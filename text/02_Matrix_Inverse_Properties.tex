@@ -1,0 +1,212 @@
+\section{Properties of the Matrix Inverse}\label{sec:inverse_prop}
+
+\asyouread{
+\item What does it mean to say that two statements are ``equivalent?''
+\item T/F: If \tta\ is not invertible, then \ttaxo\ could have no solutions.
+\item T/F: If \tta\ is not invertible, then \ttaxb\ could have infinite solutions.
+\item What is the inverse of the inverse of \tta?
+\item T/F: Solving \ttaxb\ using Gaussian elimination is faster than using the inverse of \tta.
+}
+
+We ended the previous section by stating that invertible matrices are important. Since they are, in this section we study invertible matrices in two ways. First, we look at ways to tell whether or not a matrix is invertible, and second, we study properties of invertible matrices (that is, how they interact with other matrix operations). 
+
+We start with collecting ways in which we know that a matrix is invertible. We actually already know the truth of this theorem from our work in the previous section, but it is good to list the following statements in one place. As we move through other sections, we'll add on to this theorem.
+
+%Because of this importance, we will begin to collect ways in which we know a matrix \tta\ is invertible. We'll put these ideas together in the Invertible Matrix Theorem, which we'll be adding on to throughout the rest of the text.
+
+\theorem{thm:IMT}{\index{Invertible Matrix Theorem}\index{inverse!properties}\index{inverse!Invertible Matrix Theorem}\textbf{Invertible Matrix Theorem}\\
+
+Let \tta\ be an $n\times n$ matrix. The following statements are equivalent.
+\begin{list}{(\alph{IMTcount})}{}\usecounter{IMTcount}
+
+\item \label{imt:def} \tta\ is invertible. \addtocounter{IMTcount}{\value{IMTcount_temp}}
+\item \label{imt:ba} There exists a matrix \ttb\ such that $\ttb\tta = \tti$.
+\item	\label{imt:ac} There exists a matrix \ttc\ such that $\tta\ttc = \tti$.
+\item	\label{imt:rref} The \rref\ of \tta\ is \tti.
+\item	\label{imt:axb} The equation \ttaxb\ has exactly one solution for every $n\times 1$ vector \vb.
+\item	\label{imt:axo} The equation \ttaxo\ has exactly one solution (namely, $\vx = \zero$).
+\end{list}
+\setcounter{IMTcount_temp}{\value{IMTcount}}
+\addtocounter{IMTcount_temp}{-1}
+}
+
+%%
+%%  Make notes here about what equivalent means, how each is new or signifcant
+%%
+
+Let's make note of a few things about the Invertible Matrix Theorem. 
+\begin{enumerate}
+\item		First, note that the theorem uses the phrase ``the following statements are {\em equivalent.}'' When two or more statements are equivalent, it means that the truth of any one of them implies that the rest are also true; if any one of the statements is false, then they are all false. So, for example, if we determined that the equation \ttaxo\ had exactly one solution (and \tta\ was an $n\times n$ matrix) then we would know that \tta\ was invertible, that \ttaxb\ had only one solution, that the \rref\ of \tta\ was \tti, etc.
+
+\item		Let's go through each of the statements and see why we already knew they all said essentially the same thing.
+	\begin{enumerate}
+	\item		This simply states that \tta\ is invertible -- that is, that there exists a matrix \ttai\ such that $\ttai\tta = \tta\ttai = \tti$. We'll go on to show why all the other statements basically tell us ``\tta\ is invertible.''
+	\item		If we know that \tta\ is invertible, then we already know that there is a matrix \ttb\ where $\ttb\tta=\tti$. That is part of the definition of invertible. However, we can also ``go the other way.'' Recall from Theorem \ref{thm:inverse1} that even if all we know is that there is a matrix \ttb\ where $\ttb\tta=\tti$, then we also know that $\tta\ttb=\tti$. That is, we know that \ttb\ is the inverse of \tta\ (and hence \tta\ is invertible).
+	\item		We use the same logic as in the previous statement to show why this is the same as ``\tta\ is invertible.''
+	\item		If \tta\ is invertible, we can find the inverse by using Key Idea \ref{idea:finding_inverses} (which in turn depends on Theorem \ref{thm:inverse1}). The crux of Key Idea \ref{idea:finding_inverses} is that the \rref\ of \tta\ is \tti; if it is something else, we can't find \ttai\ (it doesn't exist). Knowing that \tta\ is invertible means that the \rref\ of \tta\ is \tti. We can go the other way; if we know that the \rref\ of \tta\ is \tti, then we can employ Key Idea \ref{idea:finding_inverses} to find \ttai, so \tta\ is invertible.
+	\item		We know from Theorem \ref{thm:inverse_solution} that if \tta\ is invertible, then given any vector $\vb$, \ttaxb\ has always has exactly one solution, namely $\vx=\ttai\vb$. However, we can go the other way; let's say we know that \ttaxb\ always has exactly solution. How can we conclude that \tta\ is invertible?
+	
+	Think about how we, up to this point, determined the solution to \ttaxb. We set up the augmented matrix $\bmx{cc} \tta & \vb \emx$ and put it into \rref. We know that getting the identity matrix on the left means that we had a unique solution (and not getting the identity means we either have no solution or infinite solutions). So getting \tti\ on the left means having a unique solution; having \tti\ on the left means that the \rref\ of \tta\ is \tti, which we know from above is the same as \tta\ being invertible.
+	\item		This is the same as the above; simply replace the vector \vb\ with the vector \zero.	
+	\end{enumerate}
+
+So we came up with a list of statements that are all {\em equivalent} to the statement ``\tta\ is invertible.'' Again, if we know that if any one of them is true (or false), then they are all true (or all false).
+\end{enumerate}
+
+Theorem \ref{thm:IMT} states formally that if \tta\ is invertible, then \ttaxb\ has exactly one solution, namely $\ttai\vb$. What if \tta\ is not invertible? What are the possibilities for solutions to \ttaxb? 
+
+We know that \ttaxb\ \textit{cannot} have exactly one solution; if it did, then by our theorem it would be invertible. Recalling that linear equations have either one solution, infinite solutions, or no solution, we are left with the latter options when \tta\ is not invertible. This idea is important and so we'll state it again as a Key Idea.
+
+\keyidea{idea:solutions_invert}{\textbf{Solutions to \ttaxb\ and the Invertibility of \tta}\\
+
+Consider the system of linear equations \ttaxb. 
+\begin{enumerate}
+\item	If \tta\ is invertible, then \ttaxb\ has exactly one solution, namely $\ttai\vb$.
+\item	If \tta\ is not invertible, then \ttaxb\ has either infinite solutions or no solution.
+\end{enumerate}
+}
+
+In Theorem \ref{thm:IMT} we've come up with a list of ways in which we can tell whether or not a matrix is invertible. At the same time, we have come up with a list of properties of invertible matrices -- things we know that are true about them. (For instance, if we know that \tta\ is invertible, then we know that \ttaxb\ has only one solution.) 
+
+We now go on to discover other properties of invertible matrices. Specifically, we want to find out how invertibility interacts with other matrix operations. For instance, if we know that \tta\ and \ttb\ are invertible, what is the inverse of $\tta+\ttb$? What is the inverse of $\tta\ttb$? What is ``the inverse of the inverse?'' We'll explore these questions through an example.\\
+
+%In this section, we have defined the inverse of a matrix, shown how to compute the inverse, and have given reasons why the inverse is important. Knowing now that the inverse is important, we should explore how it relates to other matrix operations. For instance, if we know that \tta\ and \ttb\ are invertible, what is the inverse of $\tta+\ttb$? What is the inverse of $\tta\ttb$? What is ``the inverse of the inverse?'' We'll explore these questions through an example.
+
+\example{ex_inv_prop}{Let $$\tta = \bmx{cc}3&2\\0&1\emx \text{ and } \ttb = \bmx{cc}-2 & 0\\1&1\emx.$$ Find:
+
+\begin{minipage}[t]{.3\linewidth}
+\begin{enumerate}
+\item		$\ttai$
+\item		$\ttbi$
+\end{enumerate}
+\end{minipage}\begin{minipage}[t]{.3\linewidth}
+\begin{enumerate}
+\addtocounter{enumi}{2}
+\item		$(\tta\ttb)^{-1}$
+\item		$(\ttai)^{-1}$
+\end{enumerate}
+\end{minipage}
+\begin{minipage}[t]{.3\linewidth}
+\begin{enumerate}
+\addtocounter{enumi}{4}
+\item	$(\tta+\ttb)^{-1}$
+\item	$(5\tta)^{-1}$
+\end{enumerate}
+\end{minipage}\\
+
+\noindent In addition, try to find connections between each of the above.
+}
+{\begin{enumerate}
+\item	Computing \ttai\ is straightforward; we'll use Theorem \ref{thm:2by2}. 
+	$$\ttai = \frac{1}{3}\bmx{cc}1&-2\\0&3\emx = \bmx{cc} 1/3 & -2/3\\ 0 & 1\emx$$
+	
+\item	We compute \ttbi\ in the same way as above.
+  $$\ttbi = \frac{1}{-2}\bmx{cc}1&0\\-1&-2\emx = \bmx{cc} -1/2 & 0 \\ 1/2 & 1\emx$$
+  
+\item	To compute $(\tta\ttb)^{-1}$, we first compute \tta\ttb:
+	$$\tta\ttb = \bmx{cc}3&2\\0&1\emx\bmx{cc}-2 & 0\\1&1\emx = \bmx{cc} -4&2\\1&1\emx$$
+	    We now apply Theorem \ref{thm:2by2} to find $(\tta\ttb)^{-1}$.
+	$$(\tta\ttb)^{-1} = \frac{1}{-6}\bmx{cc}1&-2\\-1&-4\emx = \bmx{cc} -1/6 & 1/3\\1/6 & 2/3\emx$$
+	
+\item	To compute $(\ttai)^{-1}$, we simply apply Theorem \ref{thm:2by2} to \ttai:
+  $$(\ttai)^{-1} = \frac{1}{1/3}\bmx{cc}1 & 2/3\\0 & 1/3\emx = \bmx{cc} 3 & 2\\0 & 1\emx.$$
+  
+\item	To compute $(\tta + \ttb)^{-1}$, we first compute $\tta+\ttb$ then apply Theorem \ref{thm:2by2}:
+  $$\tta+\ttb = \bmx{cc}3&2\\0&1\emx+\bmx{cc}-2 & 0\\1&1\emx = \bmx{cc}1&2\\1&2\emx.$$
+  Hence
+  $$(\tta+\ttb)^{-1} = \frac{1}{0}\bmx{cc}2&-2\\-1&1\emx =\ !$$
+  Our last expression is really nonsense; we know that if $ad-bc=0$, then the given matrix is not invertible. That is the case with $\tta+\ttb$, so we conclude that $\tta+\ttb$ is not invertible.
+  
+\item		To compute $(5\tta)^{-1}$, we compute 5\tta\ and then apply Theorem \ref{thm:2by2}.
+	$$(5\tta)^{-1} = \left(\bmx{cc} 15 & 10\\0&5\emx\right)^{-1} = \frac{1}{75}\bmx{cc}5&-10\\0&15\emx = \bmx{cc} 1/15 & -2/15\\ 0 & 1/5\emx$$
+  
+\end{enumerate}
+\vs{.1}
+
+
+We now look for connections between \ttai, \ttbi, $(\tta\ttb)^{-1}$, $(\ttai)^{-1}$ and $(\tta+\ttb)^{-1}$. 
+%\drawexampleline{ex_inv_prop}
+\drawexampleline%{ex_inv_prop}
+
+\begin{enumerate}
+\addtocounter{enumi}{2}
+\item	 Is there some sort of relationship between $(\tta\ttb)^{-1}$ and \ttai\ and \ttbi? A first guess that seems plausible is $(\tta\ttb)^{-1} = \ttai\ttbi$. Is this true? Using our work from above, we have 
+		$$\ttai\ttbi = \bmx{cc} 1/3 & -2/3\\ 0 & 1\emx\bmx{cc} -1/2 & 0 \\ 1/2 & 1\emx = \bmx{cc} -1/2 & -2/3 \\ 1/2 & 1\emx.$$
+		Obviously, this is not equal to $(\tta\ttb)^{-1}$. Before we do some further guessing, let's think about what the inverse of \tta\ttb\ is supposed to do. The inverse -- let's call it \ttc\ -- is supposed to be a matrix such that $$(\tta\ttb)\ttc = \ttc(\tta\ttb) = \tti.$$ 
+%
+
+
+%		
+In examining the expression $(\tta\ttb)\ttc$, we see that we want \ttb\ to somehow ``cancel'' with \ttc. What ``cancels'' \ttb? An obvious answer is \ttbi. This gives us a thought: perhaps we got the order of \ttai\ and \ttbi\ wrong before. After all, we were hoping to find that $$\tta\ttb\ttai\ttbi \overset{\text{?}}{=} \tti,$$ but algebraically speaking, it is hard to cancel out these terms.\footnote{Recall that matrix multiplication is not commutative.}
+		However, switching the order of \ttai\ and \ttbi\ gives us some hope. Is $(\tta\ttb)^{-1} = \ttbi\ttai$? Let's see.
+		
+\begin{align*}
+	(\tta\ttb)(\ttbi\ttai) &= \tta(\ttb\ttbi)\ttai \textsf{\hskip 20pt  \small(regrouping by the associative property)}\\ 
+						&= \tta\tti\ttai \textsf{\hskip 49pt  \small($\ttb\ttbi = \tti$)}\\
+						&= \tta\ttai \textsf{\hskip 55pt  \small($\tta\tti = \tta$)}\\
+						&= \tti \textsf{\hskip 76pt  \small($\tta\ttai=\tti$)}
+\end{align*}
+
+Thus it seems that $(\tta\ttb)^{-1} = \ttbi\ttai$. Let's confirm this with our example matrices. 
+   $$\ttbi\ttai = \bmx{cc} -1/2 & 0 \\ 1/2 & 1\emx\bmx{cc} 1/3 & -2/3\\ 0 & 1\emx = \bmx{cc} -1/6 & 1/3\\ 1/6 & 2/3 \emx = (\tta\ttb)^{-1}.$$
+   It worked!
+   
+\item		Is there some sort of connection between $(\ttai)^{-1}$ and \tta? The answer is pretty obvious: they are equal. The ``inverse of the inverse'' returns one to the original matrix.
+
+%\drawexampleline%{ex_inv_prop}
+
+\item		Is there some sort of relationship between $(\tta+\ttb)^{-1}$, \ttai\ and \ttbi? Certainly, if we were forced to make a guess without working any examples, we would guess that $$(\tta+\ttb)^{-1} \overset{\text{?}}{=} \ttai+\ttbi.$$ However, we saw that in our example, the matrix $(\tta+\ttb)$ isn't even invertible. This pretty much kills any hope of a connection.
+
+\item		Is there a connection between $(5\tta)^{-1}$ and \ttai? Consider:
+	\begin{align*} (5\tta)^{-1} &= \bmx{cc} 1/15 & -2/15\\ 0 & 1/5\emx \\
+				&= \frac{1}{5} \bmx{cc} 1/3 & -2/3\\0&1/5\emx \\
+				&= \frac 15 \ttai
+	\end{align*}
+\enlargethispage{2\baselineskip}	
+	Yes, there is a connection!
+\end{enumerate}
+} \\ %\eexset
+
+Let's summarize the results of this example. If \tta\ and \ttb\ are both invertible matrices, then so is their product, \tta\ttb. We demonstrated this with our example, and there is more to be said. Let's suppose that \tta\ and \ttb\ are $n\times n$ matrices, but we don't yet know if they are invertible. If \tta\ttb\ is invertible, then each of \tta\ and \ttb\ are; if \tta\ttb\ is not invertible, then \tta\ or \ttb\ is also not invertible.
+
+In short, invertibility ``works well'' with matrix multiplication. However, we saw that it doesn't work well with matrix addition. Knowing that \tta\ and \ttb\ are invertible does not help us find the inverse of $(\tta+\ttb)$; in fact, the latter matrix may not even be invertible.\footnote{The fact that invertibility works well with matrix multiplication should not come as a surprise. After all, saying that \tta\ is invertible makes a statement about the mulitiplicative properties of \tta. It says that I can multiply \tta\ with a special matrix to get \tti. Invertibility, in and of itself, says nothing about matrix addition, therefore we should not be too surprised that it doesn't work well with it.}
+
+Let's do one more example, then we'll summarize the results of this section in a theorem.\\
+
+\example{ex_diagonal_inverse}{Find the inverse of $\tta = \bmx{ccc} 2&0&0\\0&3&0\\0&0&-7\emx$.}
+{We'll find \ttai\ using Key Idea \ref{idea:finding_inverses}.
+$$\bmx{cccccc} 2&0&0&1&0&0\\0&3&0&0&1&0\\0&0&-7&0&0&1\emx \quad \overrightarrow{\text{rref}} \quad
+\bmx{cccccc} 1&0&0&1/2&0&0\\0&1&0&0&1/3&0\\0&0&1&0&0&-1/7\emx$$
+Therefore $$\ttai = \bmx{ccc} 1/2 & 0 & 0 \\ 0 & 1/3 & 0 \\ 0 & 0 & -1/7\emx.$$
+\ }\\ %\eexset
+
+The matrix \tta\ in the previous example is a \textit{diagonal} matrix: the only nonzero entries of \tta\ lie on the \textit{diagonal}.\footnote{We still haven't formally defined \textit{diagonal}, but the definition is rather visual so we risk it. \index{diagonal} See Definition \ref{def:diagonal} on page \pageref{def:diagonal} for more details.}  The relationship between \tta\ and \ttai\ in the above example seems pretty strong, and it holds true in general. We'll state this and summarize the results of this section with the following theorem.
+
+\theorem{thm:inv_prop}{\index{inverse!properties}\textbf{Properties of Invertible Matrices}\\
+
+Let \tta\ and \ttb\ be $n\times n$ invertible matrices. Then:
+\begin{enumerate}
+\item	 	\tta\ttb\ is invertible; $(\tta\ttb)^{-1} = \ttbi\ttai$.
+\item	 	\ttai\ is invertible; $(\ttai)^{-1} = \tta$.
+\item		$n\tta$ is invertible for any nonzero scalar $n$; $(n\tta)^{-1} = \frac 1n \ttai$.
+\item		If \tta\ is a diagonal matrix, with diagonal entries $d_1, d_2, \cdots , d_n$, where none of the diagonal entries are 0, then \ttai\ exists and is a diagonal matrix. Furthermore, the diagonal entries of \ttai\ are $1/d_1, 1/d_2, \cdots, 1/d_n$.
+\end{enumerate}
+
+Furthermore, 
+\begin{enumerate}
+\item	If a product \tta\ttb\ is not invertible, then \tta\ or \ttb\ is not invertible.
+\item	If \tta\ or \ttb\ are not invertible, then \tta\ttb\ is not invertible.
+\end{enumerate}
+}
+
+We end this section with a comment about solving systems of equations ``in real life.''\footnote{Yes, real people do solve linear equations in real life. Not just mathematicians, but economists, engineers, and scientists of all flavors regularly need to solve linear equations, and the matrices they use are often \textit{huge.}
+
+Most people see matrices at work without thinking about it. Digital pictures are simply ``rectangular arrays'' of numbers representing colors -- they are matrices of colors. Many of the standard image processing operations involve matrix operations. The author's wife has a ``7 megapixel'' camera which creates pictures that are $3072\times 2304$ in size, giving over 7 million pixels, and that isn't even considered a ``large'' picture these days.} Solving a system \ttaxb\ by computing \ttai\vb\ seems pretty slick, so it would make sense that this is the way it is normally done. However, in practice, this is rarely done. There are two main reasons why this is the case.
+
+First, computing \ttai\ and \ttai\vb\ is ``expensive'' in the sense that it takes up a lot of computing time. Certainly, our calculators have no trouble dealing with the $3 \times 3$ cases we often consider in this textbook, but in real life the matrices being considered are very large (as in, hundreds of thousand rows and columns). Computing \ttai\ alone is rather impractical, and we waste a lot of time if we come to find out that \ttai\ does not exist. Even if we already know what \ttai\ is, computing $\ttai\vb$ is computationally expensive -- Gaussian elimination is faster.
+
+Secondly, computing \ttai\ using the method we've described often gives rise to numerical roundoff errors. Even though computers often do computations with an accuracy to more than 8 decimal places, after thousands of computations, roundoffs can cause big errors. (A ``small'' $1,000 \times 1,000$ matrix has $1,000,000$ entries! That's a lot of places to have roundoff errors accumulate!) It is not unheard of to have a computer compute \ttai\ for a large matrix, and then immediately have it compute \tta\ttai\ and \textit{not} get the identity matrix.\footnote{The result is usually very close, with the numbers on the diagonal close to 1 and the other entries near 0. But it isn't exactly the identity matrix.}
+
+Therefore, in real life, solutions to \ttaxb\ are usually found using the methods we learned in Section \ref{sec:vector_solutions}. It turns out that even with all of our advances in mathematics, it is hard to beat the basic method that Gauss introduced a long time ago. \\
+
+\printexercises{exercises/02_06_exercises}

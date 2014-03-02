@@ -1,0 +1,357 @@
+\section{Vector Solutions to Linear Systems}\label{sec:vector_solutions}
+
+\asyouread{
+\item	T/F: The equation \ttaxb\ is just another way of writing a system of linear equations.
+\item	T/F: In solving \ttaxo, if there are 3 free variables, then the solution will be ``pulled apart'' into 3 vectors.
+\item	T/F: A homogeneous system of linear equations is one in which all of the coefficients are 0.
+\item	Whether or not the equation \ttaxb\ has a solution depends on an intrinsic property of \underline{\hskip .5in}.
+}
+
+The first chapter of this text was spent finding solutions to systems of linear equations. We have spent the first two sections of this chapter learning operations that can be performed with matrices. One may have wondered ``Are the ideas of the first chapter related to what we have been doing recently?'' The answer is yes, these ideas are related. This section begins to show that relationship.
+
+We have often hearkened back to previous algebra experience to help understand matrix algebra concepts. We do that again here. Consider the equation $ax=b$, where $a=3$ and $b=6$. If we asked one to ``solve for $x$,'' what exactly would we be asking? We would want to find a number, which we call $x$, where $a$ times $x$ gives $b$; in this case, it is a number, when multiplied by 3, returns 6. 
+
+Now we consider matrix algebra expressions. We'll eventually consider solving equations like $\tta\ttx = \ttb$, where we know what the matrices \tta\ and \ttb\ are and we want to find the matrix \ttx. For now, we'll only consider equations of the type $\tta\vx=\vb$, where we know the matrix \tta\ and the vector \vb. We will want to find what vector \vx\ satisfies this equation; we want to ``solve for \vx.'' 
+
+To help understand what this is asking, we'll consider an example. Let $$\tta = \bmx{ccc}1&1&1\\1&-1&2\\2&0&1\emx, \quad \vb = \bmx{c}2\\-3\\1\emx \quad \text{and} \quad \vx=\bmx{c}x_1\\x_2\\x_3\emx.$$ (We don't know what \vx\ is, so we have to represent it's entries with the variables $x_1$, $x_2$ and $x_3$.) Let's ``solve for \vx,'' given the equation \ttaxb.
+
+We can multiply out the left hand side of this equation. We find that $$\tta\vx = \bmx{c}x_1+x_2+x_3\\x_1-x_2+2x_3\\2x_1+x_3\emx.$$ Be sure to note that the product is just a vector; it has just one column.
+
+Since \tta\vx\ is equal to \vb, we have  $$\bmx{c}x_1+x_2+x_3\\x_1-x_2+2x_3\\2x_1+x_3\emx = \bmx{c}2\\-3\\1\emx.$$ Knowing that two vectors are equal only when their corresponding entries are equal, we know \begin{align*} x_1+x_2+x_3&=2\\x_1-x_2+2x_3&=-3\\2x_1+x_3&=1.\end{align*}
+
+This should look familiar; it is a system of linear equations! Given the matrix-vector equation $\tta\vx=\vb$, we can recognize \tta\ as the coefficient matrix from a linear system and \vb\ as the vector of the constants from the linear system. To solve a matrix--vector equation (and the corresponding linear system), we simply augment the matrix \tta\ with the vector \vb,  put this matrix into \rref, and interpret the results.
+
+We convert the above linear system into an augmented matrix and find the \rref: $$\bmx{cccc}1&1&1&2\\1&-1&2&-3\\2&0&1&1\emx \quad\overrightarrow{\text{rref}}\quad \bmx{cccc}1&0&0&1\\0&1&0&2\\0&0&1&-1\emx.$$ This tells us that $x_1=1$, $x_2=2$ and $x_3 = -1$, so $$\vx = \bmx{c}1\\2\\-1\emx.$$ 
+
+We should check our work; multiply out \tta\vx\ and verify that we indeed get \vb: $$\bmx{ccc}1&1&1\\1&-1&2\\2&0&1\emx\bmx{c}1\\2\\-1\emx \quad\text{does equal}\quad \bmx{c}2\\-3\\1\emx.$$
+
+We should practice.\\
+
+\enlargethispage{2\baselineskip}
+
+\example{ex_vector_solution_1}{Solve the equation $\tta\vx=\vb$ for \vx\ where $$\tta = \bmx{ccc}1&2&3\\-1&2&1\\1&1&0\emx \quad \text{and}\quad \bmx{c} 5\\-1\\2\emx.$$}
+{The solution is rather straightforward, even though we did a lot of work before to find the answer. Form the augmented matrix $\bmx{cc} \tta&\vb\emx$ and interpret its \rref.$$\bmx{cccc}1&2&3&5\\-1&2&1&-1\\1&1&0&2\emx\quad\overrightarrow{\text{rref}}\quad \bmx{cccc}1&0&0&2\\0&1&0&0\\0&0&1&1\emx$$
+
+In previous sections we were fine stating that the result as %\begin{align*}x_1&=2\\x_2&=0\\x_3&=1,\end{align*} 
+$$x_1=2, \quad x_2=0,\quad x_3=1,$$ but we were asked to find \vx; therefore, we state the solution as $$\vx = \bmx{c}2\\0\\1\emx.$$
+\vskip -\baselineskip}\\% \eexset
+
+This probably seems all well and good. While asking one to solve the equation $\tta\vx=\vb$ for \vx\ seems like a new problem, in reality it is just asking that we solve a system of linear equations. Our variables $x_1$, etc., appear not individually but as the entries of our vector \vx. We are simply writing an old problem in a new way.
+
+In line with this new way of writing the problem, we have a new way of writing the solution. Instead of listing, individually, the values of the unknowns, we simply list them as the elements of our vector \vx.
+
+These are important ideas, so we state the basic principle once more: solving the equation $\tta\vx=\vb$ for \vx\ is the same thing as solving a linear system of equations. Equivalently, any system of linear equations can be written in the form $\tta\vx=\vb$ for some matrix \tta\ and vector \vb.
+
+Since these ideas are equivalent, we'll refer to $\tta\vx=\vb$ both as a matrix--vector equation and as a system of linear equations: they are the same thing.
+
+We've seen two examples illustrating this idea so far, and in both cases the linear system had exactly one solution. We know from Theorem \ref{thm:existence_uniqueness} that any linear system has either one solution, infinite solutions, or no solution. So how does our new method of writing a solution work with infinite solutions and no solutions?
+
+Certainly, if $\tta\vx=\vb$ has no solution, we simply say that the linear system has no solution. There isn't anything special to write. So the only other option to consider is the case where we have infinite solutions. We'll learn how to handle these situations through examples.\\
+
+\example{ex_vector_solution_101}{Solve the linear system $\tta\vx=\zero$ for \vx\ and write the solution in vector form, where $$\tta = \bmx{cc} 1&2\\2&4 \emx \quad \text{and} \quad \zero = \bmx{c}0\\0\emx.$$}
+{(Note: we didn't really need to specify that $$\zero = \bmx{c}0\\0\emx,$$ but we did just to eliminate any uncertainty.)
+
+To solve this system, put the augmented matrix into \rref, which we do below.
+
+$$\bmx{ccc} 1&2&0\\2&4&0\emx \quad \arref \quad \bmx{ccc} 1&2&0\\0&0&0\emx$$
+
+%\drawexampleline%{ex_vector_solution_101}
+
+We interpret the \rref\ of this matrix to write the solution as \begin{align*} x_1 &= -2x_2\\x_2 &\text{ is free.}\end{align*} We are not done; we need to write the solution in vector form, for our solution is the vector \vx. Recall that $$\vx = \bmx{c} x_1\\x_2\emx.$$ From above we know that $x_1 = -2x_2$, so we replace the $x_1$ in \vx\ with $-2x_2$. This gives our solution as $$\vx = \bmx{c} -2x_2\\x_2\emx.$$ Now we pull the $x_2$ out of the vector (it is just a scalar) and write \vx\ as $$\vx = x_2\bmx{c}-2\\1\emx.$$ For reasons that will become more clear later, set $$\vv = \bmx{c} -2\\1\emx.$$ Thus our solution can be written as $$\vx = x_2\vv.$$
+
+\drawexampleline
+Recall that since our system was consistent and had a free variable, we have infinite solutions. This form of the solution highlights this fact; pick any value for $x_2$ and we get a different solution. 
+
+
+For instance, by setting $x_2 = -1$, $0$, and $5$, we get the solutions $$\vx = \bmx{c}2\\-1\emx, \quad \bmx{c}0\\0\emx,\quad \text{ and }\quad \bmx{c} -10\\5\emx,$$ respectively. 
+
+We should check our work; multiply each of the above vectors by \tta\ to see if we indeed get \zero.
+
+We have officially solved this problem; we have found the solution to $\tta\vx=\zero$ and written it properly. One final thing we will do here is \textit{graph} the solution, using our skills learned in the previous section.
+
+Our solution is $$\vx = x_2\bmx{c}-2\\1\emx.$$ This means that any scalar multiply of the vector $\vv = \bmx{c} -2\\1\emx$ is a solution; we know how to sketch the scalar multiples of \vv. This is done in Figure \ref{fig:vect_sol_101}. 
+
+\begin{myfigure}%[h!]
+\begin{center}
+\begin{tikzpicture}[x={(.6cm,0)},y={(0,.6cm)}, >=latex]
+
+\drawxlines{-4.5}{4.5}{-4,...,4};
+\drawylines{-3.5}{3.5}{-3,...,3};
+\draw [<->](-4,2)--(4,-2);
+\draw [->,thick] (0,0)--(-2,1) node [above] {\vv};
+
+\end{tikzpicture}
+\end{center}
+\mycaption{The solution, as a line, to $\protect\tta\protect\vx=\protect\zero$ in Example \ref{ex_vector_solution_101}.}
+\label{fig:vect_sol_101}
+\end{myfigure}
+
+Here vector \vv\ is drawn as well as the line that goes through the origin in the direction of \vv. Any vector along this line is a solution. So in some sense, we can say that the solution to $\tta\vx=\zero$ is \textit{a line}. 
+}\\
+
+Let's practice this again. \\
+
+\example{ex_vect_sol_102}{Solve the linear system $\tta\vx=\zero$ and write the solution in vector form, where $$\tta = \bmx{cc}2 & -3 \\ -2 & 3\emx.$$
+}
+{Again, to solve this problem, we form the proper augmented matrix and we put it into \rref, which we do below. $$\bmx{ccc} 2&-3&0\\-2 & 3&0\emx \quad \arref \quad \bmx{ccc} 1 & -3/2 & 0 \\0&0&0\emx$$
+
+We interpret the \rref\ of this matrix to find that \begin{align*} x_1 &= 3/2x_2 \\ x_2 &\text{ is free.} \end{align*}
+
+As before, $$\vx = \bmx{c} x_1\\x_2\emx.$$ Since $x_1 = 3/2x_2$, we replace $x_1$ in \vx\ with $3/2x_2$: $$\vx = \bmx{c} 3/2x_2\\x_2\emx.$$ Now we pull out the $x_2$ and write the solution as $$\vx = x_2\bmx{c}3/2\\1\emx.$$ As before, let's set $$\vv = \bmx{c} 3/2\\1\emx$$ so we can write our solution as $$\vx = x_2\vv.$$
+
+%\drawexampleline%{ex_vect_sol_102}
+
+Again, we have infinite solutions; any choice of $x_2$ gives us one of these solutions. For instance, picking $x_2=2$ gives the solution $$\vx = \bmx{c} 3\\2\emx.$$ (This is a particularly nice solution, since there are no fractions$\ldots$) 
+
+As in the previous example, our solutions are multiples of a vector, and hence we can graph this, as done in Figure \ref{fig:vect_sol_102}.
+
+\begin{myfigure}%[h!]
+\begin{center}
+\begin{tikzpicture}[x={(.6cm,0)},y={(0,.6cm)}, >=latex]
+
+\drawxlines{-3.5}{6.5}{-3,...,6};
+\drawylines{-2.5}{4.5}{-2,...,4};
+\draw [<->](-3,-2)--(6,4);
+\draw [->,thick] (0,0)--(1.5,1) node [above] {\vv};
+
+\end{tikzpicture}
+\end{center}
+\mycaption{The solution, as a line, to $\protect\tta\protect\vx=\protect\zero$ in Example \ref{ex_vect_sol_102}.}
+\label{fig:vect_sol_102}
+\end{myfigure}
+}\\
+
+Let's practice some more; this time, we won't solve a system of the form $\tta\vx=\zero$, but instead $\ttaxb$, for some vector $\vb$.\\
+
+\example{ex_vect_sol_103}{Solve the linear system $\ttaxb$, where $$\tta = \bmx{cc} 1&2\\2&4\emx \quad \text{and} \quad \vb = \bmx{c} 3\\6\emx.$$
+}
+{(Note that this is the same matrix \tta\ that we used in Example \ref{ex_vector_solution_101}. This will be important later.)
+
+Our methodology is the same as before; we form the augmented matrix and put it into \rref.
+
+$$\bmx{ccc} 1&2&3\\2&4&6\emx \quad \arref \quad \bmx{ccc} 1&2&3\\0&0&0\emx$$
+
+Interpreting this \rref, we find that \begin{align*} x_1 &= 3-2x_2\\ x_2 &\text{ is free.} \end{align*} Again, $$\vx = \bmx{c} x_1\\x_2\emx,$$  and we replace $x_1$ with $3-2x_2$, giving $$\vx = \bmx{c} 3-2x_2\\x_2\emx.$$
+
+
+\drawexampleline
+This solution is different than what we've seen in the past two examples; we can't simply pull out a $x_2$ since there is a 3 in the first entry. Using the properties of matrix addition, we can ``pull apart'' this vector and write it as the sum of two vectors: one which contains only constants, and one that contains only ``$x_2$ stuff.'' We do this below. 
+\begin{align*} 
+\vx &= \bmx{c}3-2x_2\\x_2\emx \\
+		&= \bmx{c} 3\\0\emx + \bmx{c} -2x_2\\x_2\emx\\
+		&= \bmx{c} 3\\0\emx + x_2\bmx{c}-2\\1\emx.
+\end{align*}
+
+Once again, let's give names to the different component vectors of this solution (we are getting near the explanation of why we are doing this). Let $$\vect{x_p} = \bmx{c} 3\\0\emx \quad \text{and} \quad \vv = \bmx{c}-2\\1\emx.$$ We can then write our solution in the form $$\vx = \vect{x_p} + x_2\vv.$$
+
+We still have infinite solutions; by picking a value for $x_2$ we get one of these solutions. For instance, by letting $x_2= -1$, $0$, or $2$, we get the solutions $$ \bmx{c} 5\\-1\emx, \quad \bmx{c} 3\\0\emx \quad \text{and} \quad \bmx{c} -1\\2\emx.$$
+
+%\drawexampleline
+
+We have officially solved the problem; we have solved the equation \ttaxb\ for \vx\ and have written the solution in vector form. As an additional visual aid, we will graph this solution. 
+
+Each vector in the solution can be written as the sum of two vectors: $\vect{x_p}$ and a multiple of \vv. In Figure \ref{fig:vect_sol_103}, \vect{x_p}\ is graphed and \vv\ is graphed with its origin starting at the tip of \vect{x_p}. Finally, a line is drawn in the direction of \vv\ from the tip of \vect{x_p}; any vector pointing to any point on this line is a solution to \ttaxb.
+
+\begin{myfigure}%[h!]
+\begin{center}
+\begin{tikzpicture}[x={(.6cm,0)},y={(0,.6cm)}, >=latex]
+
+\drawxlines{-5.5}{5.5}{-5,...,5};
+\drawylines{-2.5}{5.5}{-2,...,5};
+\draw [<->](5,-1)--(-5,4);
+\draw [->,thick] (0,0)--(3,0) node [below] {\vect{x_p}};
+\draw [->,thick] (3,0) -- (1,1) node [above] {\vv};
+\end{tikzpicture}
+\end{center}
+\mycaption{The solution, as a line, to $\protect\tta\protect\vx=\protect\vb$ in Example \ref{ex_vect_sol_103}.}
+\label{fig:vect_sol_103}
+\end{myfigure}
+\vskip -2\baselineskip}\\
+
+%\example{ex_vector_solution_2}{Solve the linear system $\tta\vx=\zero$ for \vx\ and write the solution in vector form, where $$\tta = \bmx{ccc}1&0&3\\0&1&2\\1&2&7\emx \quad \text{and} \quad \zero =\bmx{c}0\\0\\0\emx.$$}
+%{
+%
+%
+%To solve this system, put the augmented matrix into \rref, which we do below. $$\bmx{cccc}1&0&3&0\\0&1&2&0\\1&2&7&0\emx \quad \arref \quad \bmx{cccc}1&0&3&0\\0&1&2&0\\0&0&0&0\emx$$
+%
+%We interpret the \rref\ of this matrix to write the solution as \begin{align*} x_1&=-3x_3\\x_2&=-2x_3\\x_3 &\text{ is free.}\end{align*} We are not done. We need to write our solution in vector form; we are looking for our solution vector \vx. Recall that $$\vx = \bmx{c}x_1\\x_2\\x_3\emx.$$ From above we know that $x_1 = -3x_3$ and $x_2 = -2x_3$. In \vx, replace $x_1$ with $-3x_3$ and replace $x_2$ with $-2x_3$, and write our solution vector as $$\vx = \bmx{c}-3x_3\\-2x_3\\x_3\emx.$$
+%
+%Now pull $x_3$ out of the vector and write \vx\ as $$\vx = x_3\bmx{c}-3\\-2\\1\emx.$$ This form highlights the infinite nature of our solution set; pick any value for $x_3$, and by multiplying it by the vector $$\bmx{c}-3\\-2\\1\emx$$ we have a solution. 
+%
+%It is easy to find multiple solutions; for instance, by setting $x_3$ equal to $-1$, 0 and 3, we have the solutions $$\vx = \bmx{c}3\\2\\-1\emx, \quad \bmx{c}0\\0\\0\emx \quad \text{and} \quad \bmx{c}-9\\-6\\3\emx,$$ respectively.
+%
+%We should check our work; multiply each of the above vectors by \tta\ and see that we indeed do get \zero. }\\ %\eexset
+%
+%\example{ex_vector_solution_3}{Solve the linear system \tta\vx=\vb\ for \vx\ and write the solution in vector form, where $$\tta = \bmx{ccc}1&0&3\\0&1&2\\1&2&7\emx \quad \text{and} \quad \vb =\bmx{c}1\\1\\3\emx.$$}
+%{
+%Notice that this is a very similar problem to the one found in the preceding example; the only difference is that our constant vector \vb\ has changed. To solve this system, again put the augmented matrix into \rref, which we do below. $$\bmx{cccc}1&0&3&1\\0&1&2&1\\1&2&7&3\emx \quad \arref \quad \bmx{cccc}1&0&3&1\\0&1&2&1\\0&0&0&0\emx$$
+%
+%We interpret the \rref\ of this matrix to write the solution as \begin{align*} x_1&=1-3x_3\\x_2&=1-2x_3\\x_3 &\text{ is free.}\end{align*} Using this, we write our solution in vector form by making the proper substitutions: $$\vx = \bmx{c} x_1\\x_2\\x_3\emx = \bmx{c}1-3x_3\\1-2x_3\\x_3\emx.$$
+%
+%Since our problem is slightly different than our previous problem, the solution is also slightly different. We can't simply pull $x_3$ out of \vx; first, we must write it as the sum of two vectors. One of these vectors will contain only constants, and the other will contain ``the $x_3$ stuff.'' \begin{align*}\vx &= \bmx{c}1-3x_3\\1-2x_3\\x_3\emx\\ &= \bmx{c}1\\1\\0\emx + \bmx{c}-3x_3\\-2x_3\\x_3\emx \\ &= \bmx{c}1\\1\\0\emx + x_3\bmx{c}-3\\-2\\1\emx.\end{align*}
+%
+%Again, in this form, we see that we have infinite solutions, one for each of an infinite choice of $x_3$. By arbitrarily setting $x_3 = -1$, 0 and 3, we have  three of the infinite solutions $$\vx = \bmx{c} 2\\3\\-1\emx, \quad \bmx{c} 1\\1\\0\emx \quad \text{and} \quad \bmx{c}-8\\-5\\3\emx,$$ respectively.}\\ % \eexset
+
+The previous examples illustrate some important concepts. One is that we can ``see'' the solution to a system of linear equations in a new way. Before, when we had infinite solutions, we knew we could arbitrarily pick values for our free variables and get different solutions. We knew this to be true, and we even practiced it, but the result was not very ``tangible.'' Now, we can view our solution as a vector; by picking different values for our free variables, we see this as multiplying certain important vectors by a scalar which gives a different solution.
+
+Another important concept that these examples demonstrate comes from the fact that Examples \ref{ex_vector_solution_101} and \ref{ex_vect_sol_103} were only ``slightly different'' and hence had only ``slightly different'' answers. Both solutions had $$x_2\bmx{c}-2\\1\emx$$ in them; in Example \ref{ex_vect_sol_103} the solution also had another vector added to this. Was this coincidence, or is there a definite pattern here?
+
+Of course there is a pattern! Now $\ldots$ what exactly is it? First, we define a term.
+
+\definition{def:homogeneous}{\textbf{Homogeneous Linear System of Equations}\index{system of linear equations!homogeneous}\index{homogeneous}\\
+
+A system of linear equations is \textit{homogeneous} if the constants in each equation are zero.\\
+
+Note: a homogeneous system of equations can be written in vector form as $\tta\vx = \zero$.}
+
+The term \textit{homogeneous} comes from two Greek words; \textit{homo} meaning ``same'' and \textit{genus} meaning ``type.'' A homogeneous system of equations is a system in which each equation is of the same type -- all constants are 0. Notice that the system of equations in Examples \ref{ex_vector_solution_101} and \ref{ex_vect_sol_103} are homogeneous.
+
+Note that $\tta\zero = \zero$; that is, if we set $\vx = \zero$, we have a solution to a homogeneous set of equations. This fact is important; the zero vector is \textit{always} a solution to a homogeneous linear system. Therefore a homogeneous system is always consistent; we need only to determine whether we have exactly one solution (just \zero) or infinite solutions. This idea is important so we give it it's own box.
+
+\keyidea{idea:homogeneous}{\index{consistent}\index{system of linear equations!consistent}\index{homogeneous}{\bf Homogeneous Systems and Consistency}\\
+
+All homogeneous linear systems are consistent.}
+
+How do we determine if we have exactly one or infinite solutions? Recall Key Idea \ref{idea:consistent}: if the solution has any free variables, then it will have infinite solutions. How can we tell if the system has free variables? Form the augmented matrix $\bmx{cc} \tta & \zero \emx$, put it into \rref, and interpret the result. 
+
+%Here is where some fun begins.\footnote{not that we weren't already having fun} Let \tta\ be the coefficient matrix from a homogeneous system of equations and let \vv\ be \textit{a} solution. That is, since \vv\ is a solution, we know that $\tta\vv = \zero$.
+
+%Consider the vector $k\vv$. What is $\tta (k\vv)$? \begin{align*} \tta (k\vv) &= k(\tta\cdot\vv) & &\textsf{\hskip 20pt  \small(Associative Property)}\\ 
+%&= k\cdot\zero & & \textsf{\hskip 20 pt \small (Since $\tta\vv = \zero$)}\\&= \zero \end{align*}
+%The point is, if \vv\ is a solution to the equation $\tta\vx=\zero$, then so is $k\vv$, for all values of $k$. 
+%
+%This may seem to imply that the homogeneous systems will have infinite solutions. After all, if we have a solution for every value of $k$, don't we have infinite solutions?
+%
+%No. While it is true that we have a solution for every value of $k$, we didn't say that we have a \textit{different} solution for every value of $k$. If \vv\ is the zero vector, then $k\vv$ is also the zero vector!
+%
+%At this point, the only way to tell whether or not the system $\tta\vx = \zero$ has one or infinite solutions is to put the augmented matrix $\bmx{cc} \tta & \zero \emx$ into \rref\ and interpret the results -- just as we've done all along. 
+
+It may seem that we've brought up a new question, ``When does $\tta\vx=\zero$ have exactly one or infinite solutions?'' only to answer with ``Look at the \rref\ of \tta\ and interpret the results, just as always.'' Why bring up a new question if the answer is an old one?
+
+While the new question has an old solution, it does lead to a great idea. Let's refresh our memory; earlier we solved two linear systems, $$\tta\vx = \zero \quad \text{and} \quad \tta\vx = \vb$$ where $$\tta = \bmx{cc}1&2\\2&4\emx \quad \text{and} \quad \vb = \bmx{c}3\\6\emx.$$ The solution to the first system of equations, \ttaxo, is $$\vx = x_2\bmx{c}-2\\1\emx$$  and the solution to the second set of equations, \ttaxb, is $$\vx = \bmx{c}3\\0\emx + x_2\bmx{c}-2\\1\emx,$$ for all values of $x_2$.
+
+Recalling our notation used earlier, set $$\vect{x_p} = \bmx{c} 3\\0\emx \quad \text{and let} \quad  \vv = \bmx{c}-2\\1\emx.$$
+
+Thus our solution to the linear system $\tta\vx = \vb$ is $$\vx = \vect{x_p} + x_2\vv.$$
+
+Let us see how exactly this solution works; let's see why $\tta\vx$ equals \vb.  Multiply $\tta\vx$: \begin{align*} \tta\vx &=\tta(\vect{x_p}+x_2\vv) \\ &= \tta\vect{x_p} + \tta(x_2\vv)\\ &= \tta\vect{x_p} + x_2(\tta\vv) \\ &= \tta\vect{x_p} + x_2\zero \\ &= \tta\vect{x_p} + \zero \\ &= \tta\vect{x_p}\\ &=\vb \end{align*}
+
+We know that the last line is true, that $\tta\vect{x_p} = \vb$, since we know that $\vx$ was a solution to $\tta\vx = \vb$. The whole point is that \vect{x_p}\ itself is a solution to $\tta\vx = \vb$, and we could find more solutions by adding vectors ``that go to zero'' when multiplied by \tta. (The subscript $p$ of ``\vect{x_p}'' is used to denote that this vector is a ``particular'' solution.)
+
+Stated in a different way, let's say that we know two things: that $\tta\vect{x_p} = \vb$ and $\tta\vv = \zero$. What is $\tta(\vect{x_p}+\vv)$? We can multiply it out: \begin{align*} \tta(\vect{x_p}+\vv) &= \tta\vect{x_p} + \tta\vv \\&= \vb + \zero \\ &= \vb\end{align*} and see that $\tta(\vect{x_p}+\vv)$ also equals \vb.
+
+So we wonder: does this mean that $\tta\vx = \vb$ will have infinite solutions? After all, if \vect{x_p}\ and $\vect{x_p}+\vv$ are both solutions, don't we have infinite solutions?
+
+No. If $\tta\vx = \zero$ has exactly one solution, then $\vv = \zero$, and $\vect{x_p} = \vect{x_p} +\vv$; we only have one solution.
+
+So here is the culmination of all of our fun that started a few pages back. %\footnote{but the fun isn't over} 
+ If \vv\ is a solution to $\tta\vx=\zero$ and \vect{x_p}\ is a solution to $\tta\vx=\vb$, then $\vect{x_p}+\vv$ is also a solution to $\tta\vx=\vb$. If $\tta\vx=\zero$ has infinite solutions, so does $\tta\vx = \vb$; if $\tta\vx=\zero$ has only one solution, so does $\tta\vx = \vb$. This culminating idea is of course important enough to be stated again.
+
+\keyidea{idea:unique_solutions}{\index{homogeneous}\index{consistent}\index{system of linear equations!consistent}\index{solution!unique}\index{solution!infinite}{\bf Solutions of Consistent Systems}\\
+
+Let $\tta\vx=\vb$ be a consistent system of linear equations. \begin{enumerate} \item If $\tta\vx = \zero$ has exactly one solution $(\vx = \zero)$, then $\tta\vx = \vb$ has exactly one solution. \item	If $\tta\vx =\zero$ has infinite solutions, then $\tta\vx=\vb$ has infinite solutions. \end{enumerate}}
+
+A key word in the above statement is \textit{consistent}. If $\tta\vx = \vb$ is inconsistent (the linear system has no solution), then it doesn't matter how many solutions $\tta\vx = \zero$ has; $\tta\vx=\vb$ has no solution.
+
+Enough fun, enough theory. We need to practice.\\
+
+\example{ex_vector_solution_4}{Let $$\tta = \bmx{cccc}1&-1&1&3\\4&2&4&6\emx \quad \text{and} \quad \vb = \bmx{c}1\\10\emx.$$ Solve the linear systems $\tta\vx = \zero$ and $\tta\vx = \vb$ for \vx, and write the solutions in vector form.}
+{We'll tackle $\tta\vx = \zero$ first. We form the associated augmented matrix, put it into \rref, and interpret the result. $$\bmx{ccccc}1&-1&1&3&0\\4&2&4&6&0\emx \quad \arref \quad \bmx{ccccc}1&0&1&2&0\\0&1&0&-1&0\emx$$
+\begin{align*} x_1&=-x_3-2x_4\\x_2 &= x_4\\ x_3&\text{ is free}\\x_4&\text{ is 
+free} \end{align*} 
+To write our solution in vector form, we rewrite $x_1$ and $x_2$ in \vx\ in terms of $x_3$ and $x_4$. $$\vx = \bmx{c}x_1\\x_2\\x_3\\x_4\emx = \bmx{c}-x_3-2x_4\\x_4\\x_3\\x_4\emx$$
+
+
+
+Finally, we ``pull apart'' this vector into two vectors, one with the ``$x_3$ stuff'' and one with the ``$x_4$ stuff.''
+\begin{align*}\vx &= \bmx{c}-x_3-2x_4\\x_4\\x_3\\x_4\emx\\ &= \bmx{c}-x_3\\0\\x_3\\0\emx + \bmx{c}-2x_4\\x_4\\0\\x_4\emx \\ &=x_3\bmx{c}-1\\0\\1\\0\emx + x_4\bmx{c}-2\\1\\0\\1\emx\\&=x_3\vu + x_4\vv \end{align*} We use \vu\ and \vv\ simply to give these vectors names (and save some space).
+
+It is easy to confirm that both \vu\ and \vv\ are solutions to the linear system $\tta\vx=\zero$. (Just multiply \tta\vu\ and \tta\vv\ and see that both are \zero.) Since both are solutions to a homogeneous system of linear equations, any linear combination of \vu\ and \vv\ will be a solution, too. \\
+
+\drawexampleline%{ex_vector_solution_4}
+
+Now let's tackle $\tta\vx = \vb$. Once again we put the associated augmented matrix into \rref\ and interpret the results.
+
+$$\bmx{ccccc}1&-1&1&3&1\\4&2&4&6&10\emx \quad \arref \quad \bmx{ccccc}1&0&1&2&2\\0&1&0&-1&1\emx$$
+\begin{align*} x_1&=2-x_3-2x_4\\x_2 &= 1+x_4\\ x_3&\text{ is free}\\x_4&\text{ is 
+free} \end{align*} 
+
+
+Writing this solution in vector form gives $$\vx = \bmx{c}x_1\\x_2\\x_3\\x_4\emx = \bmx{c}2-x_3-2x_4\\1+x_4\\x_3\\x_4\emx.$$ Again, we pull apart this vector, but this time we break it into three vectors: one with ``$x_3$'' stuff, one with ``$x_4$'' stuff, and one with just constants. 
+\begin{align*} \vx &= \bmx{c}2-x_3-2x_4\\1+x_4\\x_3\\x_4\emx \\
+&= \bmx{c}2\\1\\0\\0\emx + \bmx{c}-x_3\\0\\x_3\\0\emx + \bmx{c}-2x_4\\x_4\\0\\x_4\emx \\ 
+&=\bmx{c}2\\1\\0\\0\emx+x_3\bmx{c}-1\\0\\1\\0\emx + x_4\bmx{c}-2\\1\\0\\1\emx\\
+&=\underbrace{\vect{x_p}}_{\parbox{35pt}{\center {\vskip -10 pt} \scriptsize particular solution}}+\underbrace{x_3\vu + x_4\vv}_{\parbox{70pt}{\center {\vskip -10 pt} \scriptsize solution to homogeneous equations $\tta\vx=\zero$}} \end{align*}
+Note that $\tta\vect{x_p} = \vb$; by itself, $\vect{x_p}$ is a solution. To get infinite solutions, we add a bunch of stuff that ``goes to zero'' when we multiply by \tta; we add the solution to the homogeneous equations.\\
+
+Why don't we graph this solution as we did in the past? Before we had only two variables, meaning the solution could be graphed in 2D. Here we have four variables, meaning that our solution ``lives'' in 4D. You \textit{can} draw this on paper, but it is \textit{very} confusing.}\\ % \eexset
+
+\example{ex_vector_solution_5}{Rewrite the linear system $$\begin{array}{ccccccccccc} x_1&+&2x_2&-&3x_3&+&2x_4&+&7x_5&=&2\\3x_1&+&4x_2&+&5x_3&+&2x_4&+&3x_5&=&-4 \end{array}$$ as a matrix--vector equation, solve the system using vector notation, and give the solution to the related homogeneous equations.}
+{Rewriting the linear system in the form of $\tta\vx=\vb$, we have that $$\tta = \bmx{ccccc}1&2&-3&2&7\\3&4&5&2&3\emx,\quad \vx = \bmx{c}x_1\\x_2\\x_3\\x_4\\x_5\emx \quad \text{and} \quad \vb = \bmx{c}2\\-4\emx.$$ To solve the system, we put the associated augmented matrix into \rref\ and interpret the results.
+
+$$\bmx{ccccccc}1&2&-3&2&7&2\\3&4&5&2&3&-4\emx\quad \arref \quad \bmx{ccccccc}1&0&11&-2&-11&-8\\0&1&-7&2&9&5\emx$$
+\begin{align*}x_1&=-8-11x_3+2x_4+11x_5\\ 
+x_2&=5+7x_3-2x_4-9x_5\\
+x_3&\text{ is free}\\
+x_4&\text{ is free}\\
+x_5&\text{ is free}\end{align*}
+
+%\drawexampleline{ex_vector_solution_5}
+
+We use this information to write \vx, again pulling it apart. Since we have three free variables and also constants, we'll need to pull \vx\ apart into four separate vectors.
+
+\begin{align*}
+\vx &= \bmx{c}x_1\\x_2\\x_3\\x_4\\x_5\emx\\
+&= \bmx{c}-8-11x_3+2x_4+11x_5\\5+7x_3-2x_4-9x_5\\x_3\\x_4\\x_5\emx\\
+&= \bmx{c}-8\\5\\0\\0\\0\emx + \bmx{c}-11x_3\\7x_3\\x_3\\0\\0\emx+ \bmx{c}2x_4\\-2x_4\\0\\x_4\\0\emx + \bmx{c}11x_5\\-9x_5\\0\\0\\x_5\emx \\
+&= \bmx{c}-8\\5\\0\\0\\0\emx + x_3\bmx{c}-11\\7\\1\\0\\0\emx+ x_4\bmx{c}2\\-2\\0\\1\\0\emx + x_5\bmx{c}11\\-9\\0\\0\\1\emx \\
+&= \underbrace{\vect{x_p}}_{\parbox{35pt}{\center \scriptsize {\vskip -10pt} particular solution}}+ \underbrace{x_3\vu+x_4\vv+x_5\vect{w}}_{\parbox{100pt}{\center \scriptsize {\vskip -10pt} solution to homogeneous equations $\tta\vx=\zero$}}
+\end{align*}
+
+
+So $\vect{x_p}$ is a particular solution; $\tta\vxp = \vb$. (Multiply it out to verify that this is true.) The other vectors, \vu, \vv\ and \vect{w}, that are multiplied by our free variables $x_3$, $x_4$ and $x_5$, are each solutions to the homogeneous equations, $\tta\vx=\zero$. Any linear combination of these three vectors, i.e., any vector found by choosing values for $x_3$, $x_4$ and $x_5$ in $x_3\vu+x_4\vv+x_5\vect{w}$ is a solution to $\tta\vx=\zero$.}\\ % \eexset
+
+\example{ex_vector_solution_6}{Let $$\tta = \bmx{cc}1&2\\4&5\emx \quad \text{and} \quad \vb = \bmx{c} 3\\6\emx.$$ Find the solutions to $\tta\vx=\vb$ and $\tta\vx = \zero$.}
+{We go through the familiar work of finding the \rref\ of the appropriate augmented matrix and interpreting the solution. $$\bmx{ccc}1&2&3\\4&5&6\emx \quad \arref \quad \bmx{ccc}1&0&-1\\0&1&2\emx$$
+\begin{align*} x_1 &= -1\\x_2 &= 2\end{align*}
+
+Thus $$\vx = \bmx{c}x_1\\x_2\emx = \bmx{c}-1\\2\emx.$$
+
+This may strike us as a bit odd; we are used to having lots of different vectors in the solution. However, in this case, the linear system $\tta\vx = \vb$ has exactly one solution, and we've found it. What is the solution to $\tta\vx=\zero$? Since we've only found one solution to $\tta\vx=\vb$, we can conclude from Key Idea \ref{idea:unique_solutions} the related homogeneous equations $\tta\vx=\zero$ have only one solution, namely $\vx = \zero$. We can write our solution vector \vx\ in a form similar to our previous examples to highlight this: \begin{align*}\vx &= \bmx{c}-1\\2\emx \\
+&= \bmx{c}-1\\2\emx + \bmx{c}0\\0\emx\\
+&= \underbrace{\vxp}_{\parbox{35pt}{\scriptsize \center {\vskip -10pt}particular solution}} + \underbrace{\zero_{ \parbox{1pt}{{\vskip 5pt}} }}_{\parbox{35pt}{\center \scriptsize {\vskip -10pt} solution to $\tta\vx=\zero$}}.
+\end{align*} 
+\ }\\ %\eexset
+
+\example{ex_vector_solution_7}{Let $$\tta = \bmx{cc}1&1\\2&2\emx \quad \text{and} \quad \vb = \bmx{c} 1\\1\emx.$$ Find the solutions to $\tta\vx=\vb$ and $\tta\vx = \zero$.}
+{To solve \ttaxb, we put the appropriate augmented matrix into \rref\ and interpret the results.
+
+$$\bmx{ccc}1&1&1\\2&2&1\emx \quad \arref \quad \bmx{ccc}1&1&0\\0&0&1\emx$$
+
+We immediately have a problem; we see that the second row tells us that $0x_1+0x_2 = 1$, the sign that  our system does not have a solution. Thus \ttaxb\ has no solution. Of course, this does not mean that \ttaxo\ has no solution; it always has a solution.
+
+To find the solution to \ttaxo, we interpret the \rref\ of the appropriate augmented matrix. $$\bmx{ccc}1&1&0\\2&2&0\emx \quad \arref \quad \bmx{ccc}1&1&0\\0&0&0\emx$$ \begin{align*} x_1 &=-x_2 \\ x_2 &\text{ is free} \end{align*} 
+
+Thus \begin{align*}\vx &= \bmx{c} x_1\\x_2\emx\\
+&= \bmx{c}-x_2\\x_2\emx \\
+&= x_2\bmx{c}-1\\1\emx \\
+&= x_2\vu.\end{align*} 
+
+We have no solution to \ttaxb, but infinite solutions to \ttaxo.}\\ % \eexset
+
+The previous example may seem to violate the principle of Key Idea \ref{idea:unique_solutions}. After all, it seems that having infinite solutions to \ttaxo\ should imply infinite solutions to \ttaxb. However, we remind ourselves of the key word in the idea that we observed before: \textit{consistent}. If \ttaxb\ is consistent and \ttaxo\ has infinite solutions, then so will \ttaxb. But if \ttaxb\ is not consistent, it does not matter how many solutions \ttaxo\ has; \ttaxb\ is still inconsistent.\\
+
+
+This whole section is highlighting a very important concept that we won't fully understand until after two sections, but we get a glimpse of it here. When solving any system of linear equations (which we can write as $\tta\vx = \vb$), whether we have exactly one solution, infinite solutions, or no solution depends on an intrinsic property of \tta. We'll find out what that property is soon; in the next section we solve a problem we introduced at the beginning of this section, how to solve matrix equations $\tta\ttx=\ttb$.\\
+
+%Exercises
+
+%Lots of examples finding homogeneous and particular solutions.\\
+
+%\clearpage
+
+\printexercises{exercises/02_03_exercises}
+
+%\clearpage
+%\printanswers{exercises/02_03_exercises}
+

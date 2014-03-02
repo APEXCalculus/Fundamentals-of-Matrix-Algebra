@@ -1,0 +1,259 @@
+%%%%
+%% These are low level LaTeX commands that determine the 
+%% look of the Chapter and Section headings.
+%% Note the use in the chapter part of an external file
+%% that contains graphics for each chapter start.
+%%%%
+
+%%%%
+%% Commands for the header, utilizing the fancyhdr
+%% (fancy header) package
+%%%%
+
+\pagestyle{fancy}
+\fancyhead{}
+\fancyfoot{}
+\renewcommand{\chaptermark}[1]{\markboth{\chaptername\ \thechapter\ \ \ \ {#1}}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ \ \ \  #1}}
+\fancyhf{}         %Clears all header and footer fields, in preparation.
+
+\fancyhfoffset[LE,RO]{30pt}
+\fancyfoot[LE,RO]{\textbf{\thepage}} %Displays the page number in bold in the header,
+                       % to the left on even pages and to the right on odd pages.        
+\fancyhead[LE]{\nouppercase{\leftmark}}
+      %Displays the upper-level (chapter) information---
+      % as determined above---in non-upper case in the header, 
+      %to the right on even pages.
+\fancyhead[RO]{\rightmark}
+			%Displays the lower-level (section) information---as
+      % determined above---in the header, to the left on odd pages.
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+	%Underlines the header and footer. (Set to 0pt if not required).
+
+
+
+\makeatletter
+\def\@makechapterhead#1{%
+  {\parindent \z@ \raggedright \reset@font
+    \large
+    \resizebox{1.6cm}{2cm}{\thechapter}\ \ %
+		\input{headers/chapter_graphics}
+    \reset@font\LARGE\scshape\bfseries\strut \textsc #1
+    \par\vskip 10\p@
+    \hrule height 1pt
+    \vskip 50\p@
+  }}
+  
+%\makeatletter
+\def\@makesectionhead#1{%
+	 {\reset@font\LARGE\itshape\bfseries\strut #1 \thechapter.\thesection \ #1
+	 }}
+
+\newcommand{\noin}{\noindent}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\vs}[1]{\vskip #1in}
+\newcommand{\tbf}[1]{\textbf{#1}}
+\newcommand{\dds}{\displaystyle}
+\newcommand{\bmx}[1]{\left[\hskip -3pt\begin{array}{#1} }
+\newcommand{\emx}{\end{array}\hskip -3pt\right]}
+\newcommand{\bdt}[1]{\left| \begin{array}{#1} }
+\newcommand{\edt}{\end{array} \right|}
+
+\newcommand{\btz}{\begin{center}\begin{tikzpicture}}
+\newcommand{\etz}{\end{tikzpicture}\end{center}}
+
+\newcommand{\vx}[1][]{\ensuremath{\vec{x_{#1}}}}
+\newcommand{\vxp}{\ensuremath{\vec{x_p}}}
+\newcommand{\vu}{\ensuremath{\vec{u}}}
+\newcommand{\vv}{\ensuremath{\vec{v}}}
+\newcommand{\vy}{\ensuremath{\vec{y}}}
+\newcommand{\vz}{\ensuremath{\vec{z}}}
+\newcommand{\vb}{\ensuremath{\vec{b}}}
+\newcommand{\vw}{\ensuremath{\vec{w}}}
+\newcommand{\veone}{\ensuremath{\vec{e_1}}}
+\newcommand{\vetwo}{\ensuremath{\vec{e_2}}}
+\newcommand{\vethree}{\ensuremath{\vec{e_3}}}
+\newcommand{\vei}{\ensuremath{\vec{e_i}}}
+\newcommand{\ven}[1]{\ensuremath{\vec{e_{#1}}}}
+\newcommand{\rr}[1]{\ensuremath{\mathbb{R}^{#1}}}
+\newcommand{\zero}{\ensuremath{\vec{\text{\it 0}}}}
+\newcommand{\vect}[1]{\ensuremath{\vec{#1}}}
+\newcommand{\arref}{\ensuremath{\overrightarrow{\text{rref}}}}
+\newcommand{\vectt}[2]{\ensuremath{\bmx{c}#1\\#2\emx}}
+\newcommand{\vecttt}[3]{\ensuremath{\bmx{c}#1\\#2\\#3\emx}}
+
+\newcommand{\ttmm}{$M$}
+\newcommand{\mm}{\texttt{M}}
+\newcommand{\ii}[1]{\ensuremath{I_{#1}}}
+\newcommand{\tta}{\ensuremath{A}}
+\newcommand{\ttb}{\ensuremath{B}}
+\newcommand{\ttc}{\ensuremath{C}}
+\newcommand{\ttd}{\ensuremath{D}}
+\newcommand{\ttm}{\ensuremath{M}}
+\newcommand{\ttx}{\ensuremath{X}}
+\newcommand{\tti}{\ensuremath{I}}
+\newcommand{\tty}{\ensuremath{Y}}
+\newcommand{\ttp}{\ensuremath{P}}
+\newcommand{\ttat}{\ensuremath{A^T}}
+\newcommand{\ttbt}{\ensuremath{B^T}}
+\newcommand{\ttct}{\ensuremath{C^T}}
+\newcommand{\ttdt}{\ensuremath{D^T}}
+\newcommand{\ttmt}{\ensuremath{M^T}}
+\newcommand{\ttxt}{\ensuremath{X^T}}
+\newcommand{\ttit}{\ensuremath{I^T}}
+\newcommand{\ttyt}{\ensuremath{Y^T}}
+\newcommand{\ttai}{\ensuremath{A^{-1}}}
+\newcommand{\ttbi}{\ensuremath{B^{-1}}}
+\newcommand{\ttxi}{\ensuremath{X^{-1}}}
+\newcommand{\ttpi}{\ensuremath{P^{-1}}}
+\newcommand{\ttaxb}{\ensuremath{\tta\vx=\vb}}
+\newcommand{\ttaxo}{\ensuremath{\tta\vx=\zero}}
+\newcommand{\eyetwo}{\ensuremath{\bmx{cc}1&0\\0&1\emx}}
+\newcommand{\eyethree}{\ensuremath{\bmx{ccc}1&0&0\\0&1&0\\0&0&1\emx}}
+\newcommand{\eyefour}{\ensuremath{\bmx{cccc}1&0&0&0\\0&1&0&0\\0&0&1&0\\0&0&0&1\emx}}
+\newcommand{\ma}{\ensuremath{A}}
+\newcommand{\mb}{\ensuremath{B}}
+\newcommand{\mc}{\ensuremath{C}}
+\newcommand{\md}{\ensuremath{D}}
+\newcommand{\tto}{\textbf{0}}
+\renewcommand{\det}[1]{\text{det}\ensuremath{\left(#1\right)}}
+\newcommand{\tr}{$^\text{\tt T}$}
+\newcommand{\lda}{\ensuremath{\lambda}}
+\newcommand{\rref}{reduced row echelon form}
+\newcommand{\Rref}{Reduced row echelon form}
+\newcommand{\el}{eigenvalue}
+\newcommand{\ev}{eigenvector}
+\newcommand{\realn}{\ensuremath{\mathbb{R}^n}}
+\newcommand{\realm}{\ensuremath{\mathbb{R}^m}}
+\newcommand{\realnm}{\ensuremath{\mathbb{R}^n\rightarrow\mathbb{R}^m}}
+\newcommand{\real}[1]{\ensuremath{\mathbb{R}^{#1}}}
+\newcommand{\rrr}[2]{\ensuremath{\mathbb{R}^{#1}\rightarrow\mathbb{R}^{#2}}}
+\newcommand{\TT}{\ensuremath{[\, T\, ]}}
+
+%%%% Begin Header TikZ
+
+%  Some TiKZ  shortcuts to help make drawing 3D vectors faster.
+%
+\newcommand{\drawvect}[7]{\draw [#4] (0,0,0) -- (#1,0,0) -- (#1,#2,0) -- (#1,#2,#3);
+  \draw [#5] (0,0,0) -- (#1,#2,#3) node [#6] {#7};}
+\newcommand{\drawjustvect}[7]{\draw [#5] (0,0,0) -- (#1,#2,#3) node [#6] {#7};}
+
+\newcommand{\drawxaxis}[4]{\draw [->] (#1,0,0) -- (#2,0,0) node [below left] {$x$};
+\foreach \x in {#3,...,#4}
+ {\draw (\x,-.1,0)--(\x,.1,0); } }
+\newcommand{\drawyaxis}[4]{\draw [->] (0,#1,0) -- (0,#2,0) node [right] {$y$};
+\foreach \y in {#3,...,#4}
+ {\draw (0,\y,-.1)--(0,\y,.1); }; }
+\newcommand{\drawzaxis}[4]{\draw [->] (0,0,#1) -- (0,0,#2) node [above] {$z$};
+\foreach \z in {#3,...,#4}
+ {\draw (0,-.1,\z)--(0,.1,\z); }; }
+%
+% 
+% Draws the VMI Spider in TikZ
+%
+\newcommand{\vmispider}[1][]
+{\begin{scope}[#1]
+	\draw  (-2,2) -- (0,-1) -- (2,2);
+	\draw  (-1,-1) -- (-1,2) -- (0,1) -- (1,2) -- (1,-1);
+	\draw  (-1,2.5) -- (1,2.5);
+	\draw  (-1,-1.5) -- (1,-1.5);
+	\draw  (0,-1.5) -- (0,2.5);
+\end{scope}
+}
+%
+% Draws the unit square, easy to transform
+%
+\newcommand{\unitsquare}[1][]
+{\begin{scope}
+	\draw [#1] (0,0) node (A) {} -- (1,0) node (B) {} -- (1,1) node (C) {} -- (0,1) node (D) {} -- cycle;
+	\draw [->,>=latex,#1,ultra thin] (0,.25)--(1,.25);
+	\draw [->,>=latex,#1,ultra thin] (0,.5)--(1,.5);
+	\draw [->,>=latex,#1,ultra thin] (0,.75)--(1,.75);
+	\filldraw [black]  (A) circle (2pt);%black
+	\filldraw [fill=white,thick]  (B) ++(-2pt,-2pt) rectangle ++(4pt,4pt);%red
+	\filldraw [fill=white,thick]  (C) circle (2pt);%blue
+	\filldraw [fill=white,thick]  (D) ++(-2.5pt,-2.5pt) -- ++(5pt,0pt) -- ++(-2.5pt,5pt) -- cycle;%green
+	\end{scope}
+}
+%
+% Draws unit square for cover image
+%
+\newcommand{\unitsquarecover}[1][]
+{\begin{scope}
+	\draw [#1] (0,0) node (A) {} -- (1,0) node (B) {} -- (1,1) node (C) {} -- (0,1) node (D) {} -- cycle;
+	\draw [->,>=latex,#1,ultra thin] (0,.25)--(1,.25);
+	\draw [->,>=latex,#1,ultra thin] (0,.5)--(1,.5);
+	\draw [->,>=latex,#1,ultra thin] (0,.75)--(1,.75);
+	\filldraw [black]  (A) circle (2pt);%black
+	\draw [#1,ultra thick]  (B) ++(-2pt,-2pt) rectangle ++(4pt,4pt);%red
+	\draw [ultra thick]  (C) circle (2pt);%blue
+	\draw [#1,ultra thick]  (D) ++(-2.5pt,-2.5pt) -- ++(5pt,0pt) -- ++(-2.5pt,5pt) -- cycle;%green
+	\end{scope}
+}
+%
+% Draws unit square without the arrows in the middle.
+%
+\newcommand{\unitsquarewithoutarrows}[1][]
+{\begin{scope}
+	\draw [#1] (0,0) node (A) {} -- (1,0) node (B) {} -- (1,1) node (C) {} -- (0,1) node (D) {} -- cycle;
+	\filldraw [black]  (A) circle (2pt);%black
+	\filldraw [fill=white,thick]  (B) ++(-2pt,-2pt) rectangle ++(4pt,4pt);%red
+	\filldraw [fill=white,thick]  (C) circle (2pt);%blue
+	\filldraw [fill=white,thick]  (D) ++(-2.5pt,-2.5pt) -- ++(5pt,0pt) -- ++(-2.5pt,5pt) -- cycle;%green
+	\end{scope}
+}
+
+%
+% Draw x and y tick marks
+%
+\newcommand{\drawxticks}[1]
+{\foreach \x in {#1}
+		{\draw  (\x,-.1)--(\x,.1);
+			};
+}
+\newcommand{\drawyticks}[1]
+{\foreach \x in {#1}
+		{\draw  (-.1,\x)--(.1,\x);
+			};
+}
+
+\newcommand{\drawxlines}[3]
+{\draw[<->] (#1,0) -- (#2,0) node [right] {$x$};
+\foreach \x in {#3}
+		{\draw  (\x,-.1)--(\x,.1);
+			};
+}
+
+\newcommand{\drawylines}[3]
+{\draw[<->] (0,#1) -- (0,#2) node [above] {$y$};
+\foreach \x in {#3}
+		{\draw  (-.1,\x)--(.1,\x);
+			};
+}
+
+\newcommand{\asyouread}[1]{\begin{tikzpicture}
+\ifthenelse{\boolean{in_color}}{\node [preaction={fill=black,opacity=.5,transform canvas={xshift=1mm,yshift=-1mm}}, right color=blue!80!black!30, left color=blue!80] at (0,0) {\textcolor{white}{\textsf{\textit{AS YOU READ $\ldots$}}}};}
+{\node [preaction={fill=black,opacity=.5,transform canvas={xshift=1mm,yshift=-1mm}}, right color=black!30, left color=black!10] at (0,0) {\textcolor{white}{\textsf{\textit{AS YOU READ $\ldots$}}}};}
+\end{tikzpicture}
+\begin{enumerate}
+#1
+\end{enumerate}
+\vskip 20pt}
+
+%%%%
+%%  A new figure environment, trying to fix the float problem.
+%%
+%%%%
+
+\newcounter{myfigurecounter}[chapter]
+\renewcommand\themyfigurecounter{\thechapter.\arabic{myfigurecounter}}
+\newenvironment{myfigure}{\refstepcounter{myfigurecounter}}{}
+\newcommand{\mycaption}[1]{%
+\begin{center}%
+\vskip -1.5\baselineskip
+\begin{tikzpicture}%
+\draw (0,0) node [text width=\textwidth,align=center] {Figure \themyfigurecounter: #1};%
+\end{tikzpicture}%
+\end{center}%
+}

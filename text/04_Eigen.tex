@@ -1,0 +1,350 @@
+We have often explored new ideas in matrix algebra by making connections to our previous algebraic experience. Adding two numbers, $x+y$, led us to adding vectors $\vx+\vy$ and adding matrices $\tta+\ttb$. We explored multiplication, which then led us to solving the matrix equation $\ttaxb$, which was reminiscent of solving the algebra equation $ax=b$. 
+
+This chapter is motivated by another analogy. Consider: when we multiply an unknown number $x$ by another number such as 5, what do we know about the result? Unless, $x=0$, we know that in some sense $5x$ will be ``5 times bigger than $x$.'' Applying this to vectors, we would readily agree that $5\vx$ gives a vector that is ``5 times bigger than \vx.'' Each entry in \vx\ is multiplied by 5.  
+
+Within the matrix algebra context, though, we have two types of multiplication: scalar and matrix multiplication. What happens to \vx\ when we multiply it by a matrix \tta? Our first response is likely along the lines of ``You just get another vector. There is no definable relationship.'' We might wonder %\footnote{then again, we might not}
+ if there is ever the case where a matrix -- vector multiplication is very similar to a scalar -- vector multiplication. That is, do we ever have the case where $\tta\vx = a\vx$, where $a$ is some scalar? That is the motivating question of this chapter.
+
+\section{Eigenvalues and Eigenvectors}\label{sec:eigen}
+
+\asyouread{
+\item T/F: Given any matrix \tta, we can always find a vector \vx\ where $\tta\vx=\vx$.
+%\item T/F: The zero vector is an \ev\ for every matrix \tta.
+\item 	When is the zero vector an \ev\ for a matrix?
+\item		If \vv\ is an \ev\ of a matrix \tta\ with \el\ of 2, then what is $\tta\vv$?
+\item T/F: If \tta\ is a $5\times 5$ matrix, to find the \el s of \tta, we would need to find the roots of a 5$^\text{th}$ degree polynomial.
+}
+
+We start by considering the matrix \tta\ and vector \vx\ as given below.\footnote{Recall this matrix and vector were used in Example \ref{ex_mv_1} on page \pageref{ex_mv_1}.} $$\tta = \bmx{cc} 1&4\\2&3\emx \quad \quad \vx = \bmx{c}1\\1\emx$$
+
+Multiplying \tta\vx\ gives:
+\begin{align*} \tta\vx &= \bmx{cc} 1&4\\2&3\emx \bmx{c}1\\1\emx\\
+			&= \bmx{c}5\\5\emx\\ 
+			&= 5\bmx{c}1\\1\emx \ !
+\end{align*}
+
+Wow! It looks like multiplying \tta\vx\ is the same as 5\vx! This makes us wonder lots of things: Is this the only case in the world where something like this happens?\footnote{Probably not.\label{note:prob_not}} Is \tta\ somehow a special matrix, and $\tta\vx = 5\vx$ for any vector \vx\ we pick?\footnote{Probably not.} Or maybe \vx\ was a special vector, and no matter what $2\times 2$ matrix \tta\ we picked, we would have $\tta\vx\ =5\vx$.\footnote{See footnote \ref{note:prob_not}.}
+
+A more likely explanation is this: given the matrix \tta, the number 5 and the vector \vx\ formed a special pair that happened to work together in a nice way. It is then natural to wonder if other ``special'' pairs exist. For instance, could we find a vector \vx\ where $\tta\vx=3\vx$?
+
+%We can answer some of these questions with quick examples. First, let's try another vector \vy\ and see if $\tta\vy = 5\vy$. Without working too hard, let's just set $$\vy = \bmx{c}1\\-1\emx.$$ A quick multiplication quickly shows that $$\tta\vy = \bmx{c}-3\\-1\emx \neq 5\bmx{c}1\\-1\emx.$$ So it seems that \tta\ doesn't have a magic touch; it isn't always true that $\tta\vx = 5\vx$. 
+%
+%Perhaps our original choice of \vx\ was special, so that $\tta\vx =5\vx$ no matter what \tta\ we choose. However $\ldots$ a quick thought shows us that if we let $\tta = \tti$, then of course $\tta\vx \neq 5\vx$. 
+%
+%So it seems that neither \tta\ nor \vx\ are especially special, making us think that maybe 5 wasn't all that special, either. So another question arises: If we picked any other number $a$, could we find a vector \vx\ where $\tta\vx = a\vx$? For instance, can we find a vector \vx\ where $\tta\vx = 3\vx$?
+
+This equation is hard to solve \textit{at first}; we are not used to matrix equations where \vx\ appears on both sides of ``$=$.'' Therefore we put off solving this for just a moment to state a definition and make a few comments.
+
+\definition{def:eigen}{\textbf{Eigenvalues and Eigenvectors}\index{eigenvalue!definition}\index{eigenvector!|see{eigenvalue}}\\
+
+Let \tta\ be an $n\times n$ matrix, \vx\ a nonzero $n\times 1$ column vector and $\lambda$ a scalar. If $$\tta\vx = \lda\vx,$$ then \vx\ is an \textit{eigenvector} of \tta\ and \lda\ is an \textit{eigenvalue} of \tta.}
+
+The word ``eigen'' is German for ``proper'' or ``characteristic.'' Therefore, an \textit{eigenvector} of \tta\ is a ``characteristic vector of \tta.'' This vector tells us something about \tta. 
+
+Why do we use the Greek letter \lda\ (lambda)? It is pure tradition. Above, we used $a$ to represent the unknown scalar, since we are used to that notation. We now switch to \lda\ because that is how everyone else does it.\footnote{An example of mathematical peer pressure.} %If all of our friends jumped off a bridge, would we do it, too? Well $\ldots$ if \textit{all} of our friends were gone, $\ldots$}
+ Don't get hung up on this; \lda\ is just a number.
+
+Note that our definition requires that \tta\ be a square matrix.
+% This must be since in order for $\tta\vx$ to equal $\lda\vx$, $\vx$ and $\tta\vx$ must be the same size.
+If \tta\ isn't square then $\tta\vx$ and $\lambda\vx$ will have different sizes, and so they cannot be equal. Also note that \vx\ must be nonzero. Why? What if $\vx = \zero$? Then \textit{no matter what} \lda\ is, $\tta\vx = \lda\vx$. This would then imply that \textit{every number} is an eigenvalue; if every number is an eigenvalue, then we wouldn't need a definition for 
+it.\footnote{Recall footnote \ref{footnote:special} on page \pageref{footnote:special}.} Therefore we specify that $\vx\neq \zero$.
+
+Our last comment before trying to find eigenvalues and eigenvectors for given matrices deals with ``why we care.'' Did we stumble upon a mathematical curiosity, or does this somehow help us build better bridges, heal the sick, send astronauts into orbit, design optical equipment, and understand quantum mechanics? The answer, of course, is ``Yes.''\footnote{Except for the ``understand quantum mechanics'' part. Nobody truly understands that stuff; they just \textit{probably} understand it.} This is a wonderful topic in and of itself: we need no external application to appreciate its worth. At the same time, it has many, many applications to ``the real world.'' A simple Internet seach on ``applications of eigenvalues'' with confirm this.
+
+Back to our math. Given a square matrix \tta, we want to find a nonzero vector \vx\ and a scalar \lda\ such that $\tta\vx = \lda\vx$. We will solve this using the skills we developed in Chapter \ref{chapter:arithmetic}.
+
+$$\begin{array}{rclcc}
+\tta\vx & = & \lda\vx & &\parbox{100pt}{\centering\scriptsize original equation}\\
+\tta\vx - \lda\vx & = & \zero & & \parbox{100pt}{\centering\scriptsize subtract $\lda\vx$ from both sides}\\
+(\tta-\lda\tti)\vx & = & \zero & & \parbox{100pt}{\centering\scriptsize factor out \vx}\\
+\end{array}$$
+Think about this last factorization. We are likely tempted to say $$\tta\vx-\lda\vx = (\tta-\lda)\vx,$$ but this really doesn't make sense. After all, what does ``a matrix minus a number'' mean? We need the identity matrix in order for this to be logical. 
+
+Let us now think about the equation $(\tta-\lda\tti)\vx=\zero$. While it looks complicated, it really is just matrix equation of the type we solved in Section \ref{sec:vector_solutions}. We are just trying to solve $\ttb\vx=\zero$, where $\ttb = (\tta-\lda\tti)$.
+
+We know from our previous work that this type of equation\footnote{Recall this is a \textit{homogeneous} system of equations.} always has a solution, namely, $\vx = \zero$. However, we want \vx\ to be an \ev\ and, by the definition, \ev s cannot be \zero. 
+
+This means that we want solutions to $(\tta-\lda\tti)\vx=\zero$ other than $\vx=\zero$. Recall that Theorem \ref{thm:inverse_solution} says that if the matrix $(\tta-\lda\tti)$ is invertible, then the \textit{only} solution to $(\tta-\lda\tti)\vx=\zero$ is $\vx=\zero$. Therefore, in order to have other solutions, we need $(\tta-\lda\tti)$ to not be invertible. 
+
+Finally, recall from Theorem \ref{thm:determinant_properties} that noninvertible matrices all have a determinant of 0. Therefore, if we want to find \el s \lda\ and \ev s \vx, we need $\det{\tta-\lda\tti} = 0$.
+
+Let's start our practice of this theory by finding \lda\ such that $\det{\tta-\lda\tti} = 0$; that is, let's find the \el s of a matrix.\\
+
+\example{ex_find_el}{Find the \el s of \tta, that is, find \lda\ such that $\det{\tta-\lda\tti} = 0$, where $$\tta = \bmx{cc}1&4\\2&3\emx.$$}
+{(Note that this is the matrix we used at the beginning of this section.) First, we write out what $\tta-\lda\tti$ is: 
+\begin{align*}
+\tta-\lda\tti &= \bmx{cc}1&4\\2&3\emx - \lda\eyetwo \\
+							&= \bmx{cc}1&4\\2&3\emx - \bmx{cc}\lda&0\\0&\lda\emx\\
+							&= \bmx{cc}1-\lda & 4 \\ 2&3-\lda\emx
+\end{align*}
+
+Therefore, 
+\begin{align*}
+\det{\tta-\lda\tti} &= \bdt{cc}1-\lda & 4 \\ 2&3-\lda\edt \\
+										&= (1-\lda)(3-\lda)-8\\
+										&= \lda^2-4\lda-5
+\end{align*}
+
+Since we want $\det{\tta-\lda\tti}=0$, we want $\lda^2-4\lda-5=0$. This is a simple quadratic equation that is easy to factor:
+\begin{align*}
+\lda^2-4\lda-5 &= 0\\
+(\lda-5)(\lda+1) & = 0\\
+\lda &= -1,\ 5
+\end{align*}
+
+According to our above work, $\det{\tta-\lda\tti}=0$ when $\lda = -1,\ 5$. Thus, the \el s of \tta\ are $-1$ and 5.}\\ % \eexset
+
+Earlier, when looking at the same matrix as used in our example, we wondered if we could find a vector \vx\ such that $\tta\vx=3\vx$. According to this example, the answer is ``No.'' With this matrix \tta, the only values of $\lda$ that work are $-1$ and $5$.
+
+Let's restate the above in a different way: It is pointless to try to find \vx\ where $\tta\vx=3\vx$, for there is no such \vx. There are only 2 equations of this form that have a solution, namely $$\tta\vx = -\vx \quad\quad \text{and} \quad \quad \tta\vx=5\vx.$$
+
+As we introduced this section, we gave a vector \vx\ such that $\tta\vx = 5\vx$. Is this the only one? Let's find out while calling our work an example; this will amount to finding the \ev s of \tta\ that correspond to the \ev\ of 5.\\
+
+\example{ex_find_ev}{Find \vx\ such that $\tta\vx=5\vx$, where $$\tta = \bmx{cc}1&4\\2&3\emx.$$}
+{Recall that our algebra from before showed that if$$ \tta\vx=\lda\vx \quad \text{then} \quad (\tta-\lda\tti)\vx=\zero.$$
+Therefore, we need to solve the equation $(\tta-\lda\tti)\vx=\zero$ for $\vx$ when $\lambda = 5$. 
+
+\begin{align*}
+	\tta - 5\tti &= \bmx{cc} 1&4\\2&3\emx - 5\bmx{cc}1&0\\0&1\emx \\
+								&=  \bmx{cc} -4&4\\2&-2\emx
+\end{align*}
+
+To solve $(\tta-5\tti)\vx=\zero$, we form the augmented matrix and put it into \rref: $$\bmx{ccc}-4&4&0\\2&-2&0\emx \quad\quad \overrightarrow{\text{rref}} \quad\quad \bmx{ccc}1&-1&0\\0&0&0\emx.$$
+Thus 
+\begin{align*}
+x_1 &= x_2\\
+x_2 &\text{ is free}
+\end{align*}
+and
+$$\vx = \bmx{c}x_1\\x_2\emx = x_2\bmx{c}1\\1\emx.$$
+We have infinite solutions to the equation $\tta\vx = 5\vx$; any nonzero scalar multiple of the vector $\bmx{c}1\\1\emx$ is a solution. We can do a few examples to confirm this:
+$$\bmx{cc}1&4\\2&3\emx\bmx{c}2\\2\emx = \bmx{c}10\\10\emx = 5\bmx{c}2\\2\emx;$$
+$$\bmx{cc}1&4\\2&3\emx\bmx{c}7\\7\emx = \bmx{c}35\\35\emx = 5\bmx{c}7\\7\emx;$$
+$$\bmx{cc}1&4\\2&3\emx\bmx{c}-3\\-3\emx = \bmx{c}-15\\-15\emx = 5\bmx{c}-3\\-3\emx.$$
+\vskip -\baselineskip
+ }
+ \enlargethispage\baselineskip %\eexset
+
+Our method of finding the \el s of a matrix \tta\ boils down to determining which values of $\lambda$ give the matrix $(\tta - \lambda\tti)$ a determinant of 0. In computing $\det{\tta-\lambda\tti}$, we get a polynomial in $\lambda$ whose roots are the \el s of \tta. This polynomial is important and so it gets its own name.
+
+\definition{def:char_poly}{\textbf{Characteristic Polynomial}\index{characteristic polynomial}\\
+
+Let \tta\ be an $n\times n$ matrix. The \textit{characteristic polynomial} of \tta\ is the $n^\text{th}$ degree polynomial $p(\lambda) = \det{\tta-\lambda\tti}$.}
+
+Our definition just states \textit{what} the characteristic polynomial is. We know from our work so far \textit{why} we care: the roots of the characteristic polynomial of an $n\times n$ matrix \tta\ are the \el s of \tta.
+
+In Examples \ref{ex_find_el} and \ref{ex_find_ev}, we found eigenvalues and eigenvectors, respectively, of a given matrix. That is, given a matrix \tta, we found values $\lambda$ and vectors \vx\ such that $\tta\vx = \lambda\vx$. The steps that follow outline the general procedure for finding eigenvalues and eigenvectors; we'll follow this up with some examples.
+
+\keyidea{idea:eigen}{\textbf{Finding Eigenvalues and Eigenvectors}\index{eigenvalue!finding}\\
+
+Let \tta\ be an $n\times n$ matrix.
+\begin{enumerate}
+\item		To find the eigenvalues of \tta, compute $p(\lambda)$, the characteristic polynomial of \tta, set it equal to 0, then solve for $\lambda$.
+\item		To find the eigenvectors of \tta, \textit{for each eigenvalue} solve the homogeneous system $(\tta-\lambda\tti)\vx = \zero$. 
+\end{enumerate}
+}
+
+\example{ex_eigen1}{Find the eigenvalues of \tta, and for each eigenvalue, find an eigenvector where $$\tta = \bmx{cc}-3&15\\3&9\emx.$$ }
+{To find the eigenvalues, we must compute $\det{\tta-\lambda\tti}$ and set it equal to 0. 
+\begin{align*}
+\det{\tta-\lambda\tti} &= \bdt{cc}-3-\lambda & 15\\3 & 9-\lambda\edt\\
+												&= (-3-\lambda)(9-\lambda)-45 \\
+												&= \lambda^2-6\lambda-27-45\\
+												&= \lambda^2-6\lambda-72\\
+												&= (\lambda-12)(\lambda+6)
+\end{align*}
+
+Therefore, $\det{\tta-\lambda\tti} = 0$ when $\lambda = -6$ and $12$; these are our eigenvalues. (We should note that $p(\lambda) =\lambda^2-6\lambda-72$ is our characteristic polynomial.) It sometimes helps to give them ``names,'' so we'll say $\lambda_1 = -6$ and $\lambda_2 = 12$. Now we find eigenvectors.\\
+
+For $\lambda_1=-6$:
+
+
+
+We need to solve the equation $(\tta - (-6)\tti)\vx = \zero$. To do this, we form the appropriate augmented matrix and put it into \rref.
+
+$$\bmx{ccc}3&15&0\\3&15&0\emx \quad\quad\overrightarrow{\text{rref}}\quad\quad \bmx{ccc}1&5&0\\0&0&0\emx.$$
+
+Our solution is 
+\begin{align*}
+x_1 &= -5x_2\\
+x_2 & \text{ is free;}
+\end{align*}
+in vector form, we have $$\vx = x_2\bmx{c}-5\\1\emx.$$ We may pick any nonzero value for $x_2$ to get an eigenvector; a simple option is $x_2 = 1$. Thus we have the eigenvector $$\vx[1] = \bmx{c}-5\\1\emx.$$ (We used the notation $\vx[1]$ to associate this eigenvector with the eigenvalue $\lambda_1$.)\\
+
+We now repeat this process to find an eigenvector for $\lambda_2 = 12$:
+\drawexampleline%{ex_eigen1}
+
+In solving $(\tta - 12\tti)\vx = \zero$, we find
+$$\bmx{ccc}-15 & 15 & 0 \\ 3 & -3 & 0 \emx  \quad\quad\overrightarrow{\text{rref}}\quad\quad \bmx{ccc}1&-1&0\\0&0&0\emx.$$
+
+In vector form, we have $$\vx = x_2\bmx{c}1\\1\emx.$$ Again, we may pick any nonzero value for $x_2$, and so we choose $x_2 = 1$. Thus an eigenvector for $\lambda_2$ is $$\vx[2] = \bmx{c}1\\1\emx.$$ \\
+
+To summarize, we have: $$\text{eigenvalue } \lambda_1 = -6 \text{ with  \ev\ } \vx[1] = \bmx{c}-5\\1\emx$$ and $$\text{\el\ } \lambda_2 = 12 \text{ with \ev\ } \vx[2] = \bmx{c}1\\1\emx.$$
+
+We should take a moment and check our work: is it true that $\tta\vx[1] = \lambda_1\vx[1]$?
+\begin{align*}
+\tta\vx[1]	&=	\bmx{cc}-3&15\\3&9\emx\bmx{c}-5\\1\emx \\
+						&=	\bmx{c} 30\\-6\emx\\
+						&=	(-6)\bmx{c} -5\\1\emx \\
+						&=	\lambda_1\vx[1].
+\end{align*}
+Yes; it appears we have truly found an \el/\ev\ pair for the matrix \tta.} \\ %\eexset
+
+Let's do another example.\\
+
+\example{ex_eigen2}{Let $\tta = \bmx{cc} -3&0\\5&1\emx$. Find the \el s of \tta\ and an \ev\ for each \el.}
+{We first compute the characteristic polynomial, set it equal to 0, then solve for $\lambda$.
+\begin{align*}
+\det{\tta-\lambda\tti} 	&= 	\bdt{cc} -3-\lambda & 0\\5&1-\lambda \edt \\
+												&= 	(-3-\lambda)(1-\lambda)
+\end{align*}
+
+From this, we see that $\det{\tta-\lambda\tti}=0$ when $\lambda = -3, 1$. We'll set $\lambda_1 = -3$ and $\lambda_2 = 1$.\\
+
+Finding an eigenvector for $\lambda_1$:
+
+We solve $(\tta-(-3)\tti)\vx =\zero$ for \vx\ by row reducing the appropriate matrix:
+$$\bmx{ccc} 0 & 0 &0 \\ 5 & 4 & 0 \emx \quad\quad\overrightarrow{\text{rref}}\quad\quad \bmx{ccc}1&5/4&0\\0&0&0\emx.$$
+
+Our solution, in vector form, is
+$$\vx = x_2\bmx{c}-5/4\\1\emx.$$ Again, we can pick any nonzero value for $x_2$; a nice choice would eliminate the fraction. Therefore we pick $x_2 = 4$, and find $$\vx[1] = \bmx{c} -5\\4\emx.$$\\
+
+Finding an \ev\ for $\lambda_2$:
+
+We solve $(\tta-(1)\tti)\vx =\zero$ for \vx\ by row reducing the appropriate matrix:
+$$\bmx{ccc} -4 & 0 &0 \\ 5 & 0 & 0 \emx \quad\quad\overrightarrow{\text{rref}}\quad\quad \bmx{ccc}1&0&0\\0&0&0\emx.$$
+
+We've seen a matrix like this before,\footnote{See page \pageref{footnote:extra_zeros}. Our future need of knowing how to handle this situation is foretold in footnote \ref{footnote:extra_zeros}.} but we may need a bit of a refreshing. Our first row tells us that $x_1 = 0$, and we see that no rows/equations involve $x_2$. We conclude that $x_2$ is free.   Therefore, our solution, in vector form, is
+$$\vx = x_2\bmx{c}0\\1\emx.$$ We pick $x_2 = 1$, and find $$\vx[2] = \bmx{c} 0\\1\emx.$$\\
+
+To summarize, we have: $$\text{eigenvalue } \lambda_1 = -3 \text{ with  \ev\ } \vx[1] = \bmx{c}-5\\4\emx$$ and $$\text{\el\ } \lambda_2 = 1 \text{ with \ev\ } \vx[2] = \bmx{c}0\\1\emx.$$
+\ } \\ %\eexset
+
+So far, our examples have involved $2\times 2$ matrices. Let's do an example with a $3\times 3$ matrix.\\
+
+\example{ex_eigen3}{Find the \el s of \tta, and for each \el, give one \ev, where $$\tta = \bmx{ccc}-7 & -2 & 10\\ -3 & 2 & 3 \\ -6 & -2 & 9 \emx.$$}
+{We first compute the characteristic polynomial, set it equal to 0, then solve for \lda. A warning: this process is rather long. We'll use cofactor expansion along the first row; don't get bogged down with the arithmetic that comes from each step; just try to get the basic idea of what was done from step to step.
+
+
+
+\begin{align*}
+\det{\tta-\lda\tti} &= \bdt{ccc} -7-\lda & -2 & 10 \\-3 & 2-\lda & 3\\ -6 & -2 & 9-\lda \edt \\
+										&= (-7-\lda)\bdt{cc}2-\lda & 3\\-2 & 9-\lda\edt\ -\ (-2)\bdt{cc} -3&3\\-6 & 9-\lda \edt\ +\ 10\bdt{cc} -3&2-\lda \\-6 & -2 \edt \\
+										&= (-7-\lda)(\lda^2-11\lda + 24) + 2(3\lda-9)+10(-6\lda+18)\\
+										&= -\lda^3+4\lda^2-\lda -6\\
+										&= -(\lda + 1)(\lda-2)(\lda-3)
+\end{align*}
+\drawexampleline%{ex_eigen3}
+In the last step we factored the characteristic polynomial $-\lda^3+4\lda^2-\lda -6$. Factoring polynomials of degree $>2$ is not trivial; we'll assume the reader has access to methods for doing this accurately.\footnote{You probably learned how to do this in an algebra course. As a reminder, possible roots can be found by factoring the constant term (in this case, $-6$) of the polynomial. That is, the roots of this equation could be $\pm 1, \pm 2, \pm 3$ and $\pm 6$. That's 12 things to check.
+
+One could also graph this polynomial to find the roots. Graphing will show us that $\lda = 3$ \textit{looks} like a root, and a simple calculation will confirm that it is.}
+
+Our \el s are $\lda_1 = -1$, $\lda_2 = 2$ and $\lda_3 = 3$. We now find corresponding \ev s.\\
+
+For $\lda_1 = -1$:\\
+
+We need to solve the equation $(\tta - (-1)\tti)\vx = \zero$. To do this, we form the appropriate augmented matrix and put it into \rref.
+
+$$\bmx{cccc} -6 & -2 & 10 &0\\ -3 & 3 & 3 & 0  \\ -6 & -2 & 10 & 0 \emx \quad \overrightarrow{\text{rref}} \quad \bmx{cccc} 1&0&-1.5&0\\0&1&-.5&0\\0&0&0&0\emx$$
+
+Our solution, in vector form, is $$\vx = x_3\bmx{c} 3/2\\1/2\\1\emx.$$
+
+We can pick any nonzero value for $x_3$; a nice choice would get rid of the fractions. So we'll set $x_3 = 2$ and choose $\vx[1]=\bmx{c} 3\\1\\2\emx$ as our \ev.\\
+
+For $\lda_2 = 2$:\\
+
+We need to solve the equation $(\tta - 2\tti)\vx = \zero$. To do this, we form the appropriate augmented matrix and put it into \rref.
+
+$$\bmx{cccc} -9 & -2 & 10 &0\\ -3 & 0 & 3 & 0  \\ -6 & -2 & 7 & 0 \emx \quad \overrightarrow{\text{rref}} \quad \bmx{cccc} 1&0&-1&0\\0&1&-.5&0\\0&0&0&0\emx$$
+
+Our solution, in vector form, is $$\vx = x_3\bmx{c} 1\\1/2\\1\emx.$$
+
+We can pick any nonzero value for $x_3$; again, a nice choice would get rid of the fractions. So we'll set $x_3 = 2$ and choose $\vx[2]=\bmx{c} 2\\1\\2\emx$ as our \ev.\\
+
+For $\lda_3 = 3$:\\
+
+
+%\drawexampleline%{ex_eigen3}
+
+We need to solve the equation $(\tta - 3\tti)\vx = \zero$. To do this, we form the appropriate augmented matrix and put it into \rref.
+
+$$\bmx{cccc} -10 & -2 & 10 &0\\ -3 & -1 & 3 & 0  \\ -6 & -2 & 6 & 0 \emx \quad \overrightarrow{\text{rref}} \quad \bmx{cccc} 1&0&-1&0\\0&1&0&0\\0&0&0&0\emx$$
+
+Our solution, in vector form, is (note that $x_2 = 0$): $$\vx = x_3\bmx{c} 1\\0\\1\emx.$$
+
+We can pick any nonzero value for $x_3$; an easy choice is $x_3 = 1$, so $\vx[3]=\bmx{c} 1\\0\\1\emx$ as our \ev.\\
+
+\enlargethispage{\baselineskip}
+To summarize, we have the following \el/\ev\ pairs: 
+
+$$\text{\el\ } \lda_1=-1 \text{ with \ev\ } \vx[1] = \bmx{c}3\\1\\2\emx$$ 
+$$\text{\el\ } \lda_2=2 \text{ with \ev\ } \vx[2] = \bmx{c}2\\1\\2\emx$$ 
+$$\text{\el\ } \lda_3=3 \text{ with \ev\ } \vx[3] = \bmx{c}1\\0\\1\emx$$
+}
+%\vskip -\baselineskip
+%\\ %\eexset
+
+Let's practice once more.\\
+
+\example{ex_eigen4}{Find the \el s of \tta, and for each \el, give one \ev, where $$\tta = \bmx{ccc}2&-1&1\\ 0&1&6 \\ 0&3&4 \emx.$$}
+{We first compute the characteristic polynomial, set it equal to 0, then solve for \lda. We'll use cofactor expansion down the first column (since it has lots of zeros).
+
+\begin{align*}
+\det{\tta-\lda\tti} &= \bdt{ccc} 2-\lda & -1 & 1 \\0&1-\lda & 6\\ 0 & 3 & 4-\lda \edt \\
+										&= (2-\lda)\bdt{cc}1-\lda & 6\\3&4-\lda\edt\\
+										&= (2-\lda)(\lda^2-5\lda-14)\\
+										&= (2-\lda)(\lda-7)(\lda+2)\\
+\end{align*}
+
+Notice that while the characteristic polynomial is cubic, we never actually saw a cubic; we never distributed the $(2-\lda)$ across the quadratic. Instead, we realized that this was a factor of the cubic, and just factored the remaining quadratic. (This makes this example quite a bit simpler than the previous example.)
+
+Our \el s are $\lda_1 = -2$, $\lda_2 = 2$ and $\lda_3 = 7$. We now find corresponding \ev s.\\
+
+For $\lda_1 = -2$:\\
+
+
+
+We need to solve the equation $(\tta - (-2)\tti)\vx = \zero$. To do this, we form the appropriate augmented matrix and put it into \rref.
+
+$$\bmx{cccc} 4&-1&1&0\\ 0&3&6&0 \\ 0&3&6&0  \emx \quad \overrightarrow{\text{rref}} \quad \bmx{cccc} 1&0&3/4&0\\0&1&2&0\\0&0&0&0\emx$$
+
+Our solution, in vector form, is $$\vx = x_3\bmx{c} -3/4\\-2\\1\emx.$$
+
+
+
+We can pick any nonzero value for $x_3$; a nice choice would get rid of the fractions. So we'll set $x_3 = 4$ and choose $\vx[1]=\bmx{c} -3\\-8\\4\emx$ as our \ev.\\
+
+%
+
+For $\lda_2 = 2$:\\
+
+We need to solve the equation $(\tta - 2\tti)\vx = \zero$. To do this, we form the appropriate augmented matrix and put it into \rref.
+%{ex_eigen4}
+
+$$\bmx{cccc} 0&-1&1&0\\ 0&-1&6&0 \\ 0&3&2&0  \emx \quad \overrightarrow{\text{rref}} \quad \bmx{cccc} 0&1&0&0\\0&0&1&0\\0&0&0&0\emx$$
+
+This looks funny, so we'll look remind ourselves how to solve this. The first two rows tell us that $x_2 = 0$ and $x_3 = 0$, respectively. Notice that no row/equation uses $x_1$; we conclude that it is free. Therefore, our solution in vector form is $$\vx = x_1\bmx{c} 1\\0\\0\emx.$$
+\drawexampleline
+
+We can pick any nonzero value for $x_1$; an easy choice is $x_1 = 1$ and choose $\vx[2]=\bmx{c} 1\\0\\0\emx$ as our \ev.\\
+
+For $\lda_3 = 7$:\\
+
+We need to solve the equation $(\tta - 7\tti)\vx = \zero$. To do this, we form the appropriate augmented matrix and put it into \rref.
+
+$$\bmx{cccc} -5&-1&1&0\\ 0&-6&6&0 \\ 0&3&-3&0  \emx \quad \overrightarrow{\text{rref}} \quad \bmx{cccc} 1&0&0&0\\0&1&-1&0\\0&0&0&0\emx$$
+
+Our solution, in vector form, is (note that $x_1 = 0$): $$\vx = x_3\bmx{c} 0\\1\\1\emx.$$
+
+We can pick any nonzero value for $x_3$; an easy choice is $x_3 = 1$, so $\vx[3]=\bmx{c} 0\\1\\1\emx$ as our \ev.\\
+
+To summarize, we have the following \el/\ev\ pairs: 
+
+$$\text{\el\ } \lda_1=-2 \text{ with \ev\ } \vx[1] = \bmx{c}-3\\-8\\4\emx$$ 
+$$\text{\el\ } \lda_2=2 \text{ with \ev\ } \vx[2] = \bmx{c}1\\0\\0\emx$$ 
+$$\text{\el\ } \lda_3=7 \text{ with \ev\ } \vx[3] = \bmx{c}0\\1\\1\emx$$
+\ } \\ %\eexset
+
+In this section we have learned about a new concept: given a matrix \tta\ we can find certain values \lda\ and vectors \vx\ where $\tta\vx =\lda\vx$. In the next section we will continue to the pattern we have established in this text: after learning a new concept, we see how it interacts with other concepts we know about. That is, we'll look for connections between \el s and \ev s and things like the inverse, determinants, the trace, the transpose, etc.\\
+
+\printexercises{exercises/04_01_exercises}

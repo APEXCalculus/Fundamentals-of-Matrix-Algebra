@@ -1,0 +1,254 @@
+%
+%Commands used in the Exercise section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\exc}{\addtocounter{excounter}{2}\arabic{excounter}}
+
+%\newcount\edc  %exercise display count
+
+\newif\ifmore
+
+\newif\ifexsetmore
+
+\newcount\showexercises
+
+\newcount\numberofexercises
+
+\newcounter{numofexer}
+\newcounter{negnumofexer}
+
+\newcounter{debug}
+\setcounter{debug}{0}
+
+\newcounter{exercisecounter}
+\newcounter{IMTcount}
+\newcounter{IMTcount_temp}
+
+\newboolean{showexercisenames}
+%\setboolean{showexercisenames}{true}
+\setboolean{showexercisenames}{false}
+
+\def\exinput #1 {\ifnum \showexercises=1 
+												\openin0=#1 
+												\read0 to \tempp 
+												\begin{enumerate} 
+													\addtocounter{enumi}{\theexercisecounter}
+													\item 
+													\ifthenelse{\boolean{showexercisenames}}
+													{\tiny {\hskip -60pt}% This line too
+												  \makebox[60pt][l]{\printexercisename #1 }  
+												  \small
+												  %Comment above 3 lines above to get rid of 																
+												  %exercises names
+												  }{}
+													\tempp 
+													\addtocounter{exercisecounter}{1}
+												\end{enumerate}
+												\closein0 
+									\else \ifnum \showexercises=2  %i.e, we are printing odd answers, not questions 
+												\openin0=#1 
+												\read0 to \tempp % read in the question - we ignore it.
+												\addtocounter{exercisecounter}{1}
+												\read0 to \tempp % reads in the answer
+												\ifodd \theexercisecounter
+												%\else
+													\begin{enumerate} 
+													\addtocounter{enumi}{\theexercisecounter}
+													\addtocounter{enumi}{-1}
+													\item 
+													\ifthenelse{\boolean{showexercisenames}}
+													{\tiny {\hskip -60pt}% This line too
+												  \makebox[60pt][l]{\printexercisename #1 }  
+												  \small
+												  %Comment above 3 lines above to get rid of 																
+												  %exercises names
+												  }{}
+													\tempp 
+													%\addtocounter{exercisecounter}{1}
+													\end{enumerate} 
+												\fi
+												\closein0 
+												\fi  %ends the \ifnum \showexercises = 2 if statement
+												%
+												\ifnum \showexercises=3  %i.e., we print all answers, not just odds 
+												\openin0=#1 
+												\read0 to \tempp %reads in the question, which is ignored 
+												\read0 to \tempp %reads in the answer
+												\begin{enumerate} 
+													\addtocounter{enumi}{\theexercisecounter}
+													\item 
+													\ifthenelse{\boolean{showexercisenames}}
+													{\tiny {\hskip -60pt}% This line too
+												  \makebox[60pt][l]{\printexercisename #1 }  
+												  \small
+												  %Comment above 3 lines above to get rid of 																
+												  %exercises names
+												  }{}
+													\tempp 
+													\addtocounter{exercisecounter}{1}
+												\end{enumerate}
+												\closein0
+												\fi % ends the \ifnum \showexercises=3 if statement
+									\fi 
+								}
+
+\def\exsetinput #1 {\openin3=#1
+										\setcounter{numofexer}{0}
+										\setcounter{negnumofexer}{0} 
+										\read3 to \exsettemp
+										\read3 to \exsettemp
+										{\loop
+												\read3 to \exsettemp
+												\ifeof 3 \exsetmorefalse \else \exsetmoretrue \fi
+												\ifexsetmore
+														\addtocounter{numofexer}{1}
+														\addtocounter{negnumofexer}{-1}
+											\repeat}							
+										\closein3
+										\openin3=#1
+										\ifnum \showexercises=1 
+											\read3 to \exsettemp
+											\setcounter{enumi}{\theexercisecounter} 
+											\addtocounter{enumi}{1}
+											\ifthenelse{\boolean{showexercisenames}}
+													{\tiny {\hskip -60pt}% This line too
+												  \makebox[60pt][l]{\printexercisename #1 }  
+												  \small
+												  %Comment above 3 lines above to get rid of 																
+												  %exercises names
+												  }{}
+											%	  \small
+											\noin\textbf{\exsettemp\theenumi\addtocounter{enumi}{-1}
+											\addtocounter{enumi}{\thenumofexer}{-- }\theenumi%
+											\addtocounter{enumi}{\thenegnumofexer}%
+											\read3 to \exsettemp \exsettemp}%
+											
+											{\loop
+													\read3 to \exsettemp
+													\ifeof 3 \exsetmorefalse \else \exsetmoretrue \fi
+													\ifexsetmore
+															\exsettemp
+											\repeat}
+										\else
+											\read3 to \exsettemp
+											\read3 to \exsettemp
+											{\loop
+													\read3 to \exsettemp
+													\ifeof 3 \exsetmorefalse \else \exsetmoretrue \fi
+													\ifexsetmore
+															\exsettemp
+											\repeat}
+										\fi
+										\closein3
+								}
+
+\def\printexercises #1 {%
+\write7{\noexpand\printanswers{#1}}%
+\setcounter{exercisecounter}{0}\showexercises=1 \small \ifthenelse{\boolean{booksize}}{\begin{adjustwidth}{-50pt}{0pt} \noin\underline{\parbox{395pt}{\Large\textbf{Exercises \thesection} }}}{\noin\underline{\parbox{\textwidth}{\Large\textbf{Exercises \thesection} }}} 
+\sffamily%
+\vskip\baselineskip%
+\ifthenelse{\boolean{ipodsize}}{}{\begin{multicols}{2}}
+				\openin1=#1 
+				\ifeof 1 
+					{No problems written.} 
+				\else 
+					%\begin{enumerate} 
+					\loop \read1 to \extemp  
+							\ifeof 1 \morefalse \else \moretrue \fi 
+							\ifmore 
+									\extemp
+							\repeat 
+					%\end{enumerate} 
+				\fi 
+				\closein1 
+				\ifthenelse{\boolean{ipodsize}}{}{\end{multicols}}%
+				\ifthenelse{\boolean{booksize}}{\end{adjustwidth}}{}%
+				\setlength{\hoffset}{0pt} \rmfamily\normalsize \vskip \baselineskip% \end{flushleft}
+				}
+				
+
+
+% The following prints the answers. In order to print just odds, set \showexercises=2. 
+% To print all answers, set \showexercises=3.
+% 
+\def\printanswers #1 {\setcounter{exercisecounter}{0} \footnotesize \showexercises=2 \openin2=#1 
+				\ifeof 2 
+					{No problems written.} 
+				\else 
+					\loop \read2 to \extemp  
+							\ifeof 2 \morefalse \else \moretrue \fi 
+							\ifmore 
+									\extemp
+							\fi 
+							\ifeof 2 \morefalse \else \moretrue \fi 
+							\ifmore 
+					\repeat 
+				\fi 
+				\closein2
+				\normalsize}
+
+\def\testexinput #1 {\ifnum \showexercises=1 
+												\openin0=#1 
+												\read0 to \tempp 
+												\begin{enumerate} 
+													\addtocounter{enumi}{\theexercisecounter}
+													\item \tempp 
+													\addtocounter{exercisecounter}{1}
+												\end{enumerate}
+												\closein0 
+									\else \ifnum \showexercises=2 
+												\openin0=#1 
+												\read0 to \tempp 
+												\addtocounter{exercisecounter}{1}
+												\read0 to \tempp 
+												\ifodd \theexercisecounter
+												%\else
+													\begin{enumerate} 
+													\addtocounter{enumi}{\theexercisecounter}
+													\addtocounter{enumi}{-1}
+													\item \tempp 
+													%\addtocounter{exercisecounter}{1}
+													\end{enumerate} 
+												\fi
+												\closein0 
+												\fi
+									\fi 
+								}
+								
+\def \printexercisename exercises/#1_#2_#3_#4 {#1 #2 #3 #4}
+
+%%%%%%%%%%%%% Used to automate the answer production at
+%%%%%%%%%%%%% end the text.
+
+\def \readsection #1.#2{#2}
+
+\def \writeexercisestofile #1{%
+\write7{\noexpand\printanswers{exercises/0\thechapter_0\expandafter\readsection #1_exercises.tex} \noexpand \vskip \baselineskip } \write7{} }
+
+\def \cchapter #1{\chapter{#1}\write7{\noexpand \noindent {\Large \bf Chapter \thechapter} \noexpand \\ } \write7{} }
+
+\def \ssection #1{\section{#1}\write7{\noexpand\noindent {\bf Section \thesection}} \noexpand \vskip \baselineskip%\writeexercisestofile{\thesection}
+}
+
+\ifthenelse{\boolean{booksize}}%
+{\def \makeexercisesection #1{\write7{\noexpand\end{multicols}\noexpand\end{adjustwidth}
+\noexpand\normalsize} \closeout7 \chapter{#1} \input{Matrix_Algebra_Text_Project.answers}}}%
+{%
+\ifthenelse{\boolean{laptopsize}\or\boolean{amazonsize}}%
+{\def \makeexercisesection #1{\write7{\noexpand\end{multicols}
+\noexpand\normalsize} \closeout7 \chapter{#1} \input{Matrix_Algebra_Text_Project.answers}}}%
+{\def \makeexercisesection #1{\write7{
+\noexpand\normalsize} \closeout7 \chapter{#1} \input{Matrix_Algebra_Text_Project.answers}}}
+}%	
+
+
+
+\openout7=Matrix_Algebra_Text_Project.answers
+
+\ifthenelse{\boolean{booksize}}%
+{\write7{\noexpand\small\noexpand\begin{adjustwidth}{-70pt}{-70pt}\noexpand\raggedright\noexpand\begin{multicols}{3}}}%
+{%
+\ifthenelse{\boolean{laptopsize}\or\boolean{amazonsize}}%
+{\write7{\noexpand\small\noexpand\raggedright\noexpand\begin{multicols}{2}}}
+{\write7{\noexpand\small\noexpand\raggedright}}%
+}

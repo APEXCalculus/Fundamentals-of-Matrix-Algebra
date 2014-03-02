@@ -1,0 +1,59 @@
+\documentclass[10pt]{article}
+
+\input{Header_APEX}
+%\usepackage{underscore}
+\usepackage{lipsum}
+
+
+\begin{document}
+A first example using \verb|\example|. \\
+
+\example{ex_first}{\lipsum[2]}{\lipsum[2]}\\
+
+Now repeat in black and white by using \verb|\printinblackandwhite|.
+
+Also, note how the line at the end above extends down ``too far''. Fix this by adding a \verb|\vskip -\baselineskip| at the end. (This is due to my use of the \verb|lipsum| package for ``dummy'' text.)\\
+
+\printinblackandwhite
+
+\example{ex_second}{\lipsum[2]}{\lipsum[2]\vskip -\baselineskip}\\
+
+Now use \verb|\setcolorlinecolor{red}| to make the color red; also, by default, changes the printing back to color printing. \\
+
+\setcolorlinecolor{red}
+\example{ex_third}{\lipsum[2]}{\lipsum[4]\vskip -\baselineskip}\\
+
+Change the style using \verb|\setlinestyle{thin,dashed}|.
+
+We also use the \verb|\example*| version that does not include {\bf Solution.}\\
+\setlinestyle{thin,dashed}
+
+\example*{ex_fourth}{\lipsum[2]\vskip -\baselineskip}
+
+We now repeat all of this with {\bf Example} in the margin by using the 
+
+\noindent\verb|\exampleinmargin| command. 
+
+We also change the line back to its default setting first with 
+
+\noindent\verb|\setcolorlinecolor{blue!95!black!30}| and \verb|\setlinestyle{thick}|.\\
+
+\setcolorlinecolor{blue!95!black!30}
+\setlinestyle{thick}
+\exampleinmargin
+
+\example{ex_fifth}{\lipsum[1]}{\lipsum[2]\vskip -\baselineskip}\\
+
+\printinblackandwhite
+
+\example{ex_six}{\lipsum[3]}{\lipsum[2]\vskip -\baselineskip}\\
+
+\setcolorlinecolor{red}
+\example{ex_teve}{\lipsum[1]}{\lipsum[4]\vskip -\baselineskip}\\
+
+\setlinestyle{thin,dashed}
+\example*{ex_eith}{\lipsum[1]\vskip -\baselineskip}
+
+
+
+\end{document}

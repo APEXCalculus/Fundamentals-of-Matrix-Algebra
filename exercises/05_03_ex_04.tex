@@ -1,0 +1,11 @@
+{$\tta = \bmx{cc} 1&2\\ -1&-2\emx$}
+{
+\begin{tikzpicture}[>=latex,x={(.5cm,0)},y={(0,.5cm)}]
+\drawxlines{-1.5}{3.5}{-1,1,2,3};
+\drawylines{-3.5}{2.5}{-3,...,2};
+\draw[thick,->] (0,0) -- (1,1) node [right] {$\vx$};
+\draw[thick,->] (0,0) -- (-1,2) node [above] {$\vy$};
+\draw[thick,->] (0,0) -- (3,-3) node [right] {$\tta\vx$};
+\draw[thick,->] (0,0) -- (3,-3) node [below] {$\tta\vy$};
+\end{tikzpicture}
+}

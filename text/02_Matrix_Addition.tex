@@ -1,0 +1,131 @@
+A fundamental topic of mathematics is arithmetic; adding, subtracting, multiplying and dividing numbers. After learning how to do this, most of us went on to learn how to add, subtract, multiply and divide ``$x$''. We are comfortable with expressions such as $$x+3x-x\cdot x^2+x^5\cdot x^{-1}$$ and know that we can ``simplify'' this to $$4x-x^3+x^4.$$
+
+This chapter deals with the idea of doing similar operations, but instead of an unknown number $x$, we will be using a matrix \tta. So what exactly does the expression $$\tta+3\tta-\tta\cdot \tta^2+\tta^5\cdot \tta^{-1}$$ mean? We are going to need to learn to define what matrix addition, scalar multiplication, matrix multiplication and matrix inversion are. We will learn just that, plus some more good stuff, in this chapter.
+
+\section{Matrix Addition and Scalar Multiplication}\label{sec:matrix_arithmetic_1}
+
+\asyouread{
+\item When are two matrices equal?
+\item Write an explanation of how to add matrices as though writing to someone who knows what a matrix is but not much more.
+\item T/F: There is only 1 zero matrix.
+\item T/F: To multiply a matrix by 2 means to multiply each entry in the matrix by 2.
+}
+
+In the past, when we dealt with expressions that used ``$x$,'' we didn't just add and multiply $x$'s together for the fun of it, %\footnote{although that would have been fun} 
+but rather because we were usually given some sort of \textit{equation} that had $x$ in it and we had to ``solve for $x$.''
+
+This begs the question, ``What does it mean to be equal?'' Two numbers are equal, when, $\ldots$, uh, $\ldots$, nevermind. What does it mean for two matrices to be equal? We say that matrices \tta\ and \ttb\ are equal when their corresponding entries are equal. This seems like a very simple definition, but it is rather important, so we give it a box.
+
+\definition{def:matrix_equality}{\textbf{Matrix Equality}\\ Two $m\times n$ matrices \tta\ and \ttb\ are \textit{equal} if their corresponding entries are equal.} \index{matrix!equality}
+
+Notice that our more formal definition specifies that if matrices are equal, they have the same dimensions. This should make sense.
+
+Now we move on to describing how to add two matrices together. To start off, take a wild stab: what do you think the following sum is equal to? $$\bmx{cc}1&2\\3&4\emx + \bmx{cc}2&-1\\5&7\emx = \text{?}$$
+
+If you guessed $$\bmx{cc}3&1\\8&11\emx,$$ you guessed correctly. That wasn't so hard, was it?
+
+Let's keep going, hoping that we are starting to get on a roll. Make another wild guess: what do you think the following expression is equal to? $$3\cdot\bmx{cc}1&2\\3&4\emx=\text{?}$$
+
+If you guessed $$\bmx{cc}3&6\\9&12\emx,$$ you guessed correctly! 
+
+Even if you guessed wrong both times, you probably have seen enough in these two examples to have a fair idea now what matrix addition and scalar multiplication are all about. 
+
+Before we formally define how to perform the above operations, let us first recall that if \tta\ is an $m\times n$ matrix, then we can write \tta\ as $$\tta =\bmx{cccc}a_{11}&a_{12}&\cdots&a_{1n}\\a_{21}&a_{22}&\cdots&a_{2n}\\\vdots&\vdots&\ddots&\vdots\\a_{m1}&a_{m2}&\cdots&a_{mn}\emx.$$ Secondly, we should define what we mean by the word \textit{scalar}. A scalar is any number that we multiply a matrix by. (In some sense, we use that number to \textit{scale} the matrix.) We are now ready to define our first arithmetic operations.
+
+\definition{def:addition}{\index{matrix!addition}{\bf Matrix Addition}\\
+
+Let \tta\ and \ttb\ be $m\times n$ matrices. The \textit{sum} of \tta\ and \ttb, denoted $\tta+\ttb$, is $$\bmx{cccc} a_{11}+b_{11}&a_{12}+b_{12}&\cdots&a_{1n}+b_{1n}\\ a_{21}+b_{21}&a_{22}+b_{22}&\cdots&a_{2n}+b_{2n}\\\vdots&\vdots&\ddots&\vdots\\ a_{m1}+b_{m1}&a_{m2}+b_{m2}&\cdots&a_{mn}+b_{mn}\emx.$$}
+
+\definition{def:scalar_multiplication}{\index{matrix!scalar multiplication}{\bf Scalar Multiplication}\\ 
+
+Let \tta\ be an $m\times n$ matrix and let $k$ be a scalar. The \textit{scalar multiplication} of $k$ and \tta, denoted $k\tta$, is $$\bmx{cccc}ka_{11}&ka_{12}&\cdots&ka_{1n}\\ka_{21}&ka_{22}&\cdots&ka_{2n}\\\vdots&\vdots&\ddots&\vdots\\ka_{m1}&ka_{m2}&\cdots&ka_{mn}\emx.$$}
+
+We are now ready for an example. \\
+
+\example{ex_mat_add_1}{ Let $$\tta = \bmx{ccc}1&2&3\\-1&2&1\\5&5&5\emx,\quad \ttb = \bmx{ccc}2&4&6\\1&2&2\\-1&0&4\emx,\quad \ttc = \bmx{ccc} 1&2&3\\9&8&7\emx.$$ Simplify the following matrix expressions.
+\begin{center}
+\begin{minipage}{80pt}\begin{enumerate}
+	\item		$\tta+\ttb$
+	\item		$\ttb+\tta$
+\end{enumerate}\end{minipage}
+\begin{minipage}{80pt}
+\begin{enumerate}\addtocounter{enumi}{2}
+	\item		$\tta-\ttb$
+	\item		$\tta + \ttc$
+\end{enumerate}\end{minipage}
+\begin{minipage}{80pt}
+\begin{enumerate}\addtocounter{enumi}{4}
+	\item	$-3\tta +2\ttb$
+	\item	$\tta -\tta$
+\end{enumerate}\end{minipage}
+\begin{minipage}{80pt}
+\begin{enumerate}\addtocounter{enumi}{6}
+	\item	$5\tta + 5\ttb$
+	\item	$5(\tta+\ttb)$
+	\end{enumerate}\end{minipage}
+	\end{center}}
+{\begin{enumerate}
+	\item		$\tta + \ttb = \bmx{ccc}3&6&9\\0&4&3\\4&5&9\emx$.
+	\item		$\ttb + \tta = \bmx{ccc}3&6&9\\0&4&3\\4&5&9\emx$.
+	\item		$\tta - \ttb = \bmx{ccc}-1&-2&-3\\-2&0&-1\\6&5&1\emx$.
+	\item		$\tta + \ttc$ is not defined. If we look at our definition of matrix addition, we see that the two matrices need to be the same size. Since \tta\ and \ttc\ have different dimensions, we don't even try to create something as an addition; we simply say that the sum is not defined.
+	\item		$-3\tta + 2\ttb = \bmx{ccc}1&2&3\\5&-2&1\\-17&-15&-7\emx$.
+	\item		$\tta - \tta = \bmx{ccc}0&0&0\\0&0&0\\0&0&0\emx$.
+	\item		Strictly speaking, this is $\bmx{ccc}5&10&15\\-5&10&5\\25&25&25\emx +\bmx{ccc}10&20&30\\5&10&10\\-5&0&20\emx = \bmx{ccc}15&30&45\\0&20&15\\20&25&45\emx$.
+	\item		Strictly speaking, this is \begin{align*}5\left(\bmx{ccc}1&2&3\\-1&2&1\\5&5&5\emx + \bmx{ccc}2&4&6\\1&2&2\\-1&0&4\emx\right) &= 5\cdot\bmx{ccc}3&6&9\\0&4&3\\4&5&9\emx  \\ &= \bmx{ccc}15&30&45\\0&20&15\\20&25&45\emx.
+\end{align*}
+\end{enumerate}
+\vskip -\baselineskip}\\ %\eexset
+
+
+Our example raised a few interesting points. Notice how $\tta + \ttb = \ttb + \tta$. We probably aren't suprised by this, since we know that when dealing with numbers, $a+b = b+a$. Also, notice that $5\tta+5\ttb = 5(\tta+\ttb)$. In our example, we were careful to compute each of these expressions following the proper order of operations; knowing these are equal allows us to compute similar expressions in the most convenient way. 
+
+Another interesting thing that came from our previous example is that $$\tta - \tta = \bmx{ccc}0&0&0\\0&0&0\\0&0&0\emx.$$ It seems like this should be a special matrix; after all, every entry is 0 and 0 is a special number. 
+
+In fact, this is a special matrix. We define \tto, which we read as ``the zero matrix,'' to be the matrix of all zeros.\footnote{We use the bold face to distinguish the zero matrix, \tto, from the number zero, 0. } We should be careful; this previous ``definition'' is a bit ambiguous, for we have not stated what size the zero matrix should be. Is $\bmx{cc}0&0\\0&0\\ \emx$ the zero matrix? How about $\bmx{cc} 0&0\emx$?
+
+Let's not get bogged down in semantics. If we ever see \tto\ in an expression, we will usually know right away what size \tto\ should be; it will be the size that allows the expression to make sense. If \tta\ is a $3\times 5$ matrix, and we write $\tta + \tto$, we'll simply assume that \tto\ is also a $3\times 5$ matrix. If we are ever in doubt, we can add a subscript; for instance, $\tto_{2\times 7}$ is the $2\times7$ matrix of all zeros.
+
+Since the zero matrix is an important concept, we give it it's own definition box.
+
+\definition{def:zero_matrix}{\textbf{The Zero Matrix}\\
+
+\index{zero matrix}\index{matrix!the zero matrix}The $m\times n$ matrix of all zeros, denoted $\tto_{m\times n}$, is the \textit{zero matrix}.\\
+
+When the dimensions of the zero matrix are clear from the context, the subscript is generally omitted.}
+
+\enlargethispage{3\baselineskip}
+
+The following presents some of the properties of matrix addition and scalar multiplication that we discovered above, plus a few more.
+
+\theorem{thm:addition_properties}{\index{matrix!arithmetic properties}\textbf{Properties of Matrix Addition and Scalar Multiplication}\\
+
+The following equalities hold for all $m\times n$ matrices \tta, \ttb\ and \ttc\ and scalars $k$.
+\begin{enumerate}
+	\item	$\tta+\ttb = \ttb + \tta$ (Commutative Property)
+	\item	$(\tta+\ttb)+\ttc = \tta + (\ttb+\ttc)$ (Associative Property)
+	\item	$k(\tta + \ttb) = k\tta + k\ttb$ (Scalar Multiplication Distributive Property)
+	\item	$k\tta = \tta k$
+	\item	$\tta +\tto = \tto+\tta = \tta$ (Additive Identity)
+	\item	$0\tta = \tto$
+	\end{enumerate}
+}
+
+Be sure that this last property makes sense; it says that if we multiply any matrix by the \textit{number} 0, the result is the \textit{zero matrix}, or \tto.
+
+We began this section with the concept of matrix equality. Let's put our matrix addition properties to use and solve a matrix equation.\\
+
+\example{ex_equal}{Let $$\tta = \bmx{cc} 2&-1\\3&6\emx.$$ Find the matrix \ttx\ such that $$2\tta + 3\ttx = -4\tta.$$}
+{We can use basic algebra techniques to manipulate this equation for \ttx; first, let's subtract $2\tta$ from both sides. This gives us $$3\ttx = -6\tta.$$ Now divide both sides by 3 to get $$\ttx = -2\tta.$$ Now we just need to compute $-2\tta$; we find that $$\ttx = \bmx{cc} -4&2\\ -6&-12\emx.$$ \ }\\ %\eexset
+
+Our matrix properties identified \tto\ as the Additive Identity; i.e., if you add \tto\ to any matrix \tta, you simply get \tta. This is similar in notion to the fact that for all numbers $a$, $a+0 = a$. A \textit{Multiplicative Identity} would be a matrix \tti\ where $\tti\times\tta = \tta$ for all matrices \tta. (What would such a matrix look like? A matrix of all 1s, perhaps?) However, in order for this to make sense, we'll need to learn to multiply matrices together, which we'll do in the next section. \\
+%This probably gets us thinking; we know that $a\cdot 1 = a$ for all numbers $a$. Is there a similar thing for matrices? (A matrix of all 1's, perhaps?) Before we can answer this, we need to define what matrix multiplication is. You are likely to be surprised by what we find.\\
+
+%In the next section we'll further our practice with adding matrices and multiplying them by scalars. However, we'll ``look'' at them in a different way -- that is, we'll actually visualize special matrices and see what it means to add them together and multiply them by numbers. Then, in the section after that, we'll learn what it means to multiply two matrices together. \\
+
+%Exercises: simplify some simple expressions Include adding vectors  Solve matrix equation based on idea of matrix equality\\
+
+%solve $c_1\vu + c_2\vv =\vw$
+
+\printexercises{exercises/02_01_exercises}
+

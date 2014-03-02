@@ -1,0 +1,252 @@
+\documentclass[10pt]{book}
+\usepackage{ifthen}
+
+\newboolean{in_color}
+\newboolean{booksize}
+\newboolean{ipodsize}
+\newboolean{laptopsize}
+\newboolean{amazonsize} %for use with CreateSpace, using a 7x10 paper size
+\newboolean{ipad}   % for the ipad, Duh.
+
+\setboolean{in_color}{true}
+\setboolean{booksize}{false}
+\setboolean{ipodsize}{false}
+\setboolean{laptopsize}{false}
+\setboolean{amazonsize}{true}
+\setboolean{ipad}{false}
+
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+\usepackage{lipsum}
+
+%\usepackage{wrapfig}
+
+\usepackage{fontspec}
+%\setmainfont[Mapping=tex-text]{Calibri}
+%\usepackage[T1]{fontenc}
+%\usepackage{cmbright}
+
+\ifthenelse{\boolean{booksize}}{\usepackage[paper=letterpaper, hcentering=true, textheight=550pt, textwidth=345pt]{geometry}}{} % Layout for printed book through Lulu, Spiral bound, letter size
+
+%
+%	Because we want the iPad version to model the book version (same text size, etc.), we
+%	wrap the definition of amazonsize inside an ipad check.
+%
+%	
+\ifthenelse{\boolean{ipad}}
+{\ifthenelse{\boolean{amazonsize}}{\usepackage[paperheight=620pt,paperwidth=395pt, textheight=550pt,
+textwidth=345pt, includeheadfoot, hcentering=true]{geometry}}{} }
+{\ifthenelse{\boolean{amazonsize}}{\usepackage[paperheight=10in,paperwidth=7in, textheight=550pt,
+textwidth=345pt, inner=1in,includeheadfoot]{geometry}}{} }
+
+					%% Layout for printed book through Amazon CreateSpace, perfect bound,
+					%% 7x10 ``journal'' size
+
+
+\ifthenelse{\boolean{laptopsize}}{\usepackage[paperwidth=415pt, paperheight=350pt, lmargin=60pt, textheight=290pt, textwidth=345pt, tmargin=30pt,headsep=10pt, footskip=20pt]{geometry}}{}% Layout for laptop screen - full page fits on screen, relatively compact
+
+%\ifthenelse{\boolean{ipodsize}}{\usepackage[paperwidth=415pt, paperheight=1000pt, lmargin=60pt, textheight=940pt, textwidth=345pt, tmargin=30pt,headsep=10pt, footskip=20pt]{geometry}}{} % Layout for really long paper - width is still standard.
+
+\ifthenelse{\boolean{ipodsize}}{\usepackage[paperwidth=4in, paperheight=11in, textwidth=3.8in, textheight=10in]{geometry}}{} % Layout for the ipod use...
+
+%\ifthenelse{\boolean{ipadsize}}{\usepackage[paperheight=620pt,paperwidth=395pt, textheight=550pt,
+%textwidth=345pt, includeheadfoot, hcentering=true]{geometry}}{} 
+
+					%% Layout for printed book through Amazon CreateSpace, perfect bound,
+					%% 7x10 ``journal'' size
+
+
+
+\usepackage{layout}
+\usepackage{graphicx}
+\usepackage{multicol}
+\usepackage{tikz}
+%\usetikzlibrary{decorations.pathmorphing}
+\usetikzlibrary{calc}
+\usepackage{makeidx}
+
+\usepackage{changepage}
+\usepackage{ulem}
+\usepackage{xcolor}
+\usepackage[bookmarksnumbered,linkbordercolor=white]{hyperref}
+
+\usepackage{fancyhdr}
+
+\input{headers/Header_Header}
+%\input{Header_Header_Single_Side_Book}
+
+%\makeindex
+
+\normalsize 
+
+%\input{headers/Header_Simple_Definitions}
+
+%\input{headers/Header_TikZ}
+
+%\input{headers/Header_Environments_test}
+
+%\input{headers/Header_Exercises}
+
+\newboolean{showexamplelines}
+\setboolean{showexamplelines}{true}
+
+\newlength{\topmarginlength}
+\newlength{\bottommarginlength}
+\newlength{\oddpagemarginlength}
+\newlength{\evenpagemarginlength}
+\newlength{\marginlinelength}
+
+\newcounter{examplestartpageref}
+\newcounter{pagedifference}
+\newcounter{other}
+
+\setlength{\marginlinelength}{5pt}
+\setlength{\topmarginlength}{-1in-\voffset}
+\setlength{\bottommarginlength}{-1in-\textheight-2\baselineskip}
+\setlength{\oddpagemarginlength}{1in+\hoffset+\oddsidemargin-2\marginlinelength}
+\setlength{\evenpagemarginlength}{1in+\hoffset+\evensidemargin-2\marginlinelength}
+
+\newcommand{\colorlinecolor}{blue!95!black!30}
+\newcommand{\bwlinecolor}{black!30}
+\ifthenelse{\boolean{in_color}}{\newcommand{\thelinecolor}{\colorlinecolor}}{\newcommand{\thelinecolor}{\bwlinecolor}}
+\newcommand{\linestyle}{thick}
+
+\newcounter{examplecounter}
+\setcounter{examplecounter}{0}
+
+%\newsavebox{\examplebox}
+
+\newcommand{\example}[3]{%
+\noindent%
+\hskip -2\marginlinelength%
+\parbox{\marginlinelength}{%
+\begin{tikzpicture}[remember picture,overlay]%
+\draw (0,0) circle (1pt) node (#1) {};%
+\end{tikzpicture}%
+}% ends parbox where line begins
+\hskip \marginlinelength% puts us back in line
+\parbox{80pt}{{\bf Example \refstepcounter{examplecounter}\theexamplecounter}}% ends parbox
+\label{#1}%
+\ifthenelse{\pageref{#1}=\pageref{e#1}}% if the beginning and end are on the same page
+{%
+#2 \par #3  {\it Selah}\label{e#1}% writes the full example then draws the lines
+\begin{tikzpicture}[remember picture,overlay] \draw (0,0) circle (1pt) node (e#1) {};
+\draw [\linestyle,\thelinecolor] (#1) -- (#1.south |- e#1.south) -- ++(10pt,0);
+\end{tikzpicture}
+}% ends if beginning and end are on same page.
+% next is if they are on different pages
+{% first draw line from start to bottom of page
+\begin{tikzpicture}[remember picture,overlay]% 
+\ifthenelse{\isodd{\pageref{#1}}}% draws lines based on whether on an even or odd page %
+{\node [xshift=\oddpagemarginlength,yshift=\bottommarginlength](bottomleft) at (current page.north west)  {};}
+{\node [xshift=\evenpagemarginlength,yshift=\bottommarginlength](bottomleft) at (current page.north west)  {};}
+\draw [green] (#1) -- (bottomleft);
+\end{tikzpicture}
+% end drawing of line
+#2 \par #3  {\it Selah}\label{e#1}% now write out full example
+% now draw line from end to top of page
+\begin{tikzpicture}[remember picture,overlay] \draw (0,0) circle (1pt) node (e#1) {};
+\ifthenelse{\isodd{\pageref{e#1}}}% draws lines based on whether on an even or odd page %
+{\node [xshift=\oddpagemarginlength,yshift=\topmarginlength](topleft) at (current page.north west)  {};}
+{\node [xshift=\evenpagemarginlength,yshift=\topmarginlength](topleft) at (current page.north west)  {};}
+\draw [blue,very thick] (e#1.south -| topleft) -- (topleft);
+\end{tikzpicture}%
+}% ends the check for same page or not
+%
+}%ends the definition of exam
+
+
+% Draws a line on a page that doesn't contain either
+% the beginning or end of an example.
+% It has one arguments, the  label
+% of the current example. 
+\newcommand{\drawexamplelin}[1]{
+\setcounterpageref{examplestartpageref}{#1}%
+\setcounter{pagedifference}{\thepage-\theexamplestartpageref}
+\ifthenelse{\isodd{\theexamplestartpageref}}% example is on an odd page
+       {\ifthenelse{\isodd{\thepagedifference}}% is the difference between this page
+       % and the start even or odd?
+       % odd: then plots on different side of page
+       {\begin{tikzpicture}[remember picture,overlay]
+        \node [xshift=\evenpagemarginlength,yshift=\topmarginlength](tleft) at (current page.north west)  {};
+        \draw [\thelinecolor,thick] (tleft) -- ++(0,-\textheight);
+        \end{tikzpicture}
+        }% ends if difference is odd
+        {% difference is even
+        \begin{tikzpicture}[remember picture,overlay]
+        \node [xshift=\oddpagemarginlength,yshift=\topmarginlength](tleft) at (current page.north west)  {};
+        \draw [\thelinecolor,thick] (tleft) -- ++(0,-\textheight-2\baselineskip);
+        \end{tikzpicture}
+        }% ends difference is even and start page is odd
+}% ends start page is odd
+       {\ifthenelse{\isodd{\thepagedifference}}% is the difference between this page
+       % and the start even or odd?
+       % odd: then plots on different side of page
+       {\begin{tikzpicture}[remember picture,overlay]
+        \node [xshift=\oddpagemarginlength,yshift=\topmarginlength](tleft) at (current page.north west)  {};
+        \draw [\thelinecolor,thick] (tleft) -- ++(0,-\textheight);
+        \end{tikzpicture}
+        }% ends if difference is odd
+        {% difference is even
+        \begin{tikzpicture}[remember picture,overlay]
+        \node [xshift=\evenpagemarginlength,yshift=\topmarginlength](tleft) at (current page.north west)  {};
+        \draw [\thelinecolor,thick] (tleft) -- ++(0,-\textheight);
+        \end{tikzpicture}
+        }% ends difference is even and start page is even
+}% ends start page is even
+} % End show lines
+
+
+
+%
+%Define style for Definitions, Theorems and Key Ideas  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%
+%\newcommand{\example}[3]{%
+%\noindent%
+%\hskip -2\marginlinelength%
+%\parbox{\marginlinelength}{%
+%\begin{tikzpicture}[remember picture,overlay]%
+%\draw (0,0) circle (1pt) node (#1) {};%
+%\end{tikzpicture}%
+%}% ends parbox where line begins
+%\hskip \marginlinelength% puts us back in line
+%\parbox{80pt}{{\bf Example \refstepcounter{examplecounter}\theexamplecounter}}% ends parbox
+%\label{#1}%
+%\ifthenelse{\pageref{#1}=\pageref{e#1}}% if the beginning and end are on the same page
+%{%
+%#2 \par #3 {\it Selah}\label{e#1}% writes the full example then draws the lines
+%\begin{tikzpicture}[remember picture,overlay] \draw (0,0) circle (1pt) node (e#1) {};
+%\draw [\linestyle,\thelinecolor] (#1) -- (#1.south |- e#1.south) -- ++(10pt,0);
+%\end{tikzpicture}
+%}% ends if beginning and end are on same page.
+%% next is if they are on different pages
+%{% first draw line from start to bottom of page
+%\begin{tikzpicture}[remember picture,overlay]% 
+%\ifthenelse{\isodd{\pageref{#1}}}% draws lines based on whether on an even or odd page %
+%{\node [xshift=\oddpagemarginlength,yshift=\bottommarginlength](bottomleft) at (current page.north west)  {};}
+%{\node [xshift=\evenpagemarginlength,yshift=\bottommarginlength](bottomleft) at (current page.north west)  {};}
+%\draw [green] (#1) -- (bottomleft);
+%\end{tikzpicture}
+%% end drawing of line
+%#2 \par #3 {\it Selah}\label{e#1}% now write out full example
+%% now draw line from end to top of page
+%\begin{tikzpicture}[remember picture,overlay] \draw (0,0) circle (1pt) node (e#1) {};
+%\ifthenelse{\isodd{\pageref{e#1}}}% draws lines based on whether on an even or odd page %
+%{\node [xshift=\oddpagemarginlength,yshift=\topmarginlength](topleft) at (current page.north west)  {};}
+%{\node [xshift=\evenpagemarginlength,yshift=\topmarginlength](topleft) at (current page.north west)  {};}
+%\draw [blue,very thick] (e#1.south -| topleft) -- (topleft);
+%\end{tikzpicture}%
+%}% ends the check for same page or not
+%%
+%}%ends the definition of exam
+%
+%
+%\vskip \baselineskip%
+%\hskip -80pt%
+%\parbox{80pt}{\textsc{\small Solution}}%	 
+%	 

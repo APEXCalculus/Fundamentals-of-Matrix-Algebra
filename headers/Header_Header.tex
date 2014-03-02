@@ -1,0 +1,44 @@
+\pagestyle{fancy}
+\fancyhead{}
+\fancyfoot{}
+\renewcommand{\chaptermark}[1]{\markboth{\chaptername\ \thechapter\ \ \ \ {#1}}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ \ \ \  #1}}
+\fancyhf{}         %Clears all header and footer fields, in preparation.
+%\fancyheadoffset[LE,RO]{\marginparsep}
+%\addtolength{\headwidth}{\marginparwidth}
+
+%\ifthenelse{\boolean{sevenbytenbooksize}}{\fancyhfoffset[LE,RO]{30pt}}{}  
+		%  CreateSpace text size but really not needed as its an ``else''
+		%  from above
+		
+\fancyhfoffset[LE,RO]{30pt}
+\fancyfoot[LE,RO]{\textbf{\thepage}} %Displays the page number in bold in the header,
+                       % to the left on even pages and to the right on odd pages.
+                                     
+\fancyhead[LE]{\nouppercase{\leftmark}}
+      %Displays the upper-level (chapter) information---
+      % as determined above---in non-upper case in the header, 
+      %to the right on even pages.
+\fancyhead[RO]{\rightmark}
+			%Displays the lower-level (section) information---as
+      % determined above---in the header, to the left on odd pages.
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+	%Underlines the header and footer. (Set to 0pt if not required).
+
+\makeatletter
+\def\@makechapterhead#1{%
+  {\parindent \z@ \raggedright \reset@font
+    \large
+    \resizebox{1.6cm}{2cm}{\thechapter}\ \ %
+		\input{headers/chapter_graphics}
+    \reset@font\LARGE\scshape\bfseries\strut \textsc #1
+    \par\vskip 10\p@
+    \hrule height 1pt
+    \vskip 50\p@
+  }}
+  
+%\makeatletter
+\def\@makesectionhead#1{%
+	 {\reset@font\LARGE\itshape\bfseries\strut #1 \thechapter.\thesection \ #1
+	 }}

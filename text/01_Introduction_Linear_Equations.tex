@@ -1,0 +1,109 @@
+You have probably encountered systems of linear equations before; you can probably remember solving systems of equations where you had three equations, three unknowns, and you tried to find the value of the unknowns. In this chapter we will uncover some of the fundamental principles guiding the solution to such problems.
+
+Solving such systems was a bit time consuming, but not terribly difficult. So why bother? We bother because linear equations have many, many, \textit{many} applications, from business to engineering to computer graphics to understanding more mathematics. And not only are there many applications of systems of linear equations, on most occasions where these systems arise we are using far more than three variables. (Engineering applications, for instance, often require thousands of variables.) So getting a good understanding of how to solve these systems effectively is important.\\
+
+But don't worry; we'll start at the beginning.
+
+\section{Introduction to Linear Equations}\label{sec:intro}
+
+\asyouread{
+\item		What is one of the annoying habits of mathematicians?
+\item		What is the difference between constants and coefficients?
+\item		Can a coefficient in a linear equation be 0?
+}
+
+We'll begin this section by examining a problem you probably already know how to solve.\\
+
+\example{ex_by_hand}{Suppose a jar contains red, blue and green marbles. You are told that there are a total of 30 marbles in the jar; there are twice as many red marbles as green ones; the number of blue marbles is the same as the sum of the red and green marbles. How many marbles of each color are there?}
+{We could attempt to solve this with some trial and error, and we'd probably get the correct answer without too much work. However, this won't lend itself towards learning a good technique for solving larger problems, so let's be more mathematical about it.
+
+Let's let $r$ represent the number of red marbles, and let $b$ and $g$ denote the number of blue and green marbles, respectively. We can use the given statements about the marbles in the jar to create some equations. 
+
+Since we know there are 30 marbles in the jar, we know that \begin{equation}\label{eq:rbg30}r+b+g=30. \end{equation} Also, we are told that there are twice as many red marbles as green ones, so we know that \begin{equation}\label{eq:r2g}r=2g.\end{equation} Finally, we know that the number of blue marbles is the same as the sum of the red and green marbles, so we have \begin{equation}\label{eq:brg}b = r+g.\end{equation}
+
+From this stage, there isn't one ``right'' way of proceeding. Rather, there are many ways to use this information to find the solution. One way is to combine ideas from equations \ref{eq:r2g} and \ref{eq:brg}; in \ref{eq:brg} replace $r$ with $2g$. This gives us \begin{equation}\label{eq:b3g} b = 2g+g = 3g.\end{equation} We can then combine equations \ref{eq:rbg30}, \ref{eq:r2g} and \ref{eq:b3g} by replacing $r$ in \ref{eq:rbg30} with $2g$ as we did before, and replacing $b$ with $3g$ to get \begin{align} r+b+g &= 30 \notag\\  2g + 3g+g &=30 \notag \\ 6g&=30 \notag \\  g&=5 \label{eq:g5}\end{align}
+
+We can now use equation \ref{eq:g5} to find $r$ and $b$; we know from \ref{eq:r2g} that $r = 2g = 10$ and then since $r+b+g = 30$, we easily find that $b = 15$. }\\
+
+
+Mathematicians often see solutions to given problems and then ask ``What if$\ldots$?'' It's an annoying habit that we would do well to develop -- we should learn to think like a mathematician. What are the right kinds of ``what if'' questions to ask? Here's another annoying habit of mathematicians: they often ask ``wrong'' questions. That is, they often ask questions and find that the answer isn't particularly interesting. But asking enough questions often leads to some good ``right'' questions. So don't be afraid of doing something ``wrong;'' we mathematicians do it all the time.
+
+%\example*{ex_test}{Look at this example and tell me what it is all about. \\
+%
+%Mathematicians often see solutions to given problems and then ask ``What if$\ldots$?'' It's an annoying habit that we would do well to develop -- we should learn to think like a mathematician. What are the right kinds of ``what if'' questions to ask? Here's another annoying habit of mathematicians: they often ask ``wrong'' questions. That is, they often ask questions and find that the answer isn't particularly interesting. But asking enough questions often leads to some good ``right'' questions. So don't be afraid of doing something ``wrong;'' we mathematicians do it all the time.
+%}\\
+
+So what is a good question to ask after seeing Example \ref{ex_by_hand}? Here are two possible questions:
+		\begin{enumerate}
+		\item		Did we really have to call the red balls ``$r$''? Could we call them ``$q$''?
+		\item		What if we had 60 balls at the start instead of 30? 
+		\end{enumerate}
+		
+Let's look at the first question. Would the solution to our problem change if we called the red balls $q$? Of course not. At the end, we'd find that $q = 10$, and we would know that this meant that we had 10 red balls. 
+
+Now let's look at the second question. Suppose we had 60 balls, but the other relationships stayed the same. How would the situation and solution change? Let's compare the ``orginal'' equations to the ``new'' equations.
+\begin{center}\begin{tabular}{c|c} Original & New \\ \hline $r+b+g=30$ & $r+b+g=60$ \\ $r=2g$ & $r=2g$ \\ $b=r+g$ & $b=r+g$ \\ \end{tabular}\end{center}
+
+By examining these equations, we see that nothing has changed except the first equation. It isn't too much of a stretch of the imagination to see that we would solve this new problem exactly the same way that we solved the original one, except that we'd have twice as many of each type of ball.
+
+
+%What if we had 60 balls in total? Clearly our answer would be different, but again, the method that we would use is exactly the same except whereever we used 30 before, we would now use 60.
+
+A conclusion from answering these two questions is this: it doesn't matter what we call our variables, and while changing constants in the equations changes the solution, they don't really change the {\em method} of how we solve these equations.
+
+In fact, it is a great discovery to realize that all we care about are the {\em constants} and the {\em coefficients} of the equations. By systematically handling these, we can solve any set of linear equations in a very nice way. Before we go on, we must first define what a  linear equation is. 
+\enlargethispage\baselineskip %otherwise this definition goes to new page and previous page has too much blank material.
+
+\definition{def:lin_eq}{{\bf Linear Equation}\\
+
+A {\em linear equation} is an equation that can be written in the form $$a_1x_1+a_2x_2+\cdots+a_nx_n = c$$ where the $x_i$ are variables (the unknowns), the $a_i$ are coefficients, and $c$ is a constant.\\
+
+A {\em system of linear equations} is a set of linear equations that involve the same variables.\\
+
+A {\em solution} to a system of linear equations is a set of values for the variables $x_i$ such that each equation in the system is satisfied.}\index{linear equation}\index{system of linear equations!definition}\index{system of linear equations!solution}\index{solution}
+
+So in Example \ref{ex_by_hand}, when we answered ``how many marbles of each color are there?,'' we were also answering ``find a solution to a certain system of linear equations.''
+
+The following are examples of linear equations:
+
+\begin{align*}
+2x+3y-7z&=29\\
+x_1+\frac72x_2+x_3-x_4+17x_5&=\sqrt[3]{-10}\\
+y_1+14^2y_4+4&=y_2+13-y_1\\
+\sqrt{7}r+\pi s +\frac{3t}{5}&= \cos(45^\circ)
+\end{align*}
+
+Notice that the coefficients and constants can be fractions and irrational numbers (like $\pi$, $\sqrt[3]{-10}$ and $\cos(45^\circ)$). The variables only come in the form of $a_ix_i$; that is, just one variable multiplied by a coefficient. (Note that $\frac{3t}{5} = \frac35t$, just a variable multiplied by a coefficient.) Also, it doesn't really matter what side of the equation we put the variables and the constants, although most of the time we write them with the variables on the left and the constants on the right. 
+
+We would not regard the above collection of equations to constitute a system of equations, since each equation uses differently named variables. An example of a system of linear equations is 
+\begin{align*}
+x_1-x_2+x_3+x_4&=1\\
+2x_1+3x_2+x_4 &= 25\\
+x_2+x_3&=10
+\end{align*}
+
+It is important to notice that not all equations used all of the variables (it is more accurate to say that the coefficients can be 0, so the last equation could have been written as $0x_1+x_2+x_3+0x_4 = 10$). Also, just because we have four unknowns does not mean we have to have four equations. We could have had fewer, even just one, and we could have had more.
+
+To get a better feel for what a linear equation is, we point out some examples of what are {\em not} linear equations.
+
+\begin{align*}
+2xy+z&=1\\
+5x^2+2y^5&=100\\
+\frac1x+\sqrt{y}+24z&=3\\
+\sin^2x_1+\cos^2x_2 &= 29\\
+2^{x_1} + \ln x_2 &= 13
+\end{align*}
+
+The first example is not a linear equation since the variables $x$ and $y$ are multiplied together. The second is not a linear equation because the variables are raised to powers other than 1; that is also a problem in the third equation (remember that $1/x = x^{-1}$ and $\sqrt{x} = x^{1/2}$). Our variables cannot be the argument of function like $\sin$, $\cos$ or $\ln$, nor can our variables be raised as an exponent. 
+
+At this stage, we have yet to discuss how to efficiently find a solution to a system of linear equations. That is a goal for the upcoming sections. Right now we focus on identifying linear equations. It is also useful to ``limber'' up by solving a few systems of equations using any method we have at hand to refresh our memory about the basic process.\\
+
+%\textbf{Insert Exercises Here}
+
+%Is It Linear?
+
+%Solve Equations by hand.
+
+%Word Problems to be revisited in next section\\
+
+\printexercises{exercises/01_01_exercises}

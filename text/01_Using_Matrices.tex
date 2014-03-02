@@ -1,0 +1,399 @@
+\section{Using Matrices To Solve Systems of Linear Equations}\label{sec:matrices}
+
+\asyouread{
+\item	What is remarkable about the definition of a matrix?
+\item	Vertical lines of numbers in a matrix are called what?
+\item	In a matrix \tta, the entry $a_{53}$ refers to which entry?
+\item What is an augmented matrix?}
+
+In Section \ref{sec:intro} we solved a linear system using familiar techniques. Later, we commented that in the linear equations we formed, the most important information was the coefficients and the constants; the names of the variables really didn't matter. In Example \ref{ex_by_hand} we had the following three equations:
+\begin{align*}
+r+b+g&=30\\
+r&=2g\\
+b&=r+g
+\end{align*}
+
+Let's rewrite these equations so that all variables are on the left of the equal sign and all constants are on the right. Also, for a bit more consistency, let's list the variables in alphabetical order in each equation. Therefore we can write the equations as
+\begin{equation}\begin{array}{ccccccc}
+b&+&g&+&r&=&30\\
+ &-&2g&+&r&=&0\\
+-b&+&g&+&r&=&0
+\end{array}.\label{eq:before_matrix}\end{equation}
+
+As we mentioned before, there isn't just one ``right'' way of finding the solution to this system of equations. Here is another way to do it, a way that is a bit different from our method in Section \ref{sec:intro}. 
+
+First, lets add the first and last equations together, and write the result as a new
+third equation. This gives us:$$\begin{array}{ccccccc}
+b&+&g&+&r&=&30\\
+ &-&2g&+&r&=&0\\
+ & &2g&+&2r&=&30
+\end{array}.$$
+A nice feature of this is that the only equation with a $b$ in it is the first equation.
+
+Now let's multiply the second equation by $-\frac12$. This gives $$\begin{array}{ccccccc}
+b&+&g&+&r&=&30\\
+ & & g&-&1/2r&=&0\\
+ & &2g&+&2r&=&30
+\end{array}.$$
+
+Let's now do two steps in a row; our goal is to get rid of the $g$'s in the first and third equations. In order to remove the $g$ in the first equation, let's multiply the second equation by $-1$ and add that to the first equation, replacing the first equation with that sum. To remove the $g$ in the third equation, let's multiply the second equation by $-2$ and add that to the third equation, replacing the third equation. Our new system of equations now becomes
+$$\begin{array}{ccccccc}
+b&+& & &3/2r&=&30\\
+ & &g&-&1/2r&=&0\\
+ & & & &3r&=&30
+\end{array}.$$
+
+Clearly we can multiply the third equation by $\frac13$ and find that $r=10$; let's make this our new third equation, giving
+$$\begin{array}{ccccccc}
+b&+& & &3/2r&=&30\\
+ & &g&-&1/2r&=&0\\
+ & & & &r&=&10
+\end{array}.$$
+
+Now let's get rid of the $r$'s in the first and second equation. To remove the $r$ in the first equation, let's multiply the third equation by $-\frac32$ and add the result to the first equation, replacing the first equation with that sum. To remove the $r$ in the second equation, we can multiply the third equation by $\frac12$ and add that to the second equation, replacing the second equation with that sum. This gives us:
+$$\begin{array}{ccccccc}
+b& & & & &=&15\\
+ & &g& & &=&5\\
+ & & & &r&=&10
+\end{array}.$$
+Clearly we have discovered the same result as when we solved this problem in Section \ref{sec:intro}. 
+
+Now again revisit the idea that all that really matters are the coefficients and the constants. There is nothing special about the letters $b$, $g$ and $r$; we could have used $x$, $y$ and $z$ or $x_1$, $x_2$ and $x_3$. And even then, since we wrote our equations so carefully, we really didn't need to write the variable names at all as long as we put things ``in the right place.''
+
+Let's look again at our system of equations in (\ref{eq:before_matrix}) and write the coefficients and the constants in a rectangular array. This time we won't ignore the zeros, but rather write them out.
+$$
+\begin{array}{ccccccc}
+b&+&g&+&r&=&30\\
+ &-&2g&+&r&=&0\\
+-b&+&g&+&r&=&0
+\end{array}
+\quad \Leftrightarrow \quad
+\bmx{cccc}
+1&1&1&30\\
+0&-2&1&0\\
+-1&1&1&0\emx$$
+Notice how even the equal signs are gone; we don't need them, for we know that the last {\em column} contains the coefficients. 
+
+We have just created a {\em matrix}. The definition of matrix is remarkable only in how unremarkable it seems.
+
+\enlargethispage{2\baselineskip}
+
+\index{matrix!definition}
+
+\definition{def:matrix}{{\bf Matrix} \\
+
+A {\em matrix} is a rectangular array of numbers.\\
+
+The horizontal lines of numbers form {\em rows} and the vertical lines of numbers form {\em columns}. A matrix with $m$ rows and $n$ columns is said to be an $m\times n$ matrix (``an $m$ by $n$ matrix''). \\
+
+The entries of an $m\times n$ matrix are indexed as follows:
+$$\bmx{ccccc}
+a_{11}&a_{12}&a_{13}&\cdots&a_{1n}\\
+a_{21}&a_{22}&a_{23}&\cdots&a_{2n}\\
+a_{31}&a_{32}&a_{33}&\cdots&a_{3n}\\
+\vdots&\vdots&\vdots&\ddots&\vdots\\
+a_{m1}&a_{m2}&a_{m3}&\cdots&a_{mn} \emx.$$
+
+That is, $a_{32}$ means ``the number in the third row and second column.''}
+
+In the future, we'll want to create matrices with just the coefficients of a system of linear equations and leave out the constants. Therefore, when we include the constants, we often refer to the resulting matrix as an \textit{augmented matrix}.\index{augmented matrix}\index{matrix!augmented}
+
+We can use augmented matrices to find solutions to linear equations by using essentially the same steps we used above. Every time we used the word ``equation'' above, substitute the word ``row,'' as we show below. The comments explain how we get from the current set of equations (or matrix) to the one on the next line. 
+
+We can use a shorthand to describe matrix operations; let $R_1$, $R_2$ represent ``row 1'' and ``row 2,'' respectively. We can write ``add row 1 to row 3, and replace row 3 with that sum'' as ``$R_1+R_3\rightarrow R_3$.'' The expression ``$R_1 \leftrightarrow R_2$'' means ``interchange row 1 and row 2.''\\
+
+%\small
+\begin{center}
+\begin{tabular}{ccc}
+$\begin{array}{ccccccc}
+b&+&g&+&r&=&30\\
+ &-&2g&+&r&=&0\\
+-b&+&g&+&r&=&0
+\end{array}$ &$\quad\quad$&$\bmx{cccc}1&1&1&30\\ 0&-2&1&0\\-1&1&1&0\emx$ 
+ \\
+ \\
+ \parbox{120pt}{\centering \small Replace equation 3 with the sum of equations 1 and 3}&& \parbox{120pt}{\centering \small Replace row 3 with the sum of rows 1 and 3.
+
+$(R_1+R_3\rightarrow R_3)$}\\
+\\
+\end{tabular}
+
+\begin{tabular}{ccc}
+$\begin{array}{ccccccc}
+b&+&g&+&r&=&30\\
+ &-&2g&+&r&=&0\\
+ & &2g&+&2r&=&30
+\end{array}$&$\quad\quad$&$\bmx{cccc}1&1&1&30\\ 0&-2&1&0\\0&2&2&30\emx$ 
+ \\
+ \\
+  \parbox{120pt}{\centering \small Multiply equation 2 by $-\frac12$}&& \parbox{120pt}{\centering \small Multiply row 2 by $-\frac12$
+ 
+$(-\frac12R_2\rightarrow R_2)$}
+\end{tabular}
+
+\begin{tabular}{ccc}
+$\begin{array}{ccccccc}
+b&+&g&+&r&=&30\\
+ &&g&+&-1/2r&=&0\\
+ & &2g&+&2r&=&30
+\end{array}$&$\quad\quad$ &$\bmx{cccc}1&1&1&30\\ 0&1&-\frac12&0\\0&2&2&30\emx$ 
+ \\
+ \\
+ \parbox{120pt}{\centering \small Replace equation 1 with the sum of $(-1)$ times equation 2 plus equation 1; 
+ 
+ Replace equation 3 with the sum of $(-2)$ times equation 2 plus equation 3}
+ &&
+ \parbox{123pt}{\centering \small Replace row 1 with the sum of $(-1)$ times row 2 plus row 1 ($-R_2+R_1\rightarrow R_1)$; 
+ 
+ Replace row 3 with the sum of $(-2)$ times row 2 plus row 3 $(-2R_2+R_3\rightarrow R_3)$}
+\\
+\\
+\end{tabular}
+
+\begin{tabular}{ccc}
+$\begin{array}{ccccccc}
+b&+& & &3/2r&=&30\\
+ & &g&-&1/2r&=&0\\
+ & & & &3r&=&30
+\end{array}$ &$\quad\quad$ &
+$\bmx{cccc}1&0&\frac32&30\\0&1&-\frac12&0\\0&0&3&30\emx$
+\\
+\\
+  \parbox{120pt}{\centering \small Multiply equation 3 by $\frac13$}
+ &&
+  \parbox{120pt}{\centering \small Multiply row 3 by $\frac13$
+ 
+ $(\frac13R_3\rightarrow R_3)$}
+\\
+\\
+\end{tabular}
+
+\begin{tabular}{ccc}
+$\begin{array}{ccccccc}
+b&+& & &3/2r&=&30\\
+ & &g&-&1/2r&=&0\\
+ & & & &r&=&10
+\end{array}$ &$\quad\quad$ &
+$\bmx{cccc}1&0&\frac32&30\\0&1&-\frac12&0\\0&0&1&10\emx$
+\\
+\\
+\parbox{120pt}{\centering \small Replace equation 2 with the sum of $\frac12$ times equation 3 plus equation 2;
+
+Replace equation 1 with the sum of $-\frac32$ times equation 3 plus equation 1}
+ &&
+\parbox{120pt}{\centering \small Replace row 2 with the sum of $\frac12$ times row 3 plus row 2
+
+$(\frac12R_3+R_2\rightarrow R_2)$;
+
+Replace row 1 with the sum of $-\frac32$ times row 3 plus row 1
+
+$(-\frac32R_3+R_1\rightarrow R_1)$}
+\\
+\\
+\end{tabular}
+
+\begin{tabular}{ccc}
+$\begin{array}{ccccccc}
+b& & & & &=&15\\
+ & &g& & &=&5\\
+ & & & &r&=&10
+\end{array}$ &$\quad\quad$ &
+$\bmx{cccc}1&0&0&15\\0&1&0&5\\0&0&1&10\emx$ 
+ 
+\end{tabular}
+\end{center}
+
+The final matrix contains the same solution information as we have on the left in the form of equations. Recall that the first column of our matrices held the coefficients of the $b$ variable; the second and third columns held the coefficients of the $g$ and $r$ variables, respectively. Therefore, the first row of the matrix can be interpreted as ``$b+0g+0r=15$,'' or more concisely, ``$b=15$.''
+
+Let's practice this manipulation again.\\
+
+\example{ex_eq_mat}{Find a solution to the following system of linear equations by simultaneously manipulating the equations and the corresponding augmented matrices.
+$$\begin{array}{ccccccc}
+x_1&+&x_2&+&x_3&=&0\\
+2x_1&+&2x_2&+&x_3&=&0\\
+-1x_1&+&x_2&-&2x_3&=&2
+\end{array}$$}
+{We'll first convert this system of equations into a matrix, then we'll proceed by manipulating the system of equations (and hence the matrix) to find a solution. Again, there is not just one ``right'' way of proceeding; we'll choose a method that is pretty efficient, but other methods certainly exist (and may be ``better''!). The method use here, though, is a good one, and it is the method that we will be learning in the future.
+
+The given system and its corresponding augmented matrix are seen below.
+
+\begin{center}
+%\begin{tabular}{p{150pt}p{21pt}p{150pt}}
+\begin{tabular}{ccc}
+%\parbox{150pt}{\ }& & \parbox{150pt}{\ }\\
+\parbox{120pt}{\centering \small Original system of equations} & & \parbox{120pt}{\centering \small Corresponding matrix}
+\\
+\\
+$\begin{array}{ccccccc}
+x_1&+&x_2&+&x_3&=&0\\
+2x_1&+&2x_2&+&x_3&=&0\\
+-1x_1&+&x_2&-&2x_3&=&2
+\end{array}$
+&$\quad \quad$&
+$\bmx{cccc}
+1&1&1&0\\ 2&2&1&0\\ -1&1&-2&2\\
+\emx$
+\end{tabular}
+\end{center}
+%\\
+%\multicolumn{3}{c}{We'll proceed by trying to get the $x_1$ out of the second and third equation.} 
+%\\
+%\\
+We'll proceed by trying to get the $x_1$ out of the second and third equation.
+\begin{center}
+%\begin{tabular}{p{150pt}p{21pt}p{150pt}}
+\begin{tabular}{ccc}
+\parbox{120pt}{\centering\small Replace equation 2 with the sum of $(-2)$ times equation 1 plus equation 2;
+
+Replace equation 3 with the sum of equation 1 and equation 3}
+& &
+\parbox{125pt}{\centering \small Replace row 2 with the sum of $(-2)$ times row 1 plus row 2
+
+$(-2R_1+R_2\rightarrow R_2)$;
+
+Replace row 3 with the sum of row 1 and row 3
+
+$(R_1+R_3\rightarrow R_3)$}
+\\
+\\
+$\begin{array}{ccccccc}
+x_1&+&x_2&+&x_3&=&0\\
+   & &   & &-x_3&=&0\\
+   & &2x_2&-&x_3&=&2
+\end{array}$
+&$\quad \quad$&
+$\bmx{cccc}
+1&1&1&0\\ 0&0&-1&0\\ 0&2&-1&2\\
+\emx$
+\\
+\\
+%\multicolumn{3}{c}{\parbox{320pt}{Notice that the second equation no longer contains $x_2$. We'll exchange the order of the equations so that we can follow the convention of solving for the second variable in the second equation.}}
+\end{tabular}
+\end{center}
+
+\drawexampleline%{ex_eq_mat}
+
+Notice that the second equation no longer contains $x_2$. We'll exchange the order of the equations so that we can follow the convention of solving for the second variable in the second equation. 
+
+%\drawexampleline{ex_eq_mat}
+
+\begin{center}
+\begin{tabular}{ccc}
+\parbox{125pt}{\centering \small Interchange equations 2 and 3}
+&$\quad\quad$&
+\parbox{120pt}{\centering\small Interchange rows 2 and 3
+
+$R_2\leftrightarrow R_3$}
+\\
+\\
+$\begin{array}{ccccccc}
+x_1&+&x_2&+&x_3&=&0\\
+   & &2x_2&-&x_3&=&2\\
+   & &   & &-x_3&=&0
+\end{array}$
+&$\quad \quad$&
+$\bmx{cccc}
+1&1&1&0\\ 0&2&-1&2\\ 0&0&-1&0\\
+\emx$
+\\
+\\
+\parbox{120pt}{\centering \small Multiply equation 2 by $\frac12$}
+& &
+\parbox{120pt}{\centering \small Multiply row 2 by $\frac12$
+
+$(\frac12 R_2\rightarrow R_2)$}
+\\
+\\
+$\begin{array}{ccccccc}
+x_1&+&x_2&+&x_3&=&0\\
+   & &x_2&-&\frac12x_3&=&1\\
+   & &   & &-x_3&=&0
+\end{array}$
+&$\quad \quad$&
+$\bmx{cccc}
+1&1&1&0\\ 0&1&-\frac12&1\\ 0&0&-1&0\\
+\emx$
+\\
+\\
+\parbox{120pt}{\centering \small Multiply equation 3 by $-1$}
+& &
+\parbox{120pt}{\centering \small Multiply row 3 by $-1$
+
+$(-1 R_3\rightarrow R_3)$}
+\\
+\\
+$\begin{array}{ccccccc}
+x_1&+&x_2&+&x_3&=&0\\
+   & &x_2&-&\frac12x_3&=&1\\
+   & &   & &x_3&=&0
+\end{array}$
+&$\quad \quad$&
+$\bmx{cccc}
+1&1&1&0\\ 0&1&-\frac12&1\\ 0&0&1&0\\
+\emx$
+\end{tabular}
+\end{center}
+
+\enlargethispage{3\baselineskip}
+
+Notice that the last equation (and also the last row of the matrix) show that $x_3=0$. Knowing this would allow us to simply eliminate the $x_3$ from the first two equations. However, we will formally do this by manipulating the equations (and rows) as we have previously.
+
+\begin{center}
+\begin{tabular}{ccc}
+\parbox{120pt}{\centering\small Replace equation 1 with the sum of $(-1)$ times equation 3 plus equation 1;
+
+Replace equation 2 with the sum of $\frac12$ times equation 3 plus equation 2}
+&$\quad \quad$&
+\parbox{120pt}{\centering\small Replace row 1 with the sum of $(-1)$ times row 3 plus row 1
+
+$(-R_3+R_1\rightarrow R_1)$;
+
+Replace row 2 with the sum of $\frac12$ times row 3 plus row 2
+
+$(\frac12R_3+R_2\rightarrow R_2)$}
+\\
+\\
+$\begin{array}{ccccccc}
+x_1&+&x_2&&&=&0\\
+   & &x_2&&&=&1\\
+   & &   & &x_3&=&0
+\end{array}$
+&$\quad \quad$&
+$\bmx{cccc}
+1&1&0&0\\ 0&1&0&1\\ 0&0&1&0\\
+\emx$
+\end{tabular}
+\end{center}
+
+Notice how the second equation shows that $x_2 = 1$. All that remains to do is to solve for $x_1$.
+
+\begin{center}
+\begin{tabular}{ccc}
+\parbox{120pt}{\centering\small Replace equation 1 with the sum of $(-1)$ times equation 2 plus equation 1}
+&$\quad \quad$&
+\parbox{120pt}{\centering\small Replace row 1 with the sum of $(-1)$ times row 2 plus row 1
+
+$(-R_2+R_1\rightarrow R_1)$}
+\\
+\\
+$\begin{array}{ccccccc}
+x_1& &   &&&=&-1\\
+   & &x_2&&&=&1\\
+   & &   & &x_3&=&0
+\end{array}$
+&$\quad \quad$&
+$\bmx{cccc}
+1&0&0&-1\\ 0&1&0&1\\ 0&0&1&0\\
+\emx$
+\end{tabular}
+\end{center}
+
+Obviously the equations on the left tell us that $x_1 = -1$, $x_2 = 1$ and $x_3=0$, and notice how the matrix on the right tells us the same information. }\\
+
+\printexercises{exercises/01_02_exercises}
+
+%Exercises:
+%What operation takes matrix A to matrix B? 
+
+%Convert systems to matrices, simultaneously solve
+

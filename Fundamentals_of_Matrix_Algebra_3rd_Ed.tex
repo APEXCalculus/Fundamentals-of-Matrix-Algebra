@@ -1,0 +1,227 @@
+\documentclass[10pt]{book}
+
+%%56&fundamentals_format
+
+
+%% On Greg's machine at VMI, I have a format file
+%% called fundamentals_format.tex that has the one
+%% line of \input{headers/Matrix_Algebra_Text_Header.tex}.
+%% This has been precompiled within XeLaTeX for faster
+%% compilation. For other users, uncomment the following line.
+
+%%
+% slight detour to create the proper text/paper size.
+% Depends on the ifthen package, needed before loading
+% the geometry package
+%%
+
+\usepackage{ifthen}
+
+\newboolean{sevenbytenbooksize}
+\newboolean{ipadsize}   % for the ipad, Duh.
+\newboolean{standard}
+
+\setboolean{sevenbytenbooksize}{true}
+\setboolean{ipadsize}{false}
+\setboolean{standard}{false}
+%
+%	Note how the iPad version differs from the booksize only in 
+% the size of the margins.
+%
+% Changing the following isn't hard but should be done with 
+% practice and care, making sure to get the margins right for a 
+% particular page size and printing format
+%
+%% Layout for printed book through Amazon CreateSpace, perfect bound,
+%% 7x10 ``journal'' size
+
+\ifthenelse{\boolean{ipadsize}}{\usepackage[paperheight=620pt,paperwidth=395pt, textheight=550pt,
+textwidth=345pt, includeheadfoot, hcentering=true]{geometry}}{}
+
+\ifthenelse{\boolean{sevenbytenbooksize}}{\usepackage[paperheight=10in,paperwidth=7in, textheight=550pt,
+textwidth=345pt, inner=1in,includeheadfoot]{geometry}}{}
+
+\ifthenelse{\boolean{standard}}{\usepackage{geometry}}{}
+%%
+%% end detour
+%%
+
+\usepackage{APEX_format}
+\input{headers/Header_Fundamentals_Of_Matrix_Algebra}
+
+\sffamily
+%\usepackage{fontspec}
+\usepackage{mathspec}
+
+\setallmainfonts[Mapping=tex-text]{Calibri}
+\setmainfont[Mapping=tex-text]{Calibri}
+\setsansfont[Mapping=tex-text]{Calibri}
+
+\setmathsfont(Greek){[cmmi10]}
+
+
+
+\begin{document}
+
+%%%%%%%%%%
+%%%
+%%%  Set criteria for the format of the book.
+%%%  This supercedes anything set in the Text_Header.
+%%%
+%%%%%%%%%%
+
+
+\printincolor
+%\printinblackandwhite
+
+%\printexercisenames
+
+\drawexamplelines
+
+\printallanswers
+
+
+\normalem
+
+%%%\setallmainfonts[Mapping=tex-text]{Calibri}
+%%%%\setmainfont[Mapping=tex-text]{Calibri}
+%%%%\setsansfont[Mapping=tex-text]{Calibri}
+\sffamily
+
+
+%%%\pagenumbering{roman}
+
+%%%%%%
+%%%		For editing purposes, block comment down to 
+%%%		the next mark
+%%%%%%
+
+\input{cover/front_cover_in_text}
+\clearpage
+\thispagestyle{empty}
+\frontmatter
+
+\title{\textsc{Fundamentals of Matrix Algebra}\\
+{\small Version 2.1011}}
+\author{Gregory N. Hartman, Ph.D.}
+\date{}
+
+\input{text/title_page}
+
+\thispagestyle{empty}
+\clearpage
+
+\input{text/copyright_page}
+\thispagestyle{empty}
+
+
+\cleardoublepage
+\phantomsection
+\input{text/thanks}
+\addtocontents{toc}{\protect\thispagestyle{empty}}
+\addcontentsline{toc}{chapter}{Thanks} 
+\clearpage{\pagestyle{empty}\cleardoublepage}
+\phantomsection
+\input{text/preface}
+\addcontentsline{toc}{chapter}{Preface}
+\clearpage{\pagestyle{empty}\cleardoublepage}
+\phantomsection
+
+\addcontentsline{toc}{chapter}{Table of Contents}
+\tableofcontents
+\clearpage{\pagestyle{empty}\cleardoublepage}
+
+\mainmatter
+
+
+%%%%
+%		End block comment here
+%%%%
+
+
+
+
+
+\chapter{Systems of Linear Equations}\label{chapter:linear}
+\thispagestyle{empty}
+
+\input{text/01_Introduction_Linear_Equations}
+
+\input{text/01_Using_Matrices}
+
+\input{text/01_Gauss_Jordan_Elimination}
+
+\input{text/01_Existence_Uniqueness_Solutions}
+
+\input{text/01_Solving_Systems}
+
+\clearpage{\pagestyle{empty}\cleardoublepage}
+
+\chapter{Matrix Arithmetic}\label{chapter:arithmetic}
+\thispagestyle{empty}
+
+\input{text/02_Matrix_Addition}
+
+\input{text/02_Matrix_Multiplication}
+
+\input{text/02_Geometry_of_Vectors_2D}
+
+\input{text/02_Vector_Solutions}
+
+\input{text/02_Solving_AXB}
+
+\input{text/02_Matrix_Inverses}
+
+\input{text/02_Matrix_Inverse_Properties}
+
+\clearpage{\pagestyle{empty}\cleardoublepage}
+
+\chapter{Operations on Matrices}\label{chapter:ops}
+\thispagestyle{empty}
+
+\input{text/03_Transpose}
+
+\input{text/03_Trace}
+
+\input{text/03_Determinant}
+
+\input{text/03_Determinant_Properties}
+
+\input{text/03_CramersRule}
+
+\clearpage{\pagestyle{empty}\cleardoublepage}
+
+\chapter{Eigenvalues and Eigenvectors}\label{chapter:eigen}
+\thispagestyle{empty}
+
+\input{text/04_Eigen}
+
+\input{text/04_Eigen_Properties}
+%
+\clearpage{\pagestyle{empty}\cleardoublepage}
+
+\chapter{Graphical Explorations of Vectors}\label{chapter:graph}
+\thispagestyle{empty}
+
+\input{text/05_Geometry_of_Cartesian_Plane}
+
+\input{text/05_Linear_Transformations}
+
+\input{text/05_Geometry_of_Vectors_3D}
+
+\appendix
+%%
+\makeexercisesection{Solutions To Selected Problems}
+%
+%%%%%%
+%%%%		 The following makes the index and includes
+%%%%		it in the file
+%%%%%%
+
+\clearpage{\pagestyle{empty}\cleardoublepage}
+\phantomsection
+\addcontentsline{toc}{chapter}{\indexname}
+\printindex
+%
+
+\end{document}

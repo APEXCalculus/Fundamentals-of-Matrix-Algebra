@@ -1,0 +1,117 @@
+\section{The Matrix Trace}\label{sec:trace}
+
+\asyouread{
+\item	T/F: We only compute the trace of square matrices.
+\item	T/F: One can tell if a matrix is invertible by computing the trace.
+}
+
+In the previous section, we learned about an operation we can peform on matrices, namely the transpose. Given a matrix \tta, we can ``find the transpose of \tta,'' which is another matrix. In this section we learn about a new operation called the \textit{trace}. It is a different type of operation than the transpose. Given a matrix \tta, we can ``find the trace of \tta,'' which is not a matrix but rather a number. We formally define it here.
+
+\definition{def:trace}{\textbf{The Trace}\\
+
+\index{trace!definition}Let \tta\ be an $n\times n$ matrix. The \textit{trace of \tta}, denoted tr(\tta), is the sum of the diagonal elements of \tta. That is,
+$$\text{tr}(\tta) = a_{11}+a_{22}+\cdots+a_{nn}.$$}
+
+This seems like a simple definition, and it really is. Just to make sure it is clear, let's practice.\\
+
+\example{ex_trace_1}{Find the trace of \tta, \ttb, \ttc\ and \tti$_4$, where 
+$$\tta = \bmx{cc}1&2\\3&4\emx,\ \ttb = \bmx{ccc}1&2&0\\3&8&1\\-2&7&-5\emx \ \text{and}\ \ttc=\bmx{ccc} 1&2&3\\4&5&6\emx.$$}
+{To find the trace of \tta, note that the diagonal elements of \tta\ are 1 and 4. Therefore, tr($\tta) = 1+4 = 5$.
+
+We see that the diagonal elements of \ttb\ are 1, 8 and -5, so tr(\ttb)$ = 1+8-5 = 4$.
+
+The matrix \ttc\ is not a square matrix, and our definition states that we must start with a square matrix. Therefore tr(\ttc) is not defined.
+
+Finally, the diagonal of $\tti_4$ consists of four 1s. Therefore tr(\tti$_4$) = 4.}\\ % \eexset
+
+Now that we have defined the trace of a matrix, we should think like mathematicians and ask some questions. The first questions that should pop into our minds should be along the lines of ``How does the trace work with other matrix operations?''\footnote{Recall that we asked a similar question once we learned about the transpose.} We should think about how the trace works with matrix addition, scalar multiplication, matrix multiplication, matrix inverses, and the transpose.
+
+We'll give a theorem that will formally tell us what is true in a moment, but first let's play with two sample matrices and see if we can see what will happen. Let $$\tta = \bmx{ccc} 2&1&3\\2&0&-1\\3&-1&3\emx \ \text{and} \ \ttb = \bmx{ccc}2&0&1\\-1&2&0\\0&2&-1\emx.$$
+
+It should be clear that tr(\tta) = 5 and tr(\ttb) = 3. What is  tr($\tta+\ttb)$?
+\begin{align*}
+	\text{tr}(\tta+\ttb) &=	\text{tr}\left(\bmx{ccc} 2&1&3\\2&0&-1\\3&-1&3\emx + \bmx{ccc}2&0&1\\-1&2&0\\0&2&-1\emx\right) \\
+				&=	\text{tr}\left(\bmx{ccc} 4&1&4\\1&2&-1\\3&1&2\emx\right)\\
+				&= 8
+\end{align*}
+So we notice that tr($\tta+\ttb$) = tr(\tta) + tr(\ttb). This probably isn't a coincidence.
+
+How does the trace work with scalar multiplication? If we multiply \tta\ by 4, then the diagonal elements will be 8, 0 and 12, so tr(4\tta) = 20. Is it a coincidence that this is 4 times the trace of \tta?
+
+Let's move on to matrix multiplication. How will the trace of \tta\ttb\ relate to the traces of \tta\ and \ttb? Let's see:
+\begin{align*}
+	\text{tr}(\tta\ttb) &=\text{tr}\left(\bmx{ccc} 2&1&3\\2&0&-1\\3&-1&3\emx \bmx{ccc}2&0&1\\-1&2&0\\0&2&-1\emx\right) \\
+					&=	\text{tr}\left(\bmx{ccc} 3&8&-1\\4&-2&3\\7&4&0\emx\right)\\
+					&=	1
+	\end{align*}
+
+It isn't exactly clear what the relationship is among tr(\tta), tr(\ttb) and tr(\tta\ttb). Before moving on, let's find tr(\ttb\tta):
+\begin{align*}
+ \text{tr}(\ttb\tta) &= \text{tr}\left(\bmx{ccc}2&0&1\\-1&2&0\\0&2&-1\emx\bmx{ccc} 2&1&3\\2&0&-1\\3&-1&3\emx\right) \\
+ 										 &= \text{tr} \left(\bmx{ccc} 7 & 1 & 9 \\2 & -1 & -5\\ 1 & 1 & -5 \emx\right)\\
+ 										 &= 1
+\end{align*}
+
+We notice that tr$(\tta\ttb) = $ tr$(\ttb\tta)$. Is this coincidental?
+ 
+How are the traces of \tta\ and \ttai\ related? We compute \ttai\ and find that $$\ttai = \bmx{ccc} 1/17 & 6/17 & 1/17\\9/17 & 3/17 & -8/17\\ 2/17 & -5/17 & 2/17 \emx.$$ Therefore tr(\ttai) = 6/17. Again, the relationship isn't clear.\footnote{Something to think about: we know that not all square matrices are invertible. Would we be able to tell just by the trace? That seems unlikely.}
+
+Finally, let's see how the trace is related to the transpose. We actually don't have to formally compute anything. Recall from the previous section that the diagonals of \tta\ and \ttat\ are identical; therefore, tr(\tta) = tr(\ttat). That, we know for sure, isn't a coincidence.
+
+We now formally state what equalities are true when considering the interaction of the trace with other matrix operations.
+
+\theorem{thm:trace}{\index{trace!properties}{\bf Properties of the Matrix Trace}\\
+
+Let \tta\ and \ttb\ be $n\times n$ matrices. Then:
+\begin{enumerate}
+\item		tr($\tta+\ttb$) = tr(\tta) + tr(\ttb) 
+\item		tr($\tta-\ttb$) = tr(\tta) $ - $ tr(\ttb)
+\item		tr($k\tta$) = $k\cdot$tr(\tta)
+\item   tr(\tta\ttb) = tr(\ttb\tta)
+\item		tr(\ttat) = tr(\tta)
+\end{enumerate}
+}
+
+One of the key things to note here is what this theorem does \textit{not} say. %It says nothing about how the trace relates to matrix multiplication; that is, we can't figure out what tr(\tta\ttb) is just by knowing what tr(\tta) and tr(\ttb) are. The theorem also 
+It says nothing about how the trace relates to inverses. The reason for the silence in these areas is that there simply is not a relationship. 
+
+We end this section by again wondering why anyone would care about the trace of matrix. One reason mathematicians are interested in it is that it can give a measurement of the ``size''\footnote{There are many different measurements of a matrix size. In this text, we just refer to its dimensions. Some measurements of size refer the magnitude of the elements in the matrix. The next section describes yet another measurement of matrix size.} of a matrix. 
+
+Consider the following $2 \times 2$ matrices:
+$$\tta = \bmx{cc} 1&-2\\1&1\emx \ \text{and}\ \ttb = \bmx{cc} 6&7\\11&-4\emx.$$
+
+These matrices have the same trace, yet \ttb\ clearly has bigger elements in it. So how can we use the trace to determine a ``size'' of these matrices? We can consider tr(\ttat\tta) and tr(\ttbt\ttb).
+\begin{align*}
+\text{tr}(\ttat\tta) &= \text{tr}\left(\bmx{cc}1&1\\-2&1\emx\bmx{cc}1&-2\\1&1\emx\right)\\
+			&=	\text{tr}\left( \bmx{cc}2&-1\\-1&5\emx\right)\\
+			&= 7
+\end{align*}
+
+\begin{align*}
+\text{tr}(\ttbt\ttb) &= \text{tr}\left(\bmx{cc} 6&11\\7&-4\emx\bmx{cc}6&7\\11&-4\emx\right)\\
+							&= \text{tr}\left(\bmx{cc} 157 & -2\\-2 & 65\emx \right)\\
+							&= 222
+\end{align*}
+
+Our concern is not how to interpret what this ``size'' measurement means, but rather to demonstrate that the trace (along with the transpose) can be used to give (perhaps useful) information about a matrix.\footnote{This example brings to light many interesting ideas that we'll flesh out just a little bit here. 
+\begin{enumerate}
+\item		Notice that the elements of \tta\ are 1, $-2$,  1 and 1. Add the squares of these numbers: $1^2 + (-2)^2 + 1^2 + 1^2  = 7 = $ tr(\ttat\tta).
+
+				Notice that the elements of \ttb\ are 6, 7, 11 and -4. Add the squares of these numbers: $6^2 + 7^2 + 11^2 + (-4)^2 = 222 =$ tr(\ttbt\ttb).
+				
+				Can you see why this is true? When looking at multiplying \ttat\tta, focus only on where the elements on the diagonal come from since they are the only ones that matter when taking the trace.
+
+\item		You can confirm on your own that regardless of the dimensions of \tta, tr(\ttat\tta) = tr(\tta\ttat). To see why this is true, consider the previous point. (Recall also that \ttat\tta\ and \tta\ttat\ are always square, regardless of the dimensions of \tta.)
+
+\item		Mathematicians are actually more interested in $\sqrt{\text{tr}(\ttat\tta)}$ than just tr(\ttat\tta). The reason for this is a bit complicated; the short answer is that ``it works better.'' The reason ``it works better'' is related to the Pythagorean Theorem, all of all things. If we know that the legs of a right triangle have length $a$ and $b$, we are more interested in $\sqrt{a^2+b^2}$ than just $a^2+b^2$. Of course, this explanation raises more questions than it answers; our goal here is just to whet your appetite and get you to do some more reading. A Numerical Linear Algebra book would be a good place to start.
+\end{enumerate}
+}\\
+
+%EXERCISES
+
+%Find trace of matrices, including $\tti_n$
+
+%Find trace of antisymmetric matrices\\
+
+\printexercises{exercises/03_02_exercises}
+

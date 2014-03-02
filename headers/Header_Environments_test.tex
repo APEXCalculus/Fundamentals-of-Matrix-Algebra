@@ -1,0 +1,289 @@
+
+
+
+\newlength{\topmarginlength}
+\newlength{\bottommarginlength}
+\newlength{\oddpagemarginlength}
+\newlength{\evenpagemarginlength}
+\newlength{\marginlinelength}
+
+\newcounter{examplestartpageref}
+\newcounter{pagedifference}
+\newcounter{other}
+
+\setlength{\marginlinelength}{5pt}
+\setlength{\topmarginlength}{-1in-\voffset}
+\setlength{\bottommarginlength}{-1in-\textheight-2\baselineskip}
+\setlength{\oddpagemarginlength}{1in+\hoffset+\oddsidemargin-2\marginlinelength}
+\setlength{\evenpagemarginlength}{1in+\hoffset+\evensidemargin-2\marginlinelength}
+
+\newcommand{\colorlinecolor}{blue!95!black!30}
+\newcommand{\bwlinecolor}{black!30}
+\ifthenelse{\boolean{in_color}}{\newcommand{\thelinecolor}{\colorlinecolor}}{\newcommand{\thelinecolor}{\bwlinecolor}}
+\newcommand{\linestyle}{thick}
+
+\newboolean{showexamplelines}
+
+
+\newcounter{examplecounter}
+\setcounter{examplecounter}{0}
+
+\newcounter{definitioncounter}
+\setcounter{definitioncounter}{0}
+
+\newcounter{theoremcounter}
+\setcounter{theoremcounter}{0}
+
+\newcounter{keyideacounter}
+\setcounter{keyideacounter}{0}
+
+\newlength{\specialboxlength}
+\newlength{\specialboxtitlelength}
+\newlength{\specialboxinnerseplength}
+
+\setlength{\specialboxtitlelength}{75pt}
+\setlength{\specialboxinnerseplength}{15pt}
+\setlength{\specialboxlength}{\textwidth-\specialboxtitlelength-2\specialboxinnerseplength}
+
+\makeatletter
+\newcommand{\example}{\@ifstar \examplestarred \examplenostar}
+\makeatother
+
+%% This is the no-star (regular) version of
+%% the example command.
+\newcommand{\examplenostar}[3]{%
+\noindent%
+\hskip -2\marginlinelength%
+\parbox{\marginlinelength}{%
+\begin{tikzpicture}[remember picture,overlay]%
+\draw (0,0) circle (1pt) node (#1) {};%
+\end{tikzpicture}%
+}% ends parbox where line begins
+\hskip \marginlinelength% puts us back in line
+\parbox{80pt}{{\bf Example \refstepcounter{examplecounter}\theexamplecounter}}% ends parbox
+\label{#1}%
+\ifthenelse{\pageref{#1}=\pageref{e#1}}% if the beginning and end are on the same page
+{%
+#2 \vskip \baselineskip%
+\parbox{65pt}{\textsc{\small\bfseries Solution}}% 
+#3  \label{e#1}% writes the full example then draws the lines
+\ifthenelse{\boolean{showexamplelines}}{%
+\begin{tikzpicture}[remember picture,overlay] \draw (0,0) circle (1pt) node (e#1) {};
+\draw [\linestyle,\thelinecolor] (#1) -- (#1.south |- e#1.south) -- ++(10pt,0);
+\end{tikzpicture}
+}{}% ends if/then/else show lines
+}% ends if beginning and end are on same page.
+% next is if they are on different pages
+{% first draw line from start to bottom of page
+\ifthenelse{\boolean{showexamplelines}}{%
+\begin{tikzpicture}[remember picture,overlay]% 
+\ifthenelse{\isodd{\pageref{#1}}}% draws lines based on whether on an even or odd page %
+{\node [xshift=\oddpagemarginlength,yshift=\bottommarginlength](bottomleft) at (current page.north west)  {};}
+{\node [xshift=\evenpagemarginlength,yshift=\bottommarginlength](bottomleft) at (current page.north west)  {};}
+\draw [\thelinecolor,\linestyle] (#1) -- (bottomleft);
+\end{tikzpicture}
+}{}% ends if/then/else show lines
+% end drawing of line
+#2 \vskip \baselineskip%
+\parbox{65pt}{\textsc{\small \bfseries Solution}}%
+#3  \label{e#1}% now write out full example
+% now draw line from end to top of page
+\ifthenelse{\boolean{showexamplelines}}{%
+\begin{tikzpicture}[remember picture,overlay] \draw (0,0) circle (1pt) node (e#1) {};
+\ifthenelse{\isodd{\pageref{e#1}}}% draws lines based on whether on an even or odd page %
+{\node [xshift=\oddpagemarginlength,yshift=\topmarginlength](topleft) at (current page.north west)  {};}
+{\node [xshift=\evenpagemarginlength,yshift=\topmarginlength](topleft) at (current page.north west)  {};}
+\draw [\thelinecolor,\linestyle] (topleft)--(e#1.south -| topleft) -- ++(10pt,0);
+\end{tikzpicture}%
+}{}% ends if/then/else show lines
+}% ends the check for same page or not
+%
+}%ends the definition of example
+
+% This is the starred version of example.
+% It does not include a ``solution'' and only
+% takes 2 arguments.
+
+\newcommand{\examplestarred}[2]{%
+\noindent%
+\hskip -2\marginlinelength%
+\parbox{\marginlinelength}{%
+\begin{tikzpicture}[remember picture,overlay]%
+\draw (0,0) circle (1pt) node (#1) {};%
+\end{tikzpicture}%
+}% ends parbox where line begins
+\hskip \marginlinelength% puts us back in line
+\parbox{80pt}{{\bf Example \refstepcounter{examplecounter}\theexamplecounter}}% ends parbox
+\label{#1}%
+\ifthenelse{\pageref{#1}=\pageref{e#1}}% if the beginning and end are on the same page
+{%
+#2 \label{e#1}% writes the full example then draws the lines
+\ifthenelse{\boolean{showexamplelines}}{%
+\begin{tikzpicture}[remember picture,overlay] \draw (0,0) circle (1pt) node (e#1) {};
+\draw [\linestyle,\thelinecolor] (#1) -- (#1.south |- e#1.south) -- ++(10pt,0);
+\end{tikzpicture}
+}{}% ends if/then/else show lines
+}% ends if beginning and end are on same page.
+% next is if they are on different pages
+{% first draw line from start to bottom of page
+\ifthenelse{\boolean{showexamplelines}}{%
+\begin{tikzpicture}[remember picture,overlay]% 
+\ifthenelse{\isodd{\pageref{#1}}}% draws lines based on whether on an even or odd page %
+{\node [xshift=\oddpagemarginlength,yshift=\bottommarginlength](bottomleft) at (current page.north west)  {};}
+{\node [xshift=\evenpagemarginlength,yshift=\bottommarginlength](bottomleft) at (current page.north west)  {};}
+\draw [\thelinecolor,\linestyle] (#1) -- (bottomleft);
+\end{tikzpicture}
+}{}% ends if/then/else show lines
+% end drawing of line
+#2 \label{e#1}% now write out full example
+% now draw line from end to top of page
+\ifthenelse{\boolean{showexamplelines}}{%
+\begin{tikzpicture}[remember picture,overlay] \draw (0,0) circle (1pt) node (e#1) {};
+\ifthenelse{\isodd{\pageref{e#1}}}% draws lines based on whether on an even or odd page %
+{\node [xshift=\oddpagemarginlength,yshift=\topmarginlength](topleft) at (current page.north west)  {};}
+{\node [xshift=\evenpagemarginlength,yshift=\topmarginlength](topleft) at (current page.north west)  {};}
+\draw [\thelinecolor,\linestyle] (topleft)--(e#1.south -| topleft) -- ++(10pt,0);
+\end{tikzpicture}%
+}{}% ends if/then/else show lines
+}% ends the check for same page or not
+%
+}%ends the definition of example
+
+
+% Draws a line on a page that doesn't contain either
+% the beginning or end of an example.
+% It has one arguments, the  label
+% of the current example. 
+\newcommand{\drawexampleline}[1]{
+\setcounterpageref{examplestartpageref}{#1}%
+\setcounter{pagedifference}{\thepage-\theexamplestartpageref}
+\ifthenelse{\isodd{\theexamplestartpageref}}% example is on an odd page
+       {\ifthenelse{\isodd{\thepagedifference}}% is the difference between this page
+       % and the start even or odd?
+       % odd: then plots on different side of page
+       {\begin{tikzpicture}[remember picture,overlay]
+        \node [xshift=\evenpagemarginlength,yshift=\topmarginlength](tleft) at (current page.north west)  {};
+        \draw [\thelinecolor,thick] (tleft) -- ++(0,-\textheight);
+        \end{tikzpicture}
+        }% ends if difference is odd
+        {% difference is even
+        \begin{tikzpicture}[remember picture,overlay]
+        \node [xshift=\oddpagemarginlength,yshift=\topmarginlength](tleft) at (current page.north west)  {};
+        \draw [\thelinecolor,thick] (tleft) -- ++(0,-\textheight-2\baselineskip);
+        \end{tikzpicture}
+        }% ends difference is even and start page is odd
+}% ends start page is odd
+       {\ifthenelse{\isodd{\thepagedifference}}% is the difference between this page
+       % and the start even or odd?
+       % odd: then plots on different side of page
+       {\begin{tikzpicture}[remember picture,overlay]
+        \node [xshift=\oddpagemarginlength,yshift=\topmarginlength](tleft) at (current page.north west)  {};
+        \draw [\thelinecolor,thick] (tleft) -- ++(0,-\textheight);
+        \end{tikzpicture}
+        }% ends if difference is odd
+        {% difference is even
+        \begin{tikzpicture}[remember picture,overlay]
+        \node [xshift=\evenpagemarginlength,yshift=\topmarginlength](tleft) at (current page.north west)  {};
+        \draw [\thelinecolor,thick] (tleft) -- ++(0,-\textheight);
+        \end{tikzpicture}
+        }% ends difference is even and start page is even
+}% ends start page is even
+} % End show lines
+
+
+
+%
+%Define style for Definitions, Theorems and Key Ideas  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+
+%\newcounter{definitioncounter}
+%\newcounter{theoremcounter}
+%\newcounter{ideacounter}
+%\newcounter{excounter}
+
+\definecolor{myblue}{rgb}{.7,.7,1}
+\definecolor{mygreen}{rgb}{.7,1,.7}
+\definecolor{myred}{rgb}{1,.7,.7}
+\definecolor{myyellow}{rgb}{.9,.9,0}
+
+\newtheoremstyle{mystyle}% Generic Theorem Style
+  {15pt}%      Space above
+  {15pt}%      Space below
+  {\sffamily}%         Body font
+  {}%         Indent amount (empty = no indent, \parindent = para indent)
+  {\sffamily\bfseries}% Thm head font
+  {}%        Punctuation after thm head
+  {1.5em}%     Space after thm head: " " = normal interword space;
+        %       \newline = linebreak
+  {}%         Thm head spec (can be left empty, meaning `normal')
+
+\newtheoremstyle{myexamplestyle}% Used for the Example environments
+  {15pt}%      Space above
+  {5pt}%      Space below
+  {}%         Body font
+  {}%         Indent amount (empty = no indent, \parindent = para indent)
+  {\bfseries}% Thm head font
+  {}%        Punctuation after thm head
+  {1.5em}%     Space after thm head: " " = normal interword space;
+        %       \newline = linebreak
+  {}%         Thm head spec (can be left empty, meaning `normal')
+
+\theoremstyle{mystyle}
+
+%\newtheorem{deff}{Definition}
+
+%\newcommand{\definition}[2]{\begin{deff}\label{#1} \fcolorbox{blue}{myblue}{ \begin{minipage}[t]{265pt}#2\end{minipage}}\end{deff}}
+
+
+\newcommand{\definition}[2]{%
+\vskip\baselineskip
+\noindent\refstepcounter{definitioncounter}\label{#1}%
+\begin{tikzpicture}
+\draw (0,0) node[anchor=north west,text width=80pt,inner sep=0pt]{\bf Definition \thedefinitioncounter};
+\ifthenelse{\boolean{in_color}} %first, in color
+{\draw (\specialboxtitlelength,0) node[rectangle,text width = \specialboxlength,very thick,inner sep=\specialboxinnerseplength,draw = yellow!95!black!60,top color = white!95!yellow,bottom color = yellow!90!black!30,text justified,anchor=north west,yshift=\specialboxinnerseplength] {#2};}%if not in color
+{\draw (\specialboxtitlelength,0) node[rectangle,text width = \specialboxlength,very thick,inner sep=\specialboxinnerseplength,draw,text justified,anchor=north west,yshift=\specialboxinnerseplength] {#2};}
+\end{tikzpicture}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\colortheorem}[2]{%
+\vskip\baselineskip
+\noindent\refstepcounter{theoremcounter}\label{#1}%
+\begin{tikzpicture}
+\draw (0,0) node[anchor=north west,text width=80pt,inner sep=0pt]{\bf Theorem \thetheoremcounter};
+\ifthenelse{\boolean{in_color}} %first, in color
+{\draw (\specialboxtitlelength,0) node[rectangle,text width = \specialboxlength,very thick,inner sep=\specialboxinnerseplength,draw = green!30!black!50,top color = white!95!green,bottom color = green!60!black!20,text justified,anchor=north west,yshift=\specialboxinnerseplength] {#2};}%if not in color
+{\draw (\specialboxtitlelength,0) node[rectangle,text width = \specialboxlength,very thick,inner sep=\specialboxinnerseplength,draw,text justified,anchor=north west,yshift=\specialboxinnerseplength] {#2};}
+\end{tikzpicture}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\idea}[2]{%
+\vskip\baselineskip
+\noindent\refstepcounter{keyideacounter}\label{#1}%
+\begin{tikzpicture}
+\draw (0,0) node[anchor=north west,text width=80pt,inner sep=0pt]{\bf Key Idea \thekeyideacounter};
+\ifthenelse{\boolean{in_color}} %first, in color
+{\draw (\specialboxtitlelength,0) node[rectangle,text width = \specialboxlength,very thick,inner sep=\specialboxinnerseplength,draw = red!30!black!50,top color = white!95!red,bottom color = red!60!black!20,text justified,anchor=north west,yshift=\specialboxinnerseplength] {#2};}%if not in color
+{\draw (\specialboxtitlelength,0) node[rectangle,text width = \specialboxlength,very thick,inner sep=\specialboxinnerseplength,draw,text justified,anchor=north west,yshift=\specialboxinnerseplength] {#2};}
+\end{tikzpicture}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\asyouread}[1]{\begin{tikzpicture}
+\ifthenelse{\boolean{in_color}}{\node [preaction={fill=black,opacity=.5,transform canvas={xshift=1mm,yshift=-1mm}}, right color=blue!80!black!30, left color=blue!80] at (0,0) {\textcolor{white}{\textsf{\textit{AS YOU READ $\ldots$}}}};}
+{\node [preaction={fill=black,opacity=.5,transform canvas={xshift=1mm,yshift=-1mm}}, right color=black!30, left color=black!10] at (0,0) {\textcolor{white}{\textsf{\textit{AS YOU READ $\ldots$}}}};}
+\end{tikzpicture}
+\begin{enumerate}
+#1
+\end{enumerate}
+\vskip 20pt}

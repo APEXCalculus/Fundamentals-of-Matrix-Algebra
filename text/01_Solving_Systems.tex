@@ -1,0 +1,182 @@
+\section{Applications of Linear Systems}\label{sec:solving_systems}
+
+\asyouread{
+\item How do most problems appear ``in the real world?''
+\item The unknowns in a problem are also called what?
+\item How many points are needed to determine the coefficients of a 5$^\text{th}$ degree polynomial?
+}
+
+We've started this chapter by addressing the issue of finding the solution to a system of linear equations. In subsequent sections, we  defined matrices to store linear equation information; we described how we can manipulate matrices without changing the solutions; we described how to efficiently manipulate matrices so that a working solution can be easily found.
+
+We shouldn't lose sight of the fact that  our work in the previous sections was aimed at finding solutions to systems of linear equations. In this section, we'll learn how to apply what we've learned to actually solve some problems. 
+
+Many, many, \textit{many} problems that are addressed by engineers, businesspeople, scientists and mathematicians can be solved by properly setting up systems of linear equations. In this section we highlight only a few of the wide variety of problems that matrix algebra can help us solve.
+
+We start with a simple example.\\
+
+\example{ex_application_easy}{A jar contains 100 blue, green, red and yellow marbles. There are twice as many yellow marbles as blue; there are 10 more blue marbles than red; the sum of the red and yellow marbles is the same as the sum of the blue and green. How many marbles of each color are there?}
+{Let's call the number of blue balls $b$, and the number of the other balls $g$, $r$ and $y$, each representing the obvious. Since we know that we have 100 marbles, we have the equation $$b+g+r+y=100.$$ The next sentence in our problem statement allows us to create three more equations. 
+
+We are told that there are twice as many yellow marbles as blue. One of the following two equations is correct, based on this statement; which one is it? $$2y=b \quad\quad \text{or} \quad\quad2b=y$$
+
+%\drawexampleline{ex_application_easy}
+%\drawexampleline
+
+The first equation says that if we take the number of yellow marbles, then double it, we'll have the number of blue marbles. That is not what we were told. The second equation states that if we take the number of blue marbles, then double it, we'll have the number of yellow marbles. This \textit{is} what we were told.
+
+The next statement of ``there are 10 more blue marbles as red'' can be written as either $$b=r+10 \quad\quad \text{or} \quad\quad r=b+10.$$ Which is it?
+
+The first equation says that if we take the number of red marbles, then add 10, we'll have the number of blue marbles. This is what we were told. The next equation is wrong; it implies there are more red marbles than blue.
+
+The final statement tells us that the sum of the red and yellow marbles is the same as the sum of the blue and green marbles, giving us the equation $$r+y=b+g.$$
+
+We have four equations; altogether, they are \begin{align*} b+g+r+y&= 100\\ 2b&=y\\ b&=r+10\\ r+y&=b+g.\\ \end{align*}
+
+We want to write these equations in a standard way, with all the unknowns on the left and the constants on the right. Let us also write them so that the variables appear in the same order in each equation (we'll use alphabetical order to make it simple). We now have \begin{align*} b+g+r+y&=100\\2b-y&=0\\b-r&=10\\-b-g+r+y&=0\\ \end{align*}
+
+To find the solution, let's form the appropriate augmented matrix and put it into \rref. We do so here, without showing the steps.$$\bmx{ccccc}1&1&1&1&100\\2&0&0&-1&0\\1&0&-1&0&10\\-1&-1&1&1&0\\ \emx \quad\quad \overrightarrow{\text{rref}} \quad\quad \bmx{ccccc} 1&0&0&0&20\\0&1&0&0&30\\0&0&1&0&10\\0&0&0&1&40\\ \emx$$
+
+We interpret from the \rref\ of the matrix that we have 20 blue, 30 green, 10 red and 40 yellow marbles. }\\ %\eexset
+
+Even if you had a bit of difficulty with the previous example, in reality, this type of problem is pretty simple. The unknowns were easy to identify, the equations were pretty straightforward to write (maybe a bit tricky for some), and only the necessary information was given.
+
+Most problems that we face in the world do not approach us in this way; most problems do not approach us in the form of ``Here is an equation. Solve it.'' Rather, most problems come in the form of: \begin{quote}Here is a problem. I want the solution. To help, here is lots of information. It may be just enough; it may be too much; it may not be enough. You figure out what you need; just give me the solution.\end{quote}
+
+Faced with this type of problem, how do we proceed? Like much of what we've done in the past, there isn't just one ``right'' way. However, there are a few steps that can guide us. You don't have to follow these steps, ``step by step,'' but if you find that you are having difficulty solving a problem, working through these steps may help. (Note: while the principles outlined here will help one solve any type of problem, these steps are written specifically for solving problems that involve only linear equations.)
+
+\keyidea{idea:problem_solving}{\textbf{Mathematical Problem Solving} \index{problem solving}
+\begin{enumerate}
+\item		Understand the problem. What exactly is being asked?
+
+\item		Identify the unknowns. What are you trying to find? What units are involved?
+
+\item		Give names to your unknowns (these are your \textit{variables}).
+
+\item		Use the information given to write as many equations as you can that involve these variables. 
+
+\item		Use the equations to form an augmented matrix; use Gaussian elimination to put the matrix into \rref.
+
+\item		Interpret the \rref\ of the matrix to identify the solution.
+
+\item		Ensure the solution makes sense in the context of the problem.
+\end{enumerate}
+}
+
+Having identified some steps, let us put them into practice with some examples.\\
+
+\example{ex_application_1}{A concert hall has seating arranged in three sections. As part of a special promotion, guests will recieve two of three prizes. Guests seated in the first and second sections will receive Prize A, guests seated in the second and third sections will receive Prize B, and guests seated in the first and third sections will receive Prize C. Concert promoters told the concert hall managers of their plans, and asked how many seats were in each section. (The promoters want to store prizes for each section separately for easier distribution.) The managers, thinking they were being helpful, told the promoters they would need 105 A prizes, 103 B prizes, and 88 C prizes, and have since been unavailable for further help. How many seats are in each section?}
+{Before we rush in and start making equations, we should be clear about what is being asked. The final sentence asks: ``How many seats are in each section?'' This tells us what our unknowns should be: we should name our unknowns for the number of seats in each section. Let $x_1$, $x_2$ and $x_3$ denote the number of seats in the first, second and third sections, respectively. This covers the first two steps of our general problem solving technique.
+
+(It is tempting, perhaps, to name our variables for the number of prizes given away. However, when we think more about this, we realize that we already know this -- that information is given to us. Rather, we should name our variables for the things we don't know.)
+
+Having our unknowns identified and variables named, we now proceed to forming equations from the information given. Knowing that Prize A goes to guests in the first and second sections and that we'll need 105 of these prizes tells us $$x_1+x_2 = 105.$$ Proceeding in a similar fashion, we get two more equations, $$x_2+x_3 = 103\quad\text{ and }\quad x_1+x_3 = 88.$$ Thus our linear system is $$\begin{array}{rcl}x_1+x_2&=&105\\x_2+x_3&=&103\\x_1+x_3&=&88\\ \end{array}$$ and the corresponding augmented matrix is $$\bmx{cccc}1&1&0&105\\0&1&1&103\\1&0&1&88\\ \emx.$$
+
+To solve our system, let's put this matrix into \rref.
+
+$$\bmx{cccc}1&1&0&105\\0&1&1&103\\1&0&1&88\\ \emx \quad \quad \overrightarrow{\text{rref}} \quad\quad \bmx{cccc}1&0&0&45\\0&1&0&60\\0&0&1&43\\ \emx$$
+
+We can now read off our solution. The first section has 45 seats, the second has 60 seats, and the third has 43 seats.}\\ %\eexset
+
+
+\example{ex_application_2}{A lady takes a 2-mile motorized boat trip down the Highwater River, knowing the trip will take 30 minutes. She asks the boat pilot ``How fast does this river flow?'' He replies ``I have no idea, lady. I just drive the boat.'' 
+
+She thinks for a moment, then asks ``How long does the return trip take?'' He replies ``The same; half an hour.'' She follows up with the statement, ``Since both legs take the same time, you must not drive the boat at the same speed.''
+
+``Naw,'' the pilot said. ``While I really don't know exactly how fast I go, I do know that since we don't carry any tourists, I drive the boat twice as fast.''
+
+The lady walks away satisfied; she knows how fast the river flows. 
+
+(How fast \textit{does} it flow?)}
+{This problem forces us to think about what information is given and how to use it to find what we want to know. In fact, to find the solution, we'll find out extra information that we weren't asked for!
+
+%\enlargethispage{2\baselineskip}
+
+We are asked to find how fast the river is moving (step 1). To find this, we should recognize that, in some sense, there are three speeds at work in the boat trips: the speed of the river (which we want to find), the speed of the boat, and the speed that they actually travel at.
+
+We know that each leg of the trip takes half an hour; if it takes half an hour to cover 2 miles, then they must be traveling at 4 mph, each way.
+
+The other two speeds are unknowns, but they are related to the overall speeds. Let's call the speed of the river $r$ and the speed of the boat $b$. (And we should be careful. From the conversation, we know that the boat travels at two different speeds. So we'll say that $b$ represents the speed of the boat when it travels downstream, so $2b$ represents the speed of the boat when it travels upstream.) Let's let our speed be measured in the units of miles/hour (mph) as we used above (steps 2 and 3).
+
+%Now we need to write some equations. We need to refer back to some previous knowledge about travel; recall the old formula of distance = rate $\times$ time ($d=rt$). (Note: we should be careful here. We've already used the letter $r$ to represent the speed of the river, whereas the $r$ in the formula $d=rt$ represents a generic rate. We could change variables, and let $w$, for instance, represent the speed of the \textit{w}ater, but this seems unnecessary. We'll just be careful.)
+
+What is the rate of the people on the boat? When they are travelling downstream, their rate is the sum of the water speed and the boat speed. Since their overall speed is 4 mph, we have the equation $r+b=4$. 
+
+When the boat returns going against the current, its overall speed is the rate of the boat minus the rate of the river (since the river is working against the boat). The overall trip is still taken at 4 mph, so we have the equation $2b-r=4$. (Recall: the boat is traveling twice as fast as before.)
+
+%We have finished step 4; we've come up with equations using the variables we've been given. Now let's form an augmented matrix from these equations. First, let's write them in a more standard way:
+
+%\begin{align*} 0.5b + 0.5r &=2\\ 1b-0.5r&= 2\\ \end{align*}
+
+The corresponding augmented matrix is $$\bmx{ccc} 1 & 1 & 4\\ 2&-1&4\\ \emx.$$ Note that we decided to let the first column hold the coefficients of $b$.
+
+Putting this matrix in \rref\ gives us: $$\bmx{ccc} 1 & 1 & 4\\ 2&-1&4\\ \emx\quad\quad\overrightarrow{\text{rref}}\quad\quad\bmx{ccc}1&0&8/3\\0&1&4/3\\ \emx.$$
+
+We finish by interpreting this solution: the speed of the boat (going downstream) is 8/3 mph, or $2.\overline{6}$ mph, and the speed of the river is 4/3 mph, or $1.\overline{3}$ mph. All we really wanted to know was the speed of the river, at about 1.3 mph.}\\ %\eexset
+
+
+\example{ex_polynomial_1}{Find the equation of the quadratic function that goes through the points $(-1,6)$, $(1,2)$ and $(2,3)$.}
+{This may not seem like a ``linear'' problem since we are talking about a quadratic function, but closer examination will show that it really is.
+
+We normally write quadratic functions as $y=ax^2+bx+c$ where $a$, $b$ and $c$ are the coefficients; in this case, they are our unknowns. We have three points; consider the point $(-1,6)$. This tells us directly that if $x=-1$, then $y=6$. Therefore we know that $6=a(-1)^2+b(-1)+c$. Writing this in a more standard form, we have the linear equation $$a - b+c=6.$$
+
+The second point tells us that $a(1)^2+b(1)+c = 2$, which we can simplify as $a+b+c=2$, and the last point tells us $a(2)^2+b(2)+c = 3$, or $4a+2b+c=3$. Thus our linear system is $$\begin{array}{rcl} a-b+c&=&6\\ a+b+c&=&2\\ 4a+2b+c&=&3.\\ \end{array}$$ 
+
+Again, to solve our system, we find the \rref\ of the corresponding augmented matrix. We don't show the steps here, just the final result.
+
+$$\bmx{cccc}1&-1&1&6\\1&1&1&2\\4&2&1&3\\ \emx \quad\quad \overrightarrow{\text{ rref }}\quad\quad \bmx{cccc}1&0&0&1\\0&1&0&-2\\0&0&1&3\\ \emx$$
+
+This tells us that $a=1$, $b=-2$ and $c=3$, giving us the quadratic function $y=x^2-2x+3$.}\\ % \eexset
+
+One thing interesting about the previous example is that it confirms for us something that we may have known for a while (but didn't know \textit{why} it was true). Why do we need two points to find the equation of the line? Because in the equation of the a line, we have two unknowns, and hence we'll need two equations to find values for these unknowns.
+
+\enlargethispage{\baselineskip}
+
+A quadratic has three unknowns (the coefficients of the $x^2$ term and the $x$ term, and the constant). Therefore we'll need three equations, and therefore we'll need three points. 
+
+What happens if we try to find the quadratic function that goes through 3 points that are all on the same line? The fast answer is that you'll get the equation of a line; there isn't a quadratic function that goes through 3 colinear points. Try it and see! (Pick easy points, like $(0,0)$, $(1,1)$ and $(2,2)$. You'll find that the coefficient of the $x^2$ term is 0.)
+
+Of course, we can do the same type of thing to find polynomials that go through 4, 5, etc., points. In general, if you are given $n+1$ points, a polynomial that goes through all $n+1$ points will have degree at most $n$.\\
+
+
+\example{ex_ex_un_application_1}{A woman has 32 \$1, \$5 and \$10 bills in her purse, giving her a total of \$100. How many bills of each denomination does she have?}
+{Let's name our unknowns $x$, $y$ and $z$ for our ones, fives and tens, respectively (it is tempting to call them $o$, $f$ and $t$, but $o$ looks too much like 0). We know that there are a total of 32 bills, so we have the equation $$x+y+z = 32.$$ We also know that we have \$100, so we have the equation $$x+5y+10z = 100.$$ We have three unknowns but only two equations, so we know that we cannot expect a unique solution. Let's try to solve this system anyway and see what we get.
+
+Putting the system into a matrix and then finding the \rref, we have 
+$$\bmx{cccc}1&1&1&32\\ 1&5&10&100\\ \emx \qquad \overrightarrow{\text{rref}}\qquad \bmx{cccc}1&0&-\frac54&15\\0&1&\frac94&17\\ \emx.$$
+
+Reading from our reduced matrix, we have the infinite solution set \begin{align*}x &=15+\frac54z\\ y&=17 - \frac94z\\ z & \text{ is free.}\end{align*}
+
+While we do have infinite solutions, most of these solutions really don't make sense in the context of this problem. (Setting $z = \frac12$ doesn't make sense, for having half a ten dollar bill doesn't give us \$5. Likewise, having $z = 8$ doesn't make sense, for then we'd have ``$-1$'' \$5 bills.) So we must make sure that our choice of $z$ doesn't give us fractions of bills or negative amounts of bills. 
+
+To avoid fractions, $z$ must be a multiple of 4 ($-4, 0, 4, 8, \ldots$). Of course, $z\geq 0$ for a negative number wouldn't make sense. If $z = 0$, then we have 15 one dollar bills and 17 five dollar bills, giving us \$100. If $z = 4$, then we have $x = 20$ and $y = 8$. We already mentioned that $z=8$ doesn't make sense, nor does any value of $z$ where $z\geq 8$. 
+
+So it seems that we have two answers; one with $z=0$ and one with $z=4$. Of course, by the statement of the problem, we are led to believe that the lady has at least one \$10 bill, so probably the ``best'' answer is that we have 20 \$1 bills, 8 \$5 bills and 4 \$10 bills. The real point of this example, though, is to address how infinite solutions may appear in a real world situation, and how suprising things may result.}\\ %\eexset
+
+\example{ex_football}{In a football game, teams can score points through touchdowns worth 6 points, extra points (that follow touchdowns) worth 1 point, two point conversions (that also follow touchdowns) worth 2 points and field goals, worth 3 points. You are told that in a football game, the two competing teams scored on 7 occasions, giving a total score of 24 points. Each touchdown was followed by either a successful extra point or two point conversion. In what ways were these points scored?}
+{The question asks how the points were scored; we can interpret this as asking how many touchdowns, extra points, two point conversions and field goals were scored. We'll need to assign variable names to our unknowns; let $t$ represent the number of \textbf{t}ouchdowns scored; let $x$ represent the number of e\textbf xtra points scored, let $w$ represent the number of t\textbf wo point conversions, and let $f$ represent the number of \textbf field goals scored.
+
+Now we address the issue of writing equations with these variables using the given information. Since we have a total of 7 scoring occasions, we know that $$t+x+w+f=7.$$ The total points scored is 24; considering the value of each type of scoring opportunity, we can write the equation $$6t+x+2w+3f = 24.$$ Finally, we know that each touchdown was followed by a successful extra point or two point conversion. This is subtle, but it tells us that the number of touchdowns is equal to the sum of extra points and two point conversions. In other words, $$t = x+w.$$
+
+%\drawexampleline{ex_football}
+%\drawexampleline
+
+To solve our problem, we put these equations into a matrix and put the matrix into \rref. Doing so, we find $$\bmx{ccccc}1&1&1&1&7\\ 6&1&2&3&24\\1&-1&-1&0&0\\ \emx \quad\quad\overrightarrow{\text{rref}}\quad\quad \bmx{ccccc} 1&0&0&0.5&3.5\\0&1&0&1&4\\ 0&0&1&-0.5&-0.5\\ \emx.$$
+
+Therefore, we know that \begin{align*} t &=3.5-0.5f\\ x&=4-f\\ w&=-0.5+0.5f. \\ \end{align*} We recognize that this means there are ``infinite solutions,'' but of course most of these will not make sense in the context of a real football game. We must apply some logic to make sense of the situation.
+
+Progressing in no particular order, consider the second equation, $x = 4-f$. In order for us to have a positive number of extra points, we must have $f\leq 4$. (And of course, we need $f\geq 0$, too.) Therefore, right away we know we have a total of only 5 possibilities, where $f = 0$, $1$, $2$, $3$ or $4$.
+
+From the first and third equations, we see that if $f$ is an even number, then $t$ and $w$ will both be fractions (for instance, if $f=0$, then $t = 3.5$) which does not make sense. Therefore, we are down to two possible solutions, $f = 1$ and $f=3$. 
+
+
+
+If $f=1$, we have 3 touchdowns, 3 extra points, no two point conversions, and (of course), 1 field goal. (Check to make sure that gives 24 points!) If $f=3$, then we 2 touchdowns, 1 extra point, 1 two point conversion, and (of course) 3 field goals. Again, check to make sure this gives us 24 points. Also, we should check each solution to make sure that we have a total of 7 scoring occasions and that each touchdown could be followed by an extra point or a two point conversion.}\\ %\eexset
+
+We have seen a variety of applications of systems of linear equations. We would do well to remind ourselves of the ways in which solutions to linear systems come: there can be exactly one solution, infinite solutions, or no solutions. While we did see a few examples where it seemed like we had only 2 solutions, this was because we were restricting our solutions to ``make sense'' within a certain context. 
+
+We should also remind ourselves that linear equations are immensely important. The examples we considered here ask fundamentally simple questions like ``How fast is the water moving?'' or ``What is the quadratic function that goes through these three points?'' or ``How were points in a football game scored?'' The real ``important'' situations ask much more difficult questions that often require \textit{thousands} of equations! (Gauss began the systematic study of solving systems of linear equations while trying to predict the next sighting of a comet; he needed to solve a system of linear equations that had 17 unknowns. Today, this a relatively easy situation to handle with the help of computers, but to do it by hand is a real pain.) Once we understand the fundamentals of solving systems of equations, we can move on to looking at solving bigger systems of equations; this text focuses on getting us to understand the fundamentals.\\
+
+
+
+
+\printexercises{exercises/01_05_exercises}

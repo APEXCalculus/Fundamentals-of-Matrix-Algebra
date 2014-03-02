@@ -1,0 +1,234 @@
+In the previous chapter we learned about matrix arithmetic: adding, subtracting, and multiplying matrices, finding inverses, and multiplying by scalars. In this chapter we learn about some operations that we perform \textit{on} matrices. We can think of them as functions: you input a matrix, and you get something back. One of these operations, the transpose, will return another matrix. With the other operations, the trace and the determinant, we input matrices and get numbers in return, an idea that is different than what we have seen before.
+
+\section{The Matrix Transpose}\label{sec:transpose}\index{transpose}
+
+\asyouread{
+\item T/F: If \tta\ is a $3\times 5$ matrix, then \ttat\ will be a $5\times 3$ matrix.
+%\item T/F: An upper triangular matrix has only zeros above the diagonal.
+\item	Where are there zeros in an upper triangular matrix?
+\item T/F: A matrix is symmetric if it doesn't change when you take its transpose.
+\item What is the transpose of the transpose of \tta?
+\item Give 2 other terms to describe symmetric matrices besides ``interesting.''
+}
+
+We jump right in with a definition.
+
+\definition{def:transpose}{\textbf{Transpose}\\
+
+\index{transpose!definition}\index{matrix!transpose}Let \tta\ be an $m\times n$ matrix. The \textit{tranpsose of \tta}, denoted $\ttat$, is the $n\times m$ matrix whose columns are the respective rows of \tta.}\index{transpose!definition}
+
+Examples will make this definition clear.\\
+
+\example{ex_transpose_1}{Find the transpose of $\tta = \bmx{ccc}1&2&3\\4&5&6\emx$.}
+{Note that \tta\ is a $2\times 3 $ matrix, so \ttat\ will be a $3 \times 2$ matrix. By the definition, the first column of \ttat\ is the first row of \tta; the second column of \ttat\ is the second row of \tta. Therefore, $$\ttat = \bmx{cc} 1&4\\2&5\\3&6\emx . $$ 
+\vskip -\baselineskip } \\ %\eexset
+
+\example{ex_transpose_2}{Find the transpose of the following matrices. $$\tta = \bmx{cccc} 7&2&9&1\\2&-1&3&0\\-5&3&0&11\emx \quad \ttb = \bmx{ccc}1&10&-2\\3&-5&7\\4&2&-3\emx \quad \ttc = \bmx{ccccc} 1&-1&7&8&3\emx$$}
+{We find each transpose using the definition without explanation. Make note of the dimensions of the original matrix and the dimensions of its transpose. $$\ttat = \bmx{ccc}7&2&-5\\2&-1&3\\9&3&0\\1&0&11\emx \quad \ttbt = \bmx{ccc}1&3&4\\10&-5&2\\-2&7&-3\emx\quad \ttct = \bmx{c}1\\-1\\7\\8\\3\emx$$
+\vskip -\baselineskip } \\ %\eexset
+
+Notice that with matrix \ttb, when we took the transpose, the \textit{diagonal} did not change. We can see what the diagonal is below where we rewrite \ttb\ and \ttbt\ with the diagonal in bold. We'll follow this by a definition of what we mean by ``the diagonal of a matrix,'' along with a few other related definitions.
+$$\ttb = \bmx{ccc}\textbf{1}&10&-2\\3&\textbf{--5}&7\\4&2&\textbf{--3}\emx \quad\ttbt = \bmx{ccc}\textbf{1}&3&4\\10&\textbf{--5}&2\\-2&7&\textbf{--3}\emx$$
+
+It is probably pretty clear why we call those entries ``the diagonal.'' Here is the formal definition.
+
+\definition{def:diagonal}{\textbf{The Diagonal, a Diagonal Matrix, Triangular Matrices}\\
+
+\index{diagonal!definition}\index{triangular matrix!definition}\index{matrix!diagonal}\index{matrix!triangular}Let \tta\ be an $m\times n$ matrix. The \textit{diagonal of \tta}\ consists of the entries $a_{11}$, $a_{22}$, $\dots$ of \tta.\\
+
+A \textit{diagonal matrix} is an $n\times n$ matrix in which the only nonzero entries lie on the diagonal.\\
+
+An \textit{upper (lower) triangular} matrix is a matrix in which any nonzero entries lie on or above (below) the diagonal.}
+
+\example{ex_diagonal}{Consider the matrices \tta, \ttb, \ttc\ and $\tti_4$, as well as their transposes, where  $$\tta = \bmx{ccc} 1&2&3\\0&4&5\\0&0&6\emx\quad \ttb = \bmx{ccc}3&0&0\\0&7&0\\0&0&-1\emx\quad \ttc = \bmx{ccc}1&2&3\\0&4&5\\0&0&6\\0&0&0\emx.$$ Identify the diagonal of each matrix, and state whether each matrix is diagonal, upper triangular, lower triangular, or none of the above.}
+{We first compute the transpose of each matrix.
+$$\ttat = \bmx{ccc}1&0&0\\2&4&0\\3&5&6\emx\quad \ttbt = \bmx{ccc}3&0&0\\0&7&0\\0&0&-1\emx\quad \ttct = \bmx{cccc}1&0&0&0\\2&4&0&0\\3&5&6&0\emx$$
+Note that $\ttit_4 = \tti_4$.
+
+The diagonals of \tta\ and \ttat\ are the same, consisting of the entries 1, 4 and 6. The diagonals of \ttb\ and \ttbt\ are also the same, consisting of the entries 3, 7 and $-1$. Finally, the diagonals of \ttc\ and \ttct\ are the same, consisting of the entries 1, 4 and 6.
+
+The matrix \tta\ is upper triangular; the only nonzero entries lie on or above the diagonal. Likewise, \ttat\ is lower triangular.
+
+The matrix \ttb\ is diagonal. By their definitions, we can also see that \ttb\ is both upper and lower triangular. Likewise, $\tti_4$ is diagonal, as well as upper and lower triangular.
+
+Finally, \ttc\ is upper triangular, with \ttct\ being lower triangular. }\\ %\eexset
+
+Make note of the definitions of diagonal and triangular matrices. We specify that a diagonal matrix must be square, but triangular matrices don't have to be. (``Most'' of the time, however, the ones we study are.) Also, as we mentioned before in the example, by definition a diagonal matrix is also both upper and lower triangular. Finally, notice that by definition, the transpose of an upper triangular matrix is a lower triangular matrix, and vice-versa.
+
+There are many questions to probe concerning the transpose operations.\footnote{Remember, this is what mathematicians do. We learn something new, and then we ask lots of questions about it. Often the first questions we ask are along the lines of ``How does this new thing relate to the old things I already know about?''} The first set of questions we'll investigate involve the matrix arithmetic we learned from last chapter. We do this investigation by way of examples, and then summarize what we have learned at the end.\\
+
+\enlargethispage{3\baselineskip}
+
+\example{ex_transpose_add}{Let $$\tta = \bmx{ccc}1&2&3\\4&5&6\emx \ \text{and}\ \ttb = \bmx{ccc}1&2&1\\3&-1&0\emx.$$ Find $\ttat+\ttbt$ and $(\tta + \ttb)^T$.%\footnote{We have not specified ``order of operations'' in cases like these, but our intuition is likely correct: do the stuff inside the parenthesis first, then do the operation indicated on the outside.}
+}
+{We note that $$\ttat = \bmx{cc}1&4\\2&5\\3&6\emx\ \text{and}\ \ttbt = \bmx{cc}1&3\\2&-1\\1&0\emx.$$ Therefore 
+\begin{align*} \ttat + \ttbt &= \bmx{cc}1&4\\2&5\\3&6\emx+\bmx{cc}1&3\\2&-1\\1&0\emx \\
+&= \bmx{cc}2&7\\4&4\\4&6\emx.\end{align*}
+Also, 
+\begin{align*} (\tta+\ttb)^T &= \left(\bmx{ccc}1&2&3\\4&5&6\emx+\bmx{ccc}1&2&1\\3&-1&0\emx \right)^T \\
+&= \left( \bmx{ccc}2&4&4\\7&4&6\emx\right)^T \\
+&= \bmx{cc}2&7\\4&4\\4&6\emx.\end{align*}
+\ } \\ %\eexset
+
+It looks like ``the sum of the transposes is the transpose of the sum.''\footnote{This is kind of fun to say, especially when said fast. Regardless of how fast we say it, we should think about this statement. The ``is'' represents ``equals.'' The stuff before ``is'' equals the stuff afterwards.} This should lead us to wonder how the transpose works with multiplication.\\
+
+\example{ex_transpose_multiply}{Let $$\tta = \bmx{cc}1&2\\3&4\emx \ \text{and} \ \ttb = \bmx{ccc}1&2&-1\\1&0&1\emx.$$ Find $(\tta\ttb)^T$, $\ttat\ttbt$ and $\ttbt\ttat$.}
+{We first note that $$\ttat = \bmx{cc}1&3\\2&4\emx \ \text{and} \ \ttbt = \bmx{cc}1&1\\2&0\\-1&1\emx.$$
+Find $(\tta\ttb)^T$:
+\begin{align*}
+	(\tta\ttb)^T &= \left(\bmx{cc}1&2\\3&4\emx \bmx{ccc}1&2&-1\\1&0&1\emx\right)^T \\
+							&= \left(\bmx{ccc}3&2&1\\7&6&1\emx\right)^T\\
+							&= \bmx{cc}3&7\\2&6\\1&1\emx
+\end{align*}
+Now find $\ttat\ttbt$:
+\begin{align*}
+			\ttat\ttbt	&=	\bmx{cc}1&3\\2&4\emx\bmx{cc}1&1\\2&0\\-1&1\emx \\
+									&= 	\text{Not defined!}
+\end{align*}
+So we can't compute $\ttat\ttbt$. Let's finish by computing $\ttbt\ttat$:
+\begin{align*}
+			\ttbt\ttat 	&=	\bmx{cc}1&1\\2&0\\-1&1\emx\bmx{cc}1&3\\2&4\emx\\
+									&=\bmx{cc}3&7\\2&6\\1&1\emx
+\end{align*}
+\ } \\ %\eexset
+
+We may have suspected that $(\tta\ttb)^T = \ttat\ttbt$. We saw that this wasn't the case, though -- and not only was it not equal, the second product wasn't even defined! Oddly enough, though, we saw that $(\tta\ttb)^T = \ttbt\ttat$.
+\footnote{Then again, maybe this isn't all that ``odd.'' It is reminiscent of the fact that, when invertible, $(\tta\ttb)^{-1} = \ttbi\ttai$.} 
+To help understand why this is true, look back at the work above and confirm the steps of each multiplication.
+
+We have one more arithmetic operation to look at: the inverse.\\
+
+\example{ex_transpose_inverse}{Let $$\tta = \bmx{cc}2&7\\1&4\emx.$$ Find $(\ttai)^T$ and $(\ttat)^{-1}$.}
+{We first find \ttai\ and \ttat:
+$$\ttai = \bmx{cc} 4&-7\\-1&2\emx\ \text{and}\ \ttat = \bmx{cc}2&1\\7&4\emx.$$
+
+Finding $(\ttai)^T$:
+\begin{align*}
+	(\ttai)^T &= \bmx{cc} 4&-7\\-1&2\emx ^T \\
+					&=	\bmx{cc}4&-1\\-7&2\emx
+\end{align*}
+
+Finding $(\ttat)^{-1}$:
+\begin{align*}
+	(\ttat)^{-1}	&=	\bmx{cc}2&1\\7&4\emx^{-1}\\
+							&=	\bmx{cc}4&-1\\-7&2\emx
+\end{align*}
+\ } \\ %\eexset
+
+It seems that ``the inverse of the transpose is the transpose of the inverse.''\footnote{Again, we should think about this statement. The part before ``is'' states that we take the transpose of a matrix, then find the inverse. The part after ``is'' states that we find the inverse of the matrix, then take the transpose. Since these two statements are linked by an ``is,'' they are equal.}\\
+
+We have just looked at some examples of how the transpose operation interacts with matrix arithmetic operations.\footnote{These examples don't \textit{prove} anything, other than it worked in specific examples.} We now give a theorem that tells us that what we saw wasn't a coincidence, but rather is always true.
+
+\theorem{thm:transpose}{{\bf Properties of the Matrix Transpose}\\
+
+Let \tta\ and \ttb\ be matrices where the following operations are defined. Then:
+\begin{enumerate}
+	\item		$(\tta+\ttb)^T = \ttat+\ttbt$ and $(\tta-\ttb)^T = \ttat-\ttbt$
+	\item		$(k\tta)^T = k\ttat$
+	\item		$(\tta\ttb)^T = \ttbt\ttat$
+	\item		$(\ttai)^T = (\ttat)^{-1}$
+	\item		$(\ttat)^T = \tta$
+\end{enumerate}
+}\index{transpose!properties}
+We included in the theorem two ideas we didn't discuss already. First, that $(k\tta)^T = k\ttat$. This is probably obvious. It doesn't matter when you multiply a matrix by a scalar when dealing with transposes.
+
+The second ``new'' item is that $(\ttat)^T = \tta$. That is, if we take the transpose of a matrix, then take its transpose again, what do we have? The original matrix.
+
+Now that we know some properties of the transpose operation, we are tempted to play around with it and see what happens. For instance, if \tta\ is an $m\times n$ matrix, we know that \ttat\ is an $n\times m$ matrix. So no matter what matrix \tta\ we start with, we can always perform the multiplication \tta\ttat\ (and also \ttat\tta) and the result is a square matrix! 
+
+Another thing to ask ourselves as we ``play around'' with the transpose: suppose \tta\ is a square matrix. Is there anything special about $\tta+\ttat$? The following example has us try out these ideas.\\
+
+\example{ex_transpose_3}{Let $$\tta = \bmx{ccc}2&1&3\\2&-1&1\\1&0&1\emx.$$ Find \tta\ttat, $\tta+\ttat$ and $\tta - \ttat$.}
+{Finding \tta\ttat:
+\begin{align*}
+	\tta\ttat &= \bmx{ccc}2&1&3\\2&-1&1\\1&0&1\emx\bmx{ccc}2&2&1\\1&-1&0\\3&1&1\emx \\					
+						&= \bmx{ccc}14 & 6 & 5\\ 6&4&3\\ 5& 3& 2\emx
+\end{align*}
+
+Finding $\tta+\ttat$:
+\begin{align*}
+	\tta+\ttat 	&= \bmx{ccc}2&1&3\\2&-1&1\\1&0&1\emx+\bmx{ccc}2&2&1\\1&-1&0\\3&1&1\emx\\
+							&= \bmx{ccc}2&3&4\\3&-2&1\\4&1&2\emx
+\end{align*}
+
+Finding $\tta-\ttat$:
+\begin{align*}
+	\tta-\ttat 	&=	\bmx{ccc}2&1&3\\2&-1&1\\1&0&1\emx-\bmx{ccc}2&2&1\\1&-1&0\\3&1&1\emx\\
+						&=	\bmx{ccc} 0&-1&2\\1&0&1\\-2&-1&0\emx
+\end{align*}
+\ } \\ %\eexset
+
+Let's look at the matrices we've formed in this example. First, consider \tta\ttat. Something seems to be nice about this matrix -- look at the location of the 6's, the 5's and the 3's. More precisely, let's look at the transpose of $\tta\ttat$. We should notice that if we take the transpose of this matrix, we have the very same matrix. That is, $$\left(\bmx{ccc}14 & 6 & 5\\ 6&4&3\\ 5& 3& 2\emx\right)^T = \bmx{ccc}14 & 6 & 5\\ 6&4&3\\ 5& 3& 2\emx\ !$$
+
+We'll formally define this in a moment, but a matrix that is equal to its transpose is called \textit{symmetric}. 
+
+Look at the next part of the example; what do we notice about $\tta+\ttat$? We should see that it, too, is symmetric. Finally, consider the last part of the example: do we notice anything about $\tta-\ttat$? 
+
+We should immediately notice that it is not symmetric, although it does seem ``close.'' Instead of it being equal to its transpose, we notice that this matrix is the \textit{opposite} of its transpose. We call this type of matrix \textit{skew symmetric.}\footnote{Some mathematicians use the term \textit{antisymmetric}} \index{symmetric}\index{skew symmetric} We formally define these matrices here.
+
+\definition{def:symmetric}{{\bf Symmetric and Skew Symmetric Matrices}\\
+
+\index{transpose!symmetric}\index{transpose!skew-symmetric}\index{symmetric!definition}\index{skew symmetric!definition}\index{antisymmetric}A matrix \tta\ is \textit{symmetric} if $\ttat = \tta$. \\
+
+A matrix \tta\ is \textit{skew symmetric} if $\ttat = -\tta$.}
+
+Note that in order for a matrix to be either symmetric or skew symmetric, it must be square.
+
+So why was \tta\ttat\ symmetric in our previous example? Did we just luck out?\footnote{Of course not.} Let's take the transpose of \tta\ttat\ and see what happens.
+\begin{align*}
+	(\tta\ttat)^T &= (\ttat)^T(\tta)^T \quad\ \text{\scriptsize transpose multiplication rule} \\
+								&=	\tta\ttat	\quad\quad \quad\quad \text{\scriptsize $(\ttat)^T = \tta$}
+\end{align*}
+
+We have just \textit{proved} that no matter what matrix \tta\ we start with, the matrix \tta\ttat\ will be symmetric. Nothing in our string of equalities even demanded that \tta\ be a square matrix; it is always true. 
+
+We can do a similar proof to show that as long as \tta\ is square, $\tta+\ttat$ is a symmetric matrix.\footnote{Why do we say that \tta\ has to be square?} We'll instead show here that if \tta\ is a square matrix, then $\tta-\ttat$ is skew symmetric.
+\begin{align*} (\tta-\ttat)^T &= \ttat - (\ttat)^T	\quad\ \text{\scriptsize transpose subtraction rule} \\
+		&= \ttat - \tta \\
+		&= -(\tta - \ttat)
+\end{align*}
+
+So we took the transpose of $\tta - \ttat$ and we got $-(\tta-\ttat)$; this is the definition of being skew symmetric.
+
+We'll take what we learned from Example \ref{ex_transpose_3} and put it in a box. (We've already proved most of this is true; the rest we leave to solve in the Exercises.)
+
+\theorem{thm:symmetric}{\index{symmetric!theorem}\index{skew symmetric!theorem}{\bf Symmetric and Skew Symmetric Matrices}\\
+
+\begin{enumerate}
+\item		Given any matrix \tta, the matrices \tta\ttat\ and \ttat\tta\ are symmetric.
+\item		Let \tta\ be a square matrix. The matrix $\tta+\ttat$ is symmetric.
+\item		Let \tta\ be a square matrix. The matrix $\tta-\ttat$ is skew symmetric.
+\end{enumerate}
+}
+	
+Why do we care about the transpose of a matrix? Why do we care about symmetric matrices?
+
+There are two answers that each answer both of these questions. First, we are interested in the tranpose of a matrix and symmetric matrices because they are interesting.\footnote{Or: ``neat,'' ``cool,'' ``bad,'' ``wicked,'' ``phat,'' ``fo-shizzle.''} One particularly interesting thing about symmetric and skew symmetric matrices is this: consider the sum of $(\tta+\ttat)$ and $(\tta-\ttat)$:
+$$(\tta+\ttat)+(\tta-\ttat) = 2\tta.$$
+This gives us an idea: if we were to multiply both sides of this equation by $\frac12$, then the right hand side would just be \tta. This means that 
+$$\tta = \underbrace{\frac12(\tta+\ttat)}_{\text{\centering \scriptsize symmetric}}\ +\ \underbrace{\frac12(\tta-\ttat)}_{\text{\centering\scriptsize skew symmetric}}.$$
+That is, any matrix \tta\ can be written as the sum of a symmetric and skew symmetric matrix. That's interesting.
+ 
+The second reason we care about them is that they are very useful and important in various areas of mathematics. The transpose of a matrix turns out to be an important operation; symmetric matrices have many nice properties that make solving certain types of problems possible. 
+
+Most of this text focuses on the preliminaries of matrix algebra, and the actual uses are beyond our current scope. One easy to describe example is curve fitting. Suppose we are given a large set of data points that, when plotted, look roughly quadratic. How do we find the quadratic that ``best fits'' this data? %\footnote{No, we don't just ask Excel.}
+ The solution can be found using matrix algebra, and specifically a matrix called the \textit{pseudoinverse}. If \tta\ is a matrix, the pseudoinverse\index{pseudoinverse} of \tta\ is the matrix $\tta^\dagger = (\ttat\tta)^{-1}\ttat$ (assuming that the inverse exists). We aren't going to worry about what all the above means; just notice that it has a cool sounding name and the transpose appears twice. 
+
+In the next section we'll learn about the trace, another operation that can be performed on a matrix that is relatively simple to compute but can lead to some deep results.\\
+
+
+
+	
+%EXERCISES:
+
+%\textbf{Decompose matrix into symm and anti symm}
+
+%$(ABC)^T$
+
+%Prove \ttat\tta is symmetric
+
+%\tta+\ttat\ is symm
+
+%Diagonal of a antisymmetric matrix\\
+
+\printexercises{exercises/03_01_exercises}

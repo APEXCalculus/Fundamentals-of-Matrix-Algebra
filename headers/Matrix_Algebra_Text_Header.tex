@@ -1,0 +1,69 @@
+\documentclass[10pt]{book}
+\usepackage{ifthen}
+
+\newboolean{in_color}
+\newboolean{sevenbytenbooksize}
+\newboolean{ipadsize}   % for the ipad, Duh.
+
+\setboolean{in_color}{true}
+%\setboolean{booksize}{false}
+\setboolean{sevenbytenbooksize}{true}
+\setboolean{ipadsize}{false}
+
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+%
+%	Note how the iPad version differs from the booksize only in 
+% the size of the margins.
+%
+% 
+%
+					%% Layout for printed book through Amazon CreateSpace, perfect bound,
+					%% 7x10 ``journal'' size
+
+\ifthenelse{\boolean{ipadsize}}{\usepackage[paperheight=620pt,paperwidth=395pt, textheight=550pt,
+textwidth=345pt, includeheadfoot, hcentering=true]{geometry}}{}
+
+
+\ifthenelse{\boolean{sevenbytenbooksize}}{\usepackage[paperheight=10in,paperwidth=7in, textheight=550pt,
+textwidth=345pt, inner=1in,includeheadfoot]{geometry}}{}
+
+
+
+\usepackage{layout}
+\usepackage{graphicx}
+\usepackage{multicol}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{makeidx}
+
+\usepackage{changepage}
+\usepackage{ulem}
+\usepackage{xcolor}
+\usepackage[bookmarksnumbered,linkbordercolor=white]{hyperref}
+
+\usepackage{fancyhdr}
+\usepackage{calc}
+
+\input{headers/Header_Header}
+
+\makeindex
+
+\normalsize 
+
+\input{headers/Header_Simple_Definitions}
+
+\input{headers/Header_TikZ}
+
+\input{headers/Header_Environments_test}
+
+\input{headers/Header_Exercises}
+
+
+
+
+	 
+	 

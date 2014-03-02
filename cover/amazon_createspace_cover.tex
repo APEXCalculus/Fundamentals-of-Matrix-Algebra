@@ -1,0 +1,106 @@
+\documentclass{article}
+\usepackage[paperwidth=14.8in,paperheight=10.25in]{geometry}
+\usepackage{fontspec}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\pagestyle{empty}
+
+\newcommand{\unitsquare}[1][]
+{\begin{scope}
+	\draw [#1] (0,0) node (A) {} -- (1,0) node (B) {} -- (1,1) node (C) {} -- (0,1) node (D) {} -- cycle;
+	\draw [->,>=latex,#1, thin] (0,.25)--(1,.25);
+	\draw [->,>=latex,#1, thin] (0,.5)--(1,.5);
+	\draw [->,>=latex,#1, thin] (0,.75)--(1,.75);
+	\filldraw [black]  (A) circle (2pt);%black
+	\draw [#1,ultra thick]  (B) ++(-2pt,-2pt) rectangle ++(4pt,4pt);%red
+	\draw [ultra thick]  (C) circle (2pt);%blue
+	\draw [#1,ultra thick]  (D) ++(-2.5pt,-2.5pt) -- ++(5pt,0pt) -- ++(-2.5pt,5pt) -- cycle;%green
+	\end{scope}
+}
+
+\newcommand{\drawxlines}[3]
+{\draw[<->] (#1,0) -- (#2,0) node [right] {$x$};
+\foreach \x in {#3}
+		{\draw  (\x,-.1)--(\x,.1);
+			};
+}
+
+\newcommand{\drawylines}[3]
+{\draw[<->] (0,#1) -- (0,#2) node [above] {$y$};
+\foreach \x in {#3}
+		{\draw  (-.1,\x)--(.1,\x);
+			};
+}
+
+%\usepackage{fontspec}
+%\setmainfont[Mapping=tex-text]{Calibri}
+
+\begin{document}
+
+
+\begin{tikzpicture}[remember picture,overlay]
+\coordinate (top left) at (current page.north west);
+\coordinate (top right) at (current page.north east);
+\coordinate (bot left) at (current page.south west);
+\coordinate (bot right) at (current page.south east);
+\coordinate [xshift=.125in,yshift=-.125in] (ptop left) at (current page.north west) ;
+\coordinate [xshift=.125in,yshift=.125in] (pbot left) at (current page.south west);
+\coordinate [xshift=-.125in,yshift=-.125in] (ptop right) at (current page.north east);
+\coordinate [xshift=-.125in,yshift=.125in] (pbot right) at (current page.south east);
+\coordinate [xshift=7.125in] (lspine top) at (current page.north west);
+\coordinate [xshift=-7.125in] (rspine top) at (current page.north east);
+\coordinate [xshift=7.125in] (lspine bot) at (current page.south west);
+\coordinate [xshift=-7.125in] (rspine bot) at (current page.south east);
+
+\end{tikzpicture}
+
+\begin{tikzpicture}[remember picture,overlay]
+\shade [bottom color=red!50!black,top color=red!70!black!60]
+(top left) rectangle (bot right);
+
+%%
+%% Draws lines for reference. Turn off for final product.
+%%
+\draw[green] (ptop left) -- (ptop right) -- (pbot right) -- (pbot left) -- (ptop left);
+\draw [green] (lspine top) -- (lspine bot) (rspine top) -- (rspine bot);
+%%%\draw[green] (ptop right) -- (pbot left);
+
+\def\nodeshadowed[#1]#2;{
+\node[scale=1,above,#1]{#2};
+\node[scale=1,above,#1,yscale=-1,%scope fading=south,
+opacity=0.4]{#2};
+}
+
+\node[xshift=3.7in,yshift=5.5cm,scale=4,opacity=.5,blue] at (current page.center) {\fontspec[Scale=2.5]{Lucida Calligraphy}\itshape of};;
+\node[xshift=3.7in,yshift=7cm,scale=2,blue!30!black] at (current page.center) {\fontspec[Scale=2.5]{[cmcsc10]} \scshape Fundamentals};
+\node[xshift=3.7in,yshift=4cm,scale=2,blue!30!black] at (current page.center) {\fontspec[Scale=2.5]{[cmcsc10]} \scshape Matrix Algebra};
+\node[xshift=3.45in,yshift=2.5cm,scale=1,blue!30!black,left color=blue!10,right color=blue!50] at (current page.center) {\fontspec[Scale=1]{[cmsl10]} \ \hskip 5.25in Third Edition};
+
+\draw ($(current page.center)!.25!(current page.south)$) node [xshift=3.7in] {
+\begin{tikzpicture}[,>=latex,scale=5]
+		\drawxlines{-1.5}{1.5}{1,-1};
+		\drawylines{-.25}{1.5}{1};	
+		\begin{scope}[opacity=.5]\unitsquare[thin];\end{scope}
+		\unitsquare[very thick,cm={0.5,0.866,-0.866,0.5,(0,0)}];
+		\draw [very thick,->] (.5,0) arc (0:58:0.5cm) ;
+		\path (.7,0) arc (0:30:.7) node {\Huge $\theta$};
+\end{tikzpicture}
+};
+
+%\nodeshadowed [at={($(current page.center)!.75!(current page.south)$)},xshift=3.7in] {\huge $\left[ \begin{array}{cc} \cos \theta & -\sin \theta \\ \sin \theta & \cos \theta \end{array}\right] $};
+
+\draw (pbot right) node [xshift=-1.4in,yshift=.75in,scale=1,blue!30!black] {\fontspec[Scale=2]{[cmr10]}   Gregory Hartman};
+
+%\draw (current page.center) node [yshift=-0.5in,rotate=-90,blue!30!black,scale=1.5] {\fontspec[Scale=1.5]{[cmcsc10]} Fundamentals of Matrix Algebra};
+
+%\draw (current page.center) node [yshift=3.5in,rotate=-90,blue!30!black,scale=1.25] {\fontspec[Scale=1.5]{[cmcsc10]} \scshape HARTMAN};
+
+\draw (current page.center) node [yshift=0in,rotate=-90,blue!30!black] {\fontspec[Scale=1.875]{[cmcsc10]} \scshape HARTMAN \fontspec[Scale=2.25]{[cmcsc10]} \quad Fundamentals of Matrix Algebra \quad \fontspec[Scale=1.125]{[cmsl8]} Third Edition};
+
+%\draw (current page.center) node [yshift=-4in,rotate=-90,blue!30!black,scale=1.5] {\fontspec[Scale=.75]{[cmsl8]} Second Edition};
+
+\end{tikzpicture}
+
+
+
+\end{document}

@@ -1,0 +1,15 @@
+{$\vx = \bmx{c}0\\1\\1\emx$, $\vy = \bmx{c} 0\\-1\\1\emx$}
+{$\vx+\vy = \bmx{c}0\\0\\2\emx$, $\vx-\vy = \bmx{c} 0\\2\\0\emx$
+
+Sketches may vary slightly.
+
+\begin{tikzpicture}[>=latex,x={(-.53cm,-.53cm)},y={(.75cm,0)},z={(0,.75cm)}]
+\drawxaxis{0}{2}{1}{1};
+\drawyaxis{-1}{2}{1}{1};
+\drawzaxis{0}{2}{1}{1};
+\drawvect{0}{1}{1}{dotted}{->,thick}{above right}{\vx};
+\drawvect{0}{-1}{1}{dotted}{->,thick}{above left}{\vy};
+\drawvect{0}{0}{2}{dotted}{->,thick}{right}{$\vx+\vy$};
+\drawvect{0}{2}{0}{dotted}{->,thick}{below}{$\vx-\vy$};
+\end{tikzpicture}
+}

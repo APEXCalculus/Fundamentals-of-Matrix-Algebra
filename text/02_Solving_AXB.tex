@@ -1,0 +1,152 @@
+\section{Solving Matrix Equations $\tta\ttx=\ttb$}\label{sec:solve_axb}
+
+\asyouread{
+\item	T/F: To solve the matrix equation $\tta\ttx=\ttb$, put the matrix $\bmx{cc} \tta & \ttx \emx$ into \rref\ and interpret the result properly.
+\item	T/F: The first column of a matrix product \tta\ttb\ is \tta\ times the first column of \ttb.
+\item	Give two reasons why one might solve for the columns of \ttx\ in the equation \tta\ttx=\ttb\ separately.
+}
+
+We began last section talking about solving numerical equations like $ax=b$ for $x$. We mentioned that solving matrix equations of the form $\tta\ttx=\ttb$ is of interest, but we first learned how to solve the related, but simpler, equations \ttaxb. In this section we will learn how to solve the general matrix equation $\tta\ttx=\ttb$ for \ttx.
+
+We will start by considering the best case scenario when solving \ttaxb; that is, when \tta\ is square and we have exactly one solution. For instance, suppose we want to solve \ttaxb\ where $$\tta = \bmx{cc}1&1\\2&1\emx \quad \text{and} \quad \vb = \bmx{c} 0\\1\emx.$$ We know how to solve this; put the appropriate matrix into \rref\ and interpret the result. 
+$$\bmx{ccc}1&1&0\\2&1&1\emx \quad \arref \quad \bmx{ccc}1&0&1\\0&1&-1\emx$$
+We read from this that $$\vx = \bmx{c}1\\-1\emx.$$
+
+Written in a more general form,  we found our solution by forming the augmented matrix $$\bmx{cc}\tta & \vb\emx$$ and interpreting its \rref: $$\bmx{cc}\tta & \vb\emx \quad \arref \quad \bmx{cc}\tti & \vx \emx$$ Notice that when the \rref\ of \tta\ is the identity matrix \tti\ we have exactly one solution. This, again, is the best case scenario.
+
+We apply the same general technique to solving the matrix equation $\tta\ttx=\ttb$ for \ttx. We'll assume that \tta\ is a square matrix (\ttb\ need not be) and we'll form the augmented matrix $$\bmx{cc}\tta&\ttb\emx.$$ Putting this matrix into \rref\ will give us \ttx, much like we found \vx\ before.
+$$\bmx{cc}\tta&\ttb\emx \quad \arref \quad \bmx{cc}\tti & \ttx\emx$$
+
+As long as the \rref\ of \tta\ is the identity matrix, this technique works great. After a few examples, we'll discuss why this technique works, and we'll also talk %\footnote{we'll just talk; we won't actually answer anything}
+  just a little bit about what happens when the \rref\ of \tta\ is not the identity matrix.
+
+First, some examples.\\
+
+\example{ex_axb_1}{Solve the matrix equation $\tta\ttx=\ttb$ where $$\tta = \bmx{cc} 1&-1\\ 5&3\emx\quad \text{and} \quad \ttb = \bmx{ccc} -8&-13&1\\32&-17&21\emx.$$}
+{%
+To solve $\tta\ttx=\ttb$ for \ttx, we form the proper augmented matrix, put it into \rref, and interpret the result.
+
+$$\bmx{ccccc}1&-1&-8&-13&1\\5&3&32&-17&21\emx\quad \arref \quad \bmx{ccccc}1&0&1&-7&3\\0&1&9&6&2\emx$$
+
+We read from the \rref\ of the matrix that $$\ttx = \bmx{ccc}1&-7&3\\9&6&2\emx.$$ We can easily check to see if our answer is correct by multiplying $\tta\ttx$.}\\ % \eexset
+
+\example{ex_axb_2}{Solve the matrix equation $\tta\ttx = \ttb$ where $$\tta = \bmx{ccc}1&0&2\\0&-1&-2\\2&-1&0\emx \quad\text{and}\quad \ttb = \bmx{cc}-1&2\\2&-6\\2&-4\emx.$$}
+{To solve, let's again form the augmented matrix $$\bmx{cc} \tta & \ttb\emx,$$ put it into \rref, and interpret the result.
+
+\enlargethispage{2\baselineskip}
+
+$$\bmx{ccccc}1&0&2&-1&2\\0&-1&-2&2&-6\\2&-1&0&2&-4\emx\quad\arref\quad \bmx{ccccc}1&0&0&1&0\\0&1&0&0&4\\0&0&1&-1&1\emx$$
+
+We see from this that $$\ttx = \bmx{cc}1&0\\0&4\\-1&1\emx.$$
+\vskip -\baselineskip}\\ % \eexset
+
+%As we have done many times in the past, we need to learn another new concept before we can directly tackle the problem at hand. Since we are solving a problem that involves matrix multiplication, it will be useful to better understand matrix multiplication.
+
+Why does this work? To see the answer, let's define five matrices. $$\tta = \bmx{cc}1&2\\3&4\emx, \ \ \vu =\bmx{c}1\\1\emx, \ \ \vv =\bmx{c}-1\\1\emx, \ \ \vw = \bmx{c} 5\\6\emx \ \ \text{and} \ \ \ttx = \bmx{ccc}1&-1&5\\1&1&6\emx$$
+
+Notice that \vu, \vv\ and \vw\ are the first, second and third columns of \ttx, respectively. Now consider this list of matrix products: $\tta\vu$, $\tta\vv$, $\tta\vw$ and $\tta\ttx$.
+
+\begin{center}
+\begin{minipage}{100pt}
+\begin{align*}
+	\tta\vu &= \bmx{cc}1&2\\3&4\emx\bmx{c}1\\1\emx\\
+					&= \bmx{c}3\\7\emx\end{align*}
+					
+\begin{align*}
+	\tta\vw	&= \bmx{cc}1&2\\3&4\emx\bmx{c}5\\6\emx\\
+					&= \bmx{c}17\\39\emx\end{align*}
+\end{minipage}
+\begin{minipage}{20pt}
+\
+\end{minipage}
+\begin{minipage}{100pt}
+\begin{align*}
+	\tta\vv &= \bmx{cc}1&2\\3&4\emx\bmx{c}-1\\1\emx\\
+					&= \bmx{c}1\\1\emx\end{align*}
+					
+\begin{align*}
+	\tta\ttx	&= \bmx{cc}1&2\\3&4\emx\bmx{ccc}1&-1&5\\1&1&6\emx\\
+					&= \bmx{ccc}3&1&17\\7&1&39\emx\end{align*}
+\end{minipage}
+\end{center}
+
+So again note that the columns of \ttx\ are \vu, \vv\ and \vw; that is, we can write $$\ttx = \bmx{ccc}\vu & \vv&\vw \emx.$$
+Notice also that the columns of $\tta\ttx$ are $\tta\vu$, $\tta\vv$ and \tta\vw, respectively. Thus we can write 
+\begin{align*}\tta\ttx &= \tta\bmx{ccc}\vu & \vv&\vw \emx\\
+&=\bmx{ccc} \tta\vu & \tta\vv & \tta\vw \emx\\
+ &= \bmx{ccc} \bmx{c}3\\7\emx & \bmx{c} 1\\1\emx & \bmx{c}17\\39\emx \emx \\
+ &=\bmx{ccc}3&1&17\\7&1&39\emx\end{align*}
+ 
+We summarize what we saw above in the following statement: 
+\begin{quote}
+ The columns of a matrix product \tta\ttx\  are \tta\ times the columns of \ttx.
+\end{quote}
+
+How does this help us solve the matrix equation $\tta\ttx=\ttb$ for \ttx? Assume that \tta\ is a square matrix (that forces \ttx\ and \ttb\ to be the same size). We'll let $\vect{x_1},\vect{x_2}, \cdots \vect{x_n}$ denote the columns of the (unknown) matrix \ttx, and we'll let $\vect{b_1},\vect{b_2}, \cdots \vect{b_n}$ denote the columns of \ttb. We want to solve $\tta\ttx = \ttb$ for \ttx. That is, we want \ttx\ where 
+\begin{align*} \tta\ttx &= \ttb\\
+\tta\bmx{cccc}\vect{x_1}&\vect{x_2}& \cdots & \vect{x_n} \emx & = \bmx{cccc}\vect{b_1}&\vect{b_2}& \cdots & \vect{b_n} \emx\\
+\bmx{cccc}\tta\vect{x_1}&\tta\vect{x_2}& \cdots & \tta\vect{x_n} \emx & = \bmx{cccc}\vect{b_1}&\vect{b_2}& \cdots & \vect{b_n} \emx\end{align*}
+
+If the matrix on the left hand side is equal to the matrix on the right, then their respective columns must be equal. This means we need to solve $n$ equations:
+\begin{align*}
+\tta\vect{x_1} & = \vect{b_1}\\
+\tta\vect{x_2} & = \vect{b_2}\\
+\vdots\		\		& = \ \vdots \\
+\tta\vect{x_n} &= \vect{b_n}
+\end{align*}
+
+We already know how to do this; this is what we learned in the previous section. Let's do this in a concrete example. In our above work we defined matrices \tta\ and \ttx, and looked at the product \tta\ttx. Let's call the product \ttb; that is, set \ttb = \tta\ttx. Now, let's pretend that we don't know what \ttx\ is, and let's try to find the matrix \ttx\ that satisfies the equation $\tta\ttx=\ttb$. As a refresher, recall that $$\tta = \bmx{cc}1&2\\3&4\emx \quad \text{and} \quad \ttb = \bmx{ccc}3&1&17\\7&1&39\emx.$$
+
+Since \tta\ is a $2\times 2$ matrix and \ttb\ is a $2\times 3$ matrix, what dimensions must \ttx\ be in the equation $\tta\ttx=\ttb$? The number of rows of \ttx\ must match the number of columns of \tta; the number of columns of \ttx\ must match the number of columns of \ttb. Therefore we know that \ttx\ must be a $2\times 3$ matrix.
+
+We'll call the three columns of \ttx\ $\vect{x_1}$, $\vect{x_2}$ and $\vect{x_3}$. Our previous explanation tells us that if $\tta\ttx = \ttb$, then:
+\begin{align*}
+\tta\ttx & = \ttb\\
+\tta\bmx{ccc}\vect{x_1} & \vect{x_2} & \vect{x_3}\emx & = \bmx{ccc}3&1&17\\7&1&39\emx \\
+\bmx{ccc}\tta\vect{x_1} & \tta\vect{x_2} & \tta\vect{x_3}\emx & =\bmx{ccc}3&1&17\\7&1&39\emx. 
+\end{align*}
+Hence
+\begin{align*}
+\tta\vect{x_1} & = \bmx{c}3\\7\emx\\
+\tta\vect{x_2} & = \bmx{c}1\\1\emx\\
+\tta\vect{x_3} & = \bmx{c}17\\39\emx\\
+\end{align*}
+
+To find \vect{x_1}, we form the proper augmented matrix and put it into \rref\ and interpret the results. $$\bmx{ccc}1&2&3\\3&4&7\emx \quad \arref \quad \bmx{ccc}1&0&1\\0&1&1\emx$$
+This shows us that $$\vect{x_1} = \bmx{c}1\\1\emx.$$
+
+To find \vect{x_2}, we again form an augmented matrix and interpret its \rref. $$\bmx{ccc}1&2&1\\3&4&1\emx \quad \arref \quad \bmx{ccc}1&0&-1\\0&1&1\emx$$
+Thus $$\vect{x_2} = \bmx{c}-1\\1\emx$$ which matches with what we already knew from above.
+
+Before continuing on in this manner to find \vect{x_3}, we should stop and think. If the matrix vector equation \ttaxb\ is consistent, then the steps involved in putting $$\bmx{cc}\tta & \vb\emx$$ into \rref\ depend only on \tta; it does not matter what \vb\ is. So when we put the two matrices $$\bmx{ccc}1&2&3\\3&4&7\emx \quad \text{and} \quad \bmx{ccc}1&2&1\\3&4&1\emx $$ from above into \rref, we performed exactly the same steps! (In fact, those steps are: $-3R_1+R_2\rightarrow R_2$; $-\frac12R_2\rightarrow R_2$; $-2R_2+R_1\rightarrow R_1$.)
+
+Instead of solving for each column of \ttx\ separately, performing the same steps to put the necessary matrices into \rref\ three different times, why don't we just do it all at once?\footnote{One reason to do it three different times is that we enjoy doing unnecessary work. Another reason could be that we are stupid.} Instead of individually putting $$\bmx{ccc}1&2&3\\3&4&7\emx, \quad \bmx{ccc}1&2&1\\3&4&1\emx \quad \text{and} \quad \bmx{ccc}1&2&17\\3&4&39\emx$$ into \rref, let's just put $$\bmx{ccccc}1&2&3&1&17\\3&4&7&1&39\emx$$ into \rref.
+$$\bmx{ccccc}1&2&3&1&17\\3&4&7&1&39\emx \quad \arref \quad \bmx{ccccc}1&0&1&-1&5\\0&1&1&1&6\emx$$
+
+By looking at the last three columns, we see \ttx: $$\ttx = \bmx{ccc}1&-1&5\\1&1&6\emx.$$
+
+%We'll return to theory in a moment. First, a few examples.
+
+Now that we've justified the technique we've been using in this section to solve $\tta\ttx=\ttb$ for \ttx, we reinfornce its importance by restating it as a Key Idea.
+
+\keyidea{idea:solve_AXB}{\textbf{Solving $\tta\ttx=\ttb$}\\
+
+Let \tta\ be an $n\times n$ matrix, where the \rref\ of \tta\ is \tti. To solve the matrix equation $\tta\ttx=\ttb$ for \ttx,
+	\begin{enumerate}
+	\item		Form the augmented matrix $\bmx{cc}\tta&\ttb\emx$.
+	\item		Put this matrix into \rref. It will be of the form $\bmx{cc} \tti & \ttx \emx$, where \ttx\ appears in the columns where \ttb\ once was.
+	\end{enumerate}
+}
+	
+These simple steps cause us to ask certain questions. First, we specify above that \tta\ should be a square matrix. What happens if \tta\ isn't square? Is a solution still possible? Secondly, we only considered cases where the \rref\ of \tta\ was \tti\ (and stated that as a requirement in our Key Idea). What if the \rref\ of \tta\ isn't \tti? Would we still be able to find a solution? (Instead of having exactly one solution, could we have no solution? Infinite solutions? How would we be able to tell?)
+%what if  we found the \rref\ of $\bmx{cc}\tta&\ttb\emx$ and we did not get the identity matrix \tti\ where \tta\ used to be? What would that mean?
+%\footnote{Recall that solutions to linear systems come in one of three forms: exactly one solution, infinite solutions and no solution. We have focused here on exactly one solution to $\tta\ttx=\ttb$. What would the \rref\ of $\bmx{cc} \tta & \ttb\emx$ look like if there were no solution? Infinite solutions? How would we represent the solution if there were infinite solutions?}
+
+
+These questions are good to ask, and we leave it to the reader to discover their answers. Instead of tackling these questions, we instead tackle the problem of ``Why do we care about solving $\tta\ttx=\ttb$?'' The simple answer is that, for now, we only care about the special case when $\ttb=\tti$. By solving $\tta\ttx = \tti$ for \ttx, we find a matrix \ttx\ that, when multiplied by \tta, gives the identity \tti. That will be very useful.\\
+
+%revisit an old algebra problem: solve $ax=b$ for $x$. 
+
+%We know that $x = \frac{b}{a}$; we can write this several different ways. One formal way is to write $x = a^{-1}b$, where $a^{-1}$ is that special number where $a^{-1}\cdot a = 1$. 
+
+\printexercises{exercises/02_04_exercises}

@@ -1,0 +1,285 @@
+\section{The Determinant}\label{sec:determinant_1}
+
+\asyouread{
+\item	T/F: The determinant of a matrix is always positive.
+\item	T/F: To compute the determinant of a $3\times 3$ matrix, one needs to compute the determinants of 3 $2\times 2$ matrices.
+%\item	T/F: The determinant of a matrix can be 0.
+\item		Give an example of a $2\times 2$ matrix with a determinant of 3.}
+
+In this chapter so far we've learned about the transpose (an operation on a matrix that returns another matrix) and the trace (an operation on a square matrix that returns a number). In this section we'll learn another operation on square matrices that returns a number, called the \textit{determinant}. 
+We give a pseudo-definition of the determinant here.
+\begin{center}
+\parbox{240pt}{The \textit{determinant} of an $n\times n$ matrix \tta\ is a number, denoted \det{\tta}, that is determined by \tta.}
+\end{center}
+
+That definition isn't meant to explain everything; it just gets us started by making us realize that the determinant is a number. The determinant is kind of a tricky thing to define. Once you know and understand it, it isn't that hard, but getting started is a bit complicated.\footnote{It's similar to learning to ride a bike. The riding itself isn't hard, it is getting started that's difficult.} We start simply; we define the determinant for $2 \times 2$ matrices.
+
+\definition{def:determinant_1}{\index{determinant!of $2\times 2$ matrices}\index{matrix!determinant}\textbf{Determinant of $2\times 2$ Matrices}\\
+
+Let $$\tta = \bmx{cc}a&b\\c&d\emx.$$ The \textit{determinant of \tta}, denoted by $$\det{\tta} \ \text{or}\ \bdt{cc}a&b\\c&d\edt,$$ is $ad-bc$.
+}
+We've seen the expression $ad-bc$ before. In Section \ref{sec:inverses}, we saw that a $2\times2$ matrix \tta\ has inverse $$\frac{1}{ad-bc}\bmx{cc}d&-b\\-c&a\emx$$ as long as $ad-bc\neq 0$; otherwise, the inverse does not exist. We can rephrase the above statement now: If det(\tta)$\neq 0$, then $$\ttai = \frac{1}{\det{\tta}}\bmx{cc}d&-b\\-c&a\emx.$$
+
+A brief word about the notation: notice that we can refer to the determinant by using what \textit{looks like} absolute value bars around the entries of a matrix. We discussed at the end of the last section the idea of measuring the ``size'' of a matrix, and mentioned that there are many different ways to measure size. The determinant is one such way. Just as the absolute value of a number measures its size (and ignores its sign), the determinant of a matrix is a measurement of the size of the matrix. (Be careful, though: \det{\tta} can be negative!)
+
+Let's practice.\\
+
+\example{ex_determinant_1}{ Find the determinant of \tta, \ttb\ and \ttc\ where $$\tta = \bmx{cc}1&2\\3&4\emx, \ \ttb = \bmx{cc}3&-1\\2&7\emx\ \text{and}\ \ttc = \bmx{cc}1&-3\\-2&6\emx.$$}
+{Finding the determinant of \tta:
+\begin{align*}
+\det{\tta} &= \bdt{cc}1&2\\3&4\edt \\
+						&= 1(4) - 2(3)\\
+						&= -2.
+\end{align*}
+
+Similar computations show that $\det{\ttb} = 3(7)- (-1)(2) = 23$ and $\det{\ttc} = 1(6) - (-3)(-2) = 0$.}\\ % \eexset
+
+Finding the determinant of a $2\times2$ matrix is pretty straightforward. It is natural to ask next ``How do we compute the determinant of matrices that are not $2\times2$?'' We first need to define some terms.\footnote{This is the standard definition of these two terms, although slight variations exist.}
+
+\definition{def:minor_cofactor}{\index{matrix!minor}\index{matrix!cofactor}\index{minor}\index{cofactor}\textbf{Matrix Minor, Cofactor}\\
+
+Let \tta\ be an $n\times n$ matrix. The \textit{$i,j$ minor of \tta}, denoted $\tta_{i,j}$, is the  determinant of the $(n-1)\times(n-1)$ matrix formed by deleting the $i^{th}$ row and $j^{th}$ column of \tta.\\
+
+The \textit{$i,j$-cofactor of \tta} is the number $$C_{ij}=(-1)^{i+j}\tta_{i,j}.$$
+}
+Notice that this definition makes reference to taking the determinant of a matrix, while we haven't yet defined what the determinant is beyond $2\times 2$ matrices. We recognize this problem, and we'll see how far we can go before it becomes an issue.
+
+Examples will help.\\
+
+\example{ex_minor}{Let $$\tta = \bmx{ccc}1&2&3\\4&5&6\\7&8&9\emx\ \text{and}\ \ttb = \bmx{cccc}1&2&0&8\\-3&5&7&2\\-1&9&-4&6\\1&1&1&1\emx.$$ 
+Find $\tta_{1,3}$, $\tta_{3,2}$, $\ttb_{2,1}$, $\ttb_{4,3}$ and their respective cofactors.}
+{To compute the minor $\tta_{1,3}$, we remove the first row and third column of \tta\ then take the determinant. 
+$$\tta = \bmx{ccc}1&2&3\\4&5&6\\7&8&9\emx\Rightarrow\bmx{ccc}\textbf{\sout{1}}&\textbf{\sout{2}}&\textbf{\sout{3}}\\4&5&\textbf{\sout{6}}\\7&8&\textbf{\sout{9}}\emx\Rightarrow\bmx{cc}4&5\\7&8\emx $$
+$$\tta_{1,3} = \bdt{cc}4&5\\7&8\edt = 32-35 = -3.$$
+ 
+The corresponding cofactor, $C_{1,3}$, is
+$$C_{1,3} = (-1)^{1+3}\tta_{1,3} = (-1)^4(-3) = -3.$$
+
+The minor $\tta_{3,2}$ is found by removing the third row and second column of \tta\ then taking the determinant.
+$$\tta = \bmx{ccc}1&2&3\\4&5&6\\7&8&9\emx\Rightarrow\bmx{ccc}1&\textbf{\sout{2}}&3\\4&\textbf{\sout{5}}&6\\ \textbf{\sout{7}}&\textbf{\sout{8}}&\textbf{\sout{9}}\emx\Rightarrow \bmx{cc}1&3\\4&6\emx$$
+$$\tta_{3,2} = \bdt{cc}1&3\\4&6\edt = 6-12 = -6.$$ 
+The corresponding cofactor, $C_{3,2}$, is
+$$C_{3,2} = (-1)^{3+2}\tta_{3,2} = (-1)^5(-6) = 6.$$
+
+\drawexampleline%{ex_minor}
+
+The minor $\ttb_{2,1}$ is found by removing the second row and first column of \ttb\ then taking the determinant.
+$$\ttb = \bmx{cccc}1&2&0&8\\-3&5&7&2\\-1&9&-4&6\\1&1&1&1\emx \Rightarrow \bmx{cccc}\textbf{\sout{1}}&2&0&8\\ \textbf{\sout{-3}}&\textbf{\sout{5}}&\textbf{\sout{7}}&\textbf{\sout{2}}\\ \textbf{\sout{-1}}&9&-4&6\\ \textbf{\sout{1}}&1&1&1\emx \Rightarrow \bmx{ccc}2&0&8\\9&-4&6\\1&1&1\emx $$
+$$\ttb_{2,1} = \bdt{ccc}2&0&8\\9&-4&6\\1&1&1\edt \stackrel{!}{=} \ ?$$
+We're a bit stuck. We don't know how to find the determinate of this $3\times 3$ matrix. We'll come back to this later. The corresponding cofactor is
+$$C_{2,1} = (-1)^{2+1}\ttb_{2,1} = -\ttb_{2,1},$$ whatever this number happens to be.
+
+
+The minor $\ttb_{4,3}$ is found by removing the fourth row and third column of \ttb\ then taking the determinant.
+$$\ttb = \bmx{cccc}1&2&0&8\\-3&5&7&2\\-1&9&-4&6\\1&1&1&1\emx \Rightarrow \bmx{cccc}1&2&\textbf{\sout{0}}&8\\-3&5&\textbf{\sout{7}}&2\\-1&9&\textbf{\sout{-4}}&6\\ \textbf{\sout{1}}&\textbf{\sout{1}}&\textbf{\sout{1}}&\textbf{\sout{1}}\emx \Rightarrow \bmx{ccc}1&2&8\\-3&5&2\\-1&9&6\emx$$
+$$\ttb_{4,3} = \bdt{ccc}1&2&8\\-3&5&2\\-1&9&6\edt \stackrel{!}{=}\ ?$$
+Again, we're stuck. We won't be able to fully compute $C_{4,3}$; all we know so far is that
+$$C_{4,3} = (-1)^{4+3}\ttb_{4,3} = (-1)\ttb_{4,3}.$$ Once we learn how to compute determinates for matrices larger than $2\times 2$ we can come back and finish this exercise.}\\ % \eexset
+
+In our previous example we ran into a bit of trouble. By our definition, in order to compute a minor of an $n\times n$ matrix we needed to compute the determinant of a $(n-1)\times(n-1)$ matrix. This was fine when we started with a $3\times3$ matrix, but when we got up to a $4\times4$ matrix (and larger) we run into trouble.
+
+We are almost ready to define the determinant for any square matrix; we need one last definition.
+
+\definition{def:cofactor}{\index{cofactor!expansion}\textbf{Cofactor Expansion}\\
+
+Let \tta\ be an $n\times n$ matrix. \\
+
+The \textit{cofactor expansion of \tta\ along the $i^{th}$ row} is the sum $$a_{i,1}C_{i,1} + a_{i,2}C_{i,2} + \cdots + a_{i,n}C_{i,n}.$$
+
+The \textit{cofactor expansion of \tta\ down the $j^{th}$ column} is the sum $$a_{1,j}C_{1,j} + a_{2,j}C_{2,j} + \cdots + a_{n,j}C_{n,j}.$$
+}
+
+The notation of this definition might be a little intimidating, so let's look at an example.\\
+
+\example{ex_cofactor}{Let $$\tta = \bmx{ccc}1&2&3\\4&5&6\\7&8&9\emx.$$ Find the cofactor expansions along the second row and down the first column.}
+{By the definition, the cofactor expansion along the second row is the sum 
+$$a_{2,1}C_{2,1} + a_{2,2}C_{2,2} + a_{2,3}C_{2,3}.$$
+(Be sure to compare the above line to the definition of cofactor expansion, and see how the ``$i$'' in the definition is replaced by ``2'' here.)
+
+We'll find each cofactor and then compute the sum.
+$$C_{2,1} = (-1)^{2+1}\bdt{cc}2&3\\8&9\edt  = (-1)(-6) = 6 \quad\quad \left(\parbox{100pt}{\centering\scriptsize we removed the second row and first column of \tta\ to compute the minor}\right)$$
+
+$$C_{2,2} = (-1)^{2+2}\bdt{cc}1&3\\7&9\edt = (1)(-12) = -12 \quad\quad \left(\parbox{100pt}{\centering\scriptsize we removed the second row and second column of \tta\ to compute the minor}\right)$$
+
+$$C_{2,3} = (-1)^{2+3}\bdt{cc}1&2\\7&8\edt = (-1)(-6) = 6 \quad\quad \left(\parbox{100pt}{\centering\scriptsize we removed  the second row and third column of \tta\ to compute the minor}\right)$$
+
+%Recall that $a_{2,1}$ refers to the entry of \tta\ in the second row and first column. 
+
+Thus the cofactor expansion along the second row is
+\begin{align*}
+a_{2,1}C_{2,1} + a_{2,2}C_{2,2} + a_{2,3}C_{2,3} &= 4(6) + 5(-12) + 6(6) \\
+&= 24-60+36\\
+&= 0
+\end{align*}
+
+At the moment, we don't know what to do with this cofactor expansion; we've just successfully found it.
+
+We move on to find the cofactor expansion down the first column. By the definition, this sum is
+$$a_{1,1}C_{1,1} + a_{2,1}C_{2,1} + a_{3,1}C_{3,1}.$$
+(Again, compare this to the above definition and see how we replaced the ``$j$'' with ``1.'')
+
+We find each cofactor:
+$$C_{1,1} = (-1)^{1+1}\bdt{cc}5&6\\8&9\edt = (1)(-3) = -3 \quad\quad \left(\parbox{100pt}{\centering\scriptsize we removed  the first row and first column of \tta\ to compute the minor}\right)$$
+
+$$C_{2,1} = (-1)^{2+1}\bdt{cc}2&3\\8&9\edt  = (-1)(-6) = 6 \quad\quad \left(\parbox{100pt}{\centering\scriptsize we computed this cofactor above}\right)$$
+
+$$C_{3,1} = (-1)^{3+1}\bdt{cc}2&3\\5&6\edt = (1)(-3) = -3 \quad\quad \left(\parbox{100pt}{\centering\scriptsize we removed  the third row and first column of \tta\ to compute the minor}\right)$$
+
+%%%
+
+%\begin{align*}
+%C_{1,1} &= (-1)^{1+1}\bdt{cc}5&6\\8&9\edt = (1)(-3) &= -3 & %\left(\parbox{100pt}{\centering\scriptsize we removed  the first row and %first column of \tta\ to compute the minor}\right)\\
+%C_{2,1} &= (-1)^{2+1}\bdt{cc}2&3\\8&9\edt  = (-1)(-6)& = 6 & %\left(\parbox{100pt}{\centering\scriptsize we computed this cofactor %above}\right)\\
+%C_{3,1} &= (-1)^{3+1}\bdt{cc}2&3\\5&6\edt = (1)(-3) &= -3 & %\left(\parbox{100pt}{\centering\scriptsize we removed  the third row and %first column of \tta\ to compute the minor}\right)
+%\end{align*}
+
+The cofactor expansion down the first column is 
+\begin{align*}
+a_{1,1}C_{1,1} + a_{2,1}C_{2,1} + a_{3,1}C_{3,1} &= 1(-3) + 4(6) + 7(-3) \\
+&= -3+24-21\\
+&=0
+\end{align*}
+\vskip -\baselineskip} \\ %\eexset
+
+Is it a coincidence that both cofactor expansions were 0? We'll answer that in a while.
+
+This section is entitled ``The Determinant,'' yet we don't know how to compute it yet except for $2\times 2$ matrices. We finally define it now.
+
+%First, we defined a \textit{minor} of a matrix \tta\- a submatrix of \tta. Taking the determinant of the minor and multiplying it by a power of $-1$ gave us a \textit{cofactor.} Finally, we computed a sum by multiplying cofactors by corresponding matrix entries along rows or columns. We are now ready for the definition of the determinant.
+
+\definition{def:determinant}{\index{matrix!determinant}\index{determinant!definition}\textbf{The Determinant}\\
+
+The \textit{determinant} of an $n\times n$ matrix \tta, denoted \det{\tta} or $|\tta|$, is a number given by the following:
+\begin{itemize}
+\item		if \tta\ is a $1\times 1$ matrix $\tta = [a]$, then $\det{\tta} = a.$
+
+\item		if \tta\ is a $2\times 2$ matrix $$\tta = \bmx{cc} a&b\\c&d\emx,$$ then $\det{\tta} = ad-bc$.
+
+\item		if \tta\ is an $n\times n$ matrix, where $n\geq 2$, then \det{\tta}\ is the number found by taking the cofactor expansion along the first row of \tta. That is, $$\det{\tta} = a_{1,1}C_{1,1} + a_{1,2}C_{1,2} + \cdots + a_{1,n}C_{1,n}.$$
+\end{itemize}
+}
+Notice that in order to compute the determinant of an $n\times n$ matrix, we need to compute the determinants of $n$ $(n-1)\times (n-1)$ matrices. This can be a lot of work. We'll later learn how to shorten some of this. First, let's practice.\\
+
+\example{ex_determinant_2}{ Find the determinant of $$\tta = \bmx{ccc}1&2&3\\4&5&6\\7&8&9\emx.$$
+}
+{Notice that this is the matrix from Example \ref{ex_cofactor}. The cofactor expansion along the first row is $$\det{\tta} = a_{1,1}C_{1,1}+a_{1,2}C_{1,2}+a_{1,3}C_{1,3}.$$ We'll compute each cofactor first then take the appropriate sum.\\
+
+\noin\begin{minipage}{120pt}
+\begin{align*} C_{1,1} &= (-1)^{1+1}\tta_{1,1} \\
+												&= 1\cdot\bdt{cc}5&6\\8&9\edt\\
+												&= 45-48\\
+												&=-3
+\end{align*}
+\end{minipage}\vline
+\begin{minipage}{120pt}
+\begin{align*} C_{1,2} &= (-1)^{1+2}\tta_{1,2} \\
+	&= (-1)\cdot\bdt{cc} 4&6\\7&9\edt\\
+	&= (-1)(36-42)\\
+	&= 6
+\end{align*}
+\end{minipage}\vline
+\begin{minipage}{120pt}
+\begin{align*} C_{1,3} &= (-1)^{1+3}\tta_{1,3}\\
+	&= 1\cdot\bdt{cc}4&5\\7&8\edt\\
+	&= 32-35\\
+	&= -3
+\end{align*}
+\end{minipage}
+\vs{.2}
+
+Therefore the determinant of \tta\ is $$\det{\tta} = 1(-3) + 2(6)+3(-3) = 0.$$
+ 
+\vskip -\baselineskip}\\ % \eexset
+
+\example{ex_determinant_3}{Find the determinant of $$\tta = \bmx{ccc} 3&6&7\\0&2&-1\\3&-1&1\emx.$$
+}
+{We'll compute each cofactor first then find the determinant.
+
+\noin\begin{minipage}{120pt}
+\begin{align*} C_{1,1} &= (-1)^{1+1}\tta_{1,1} \\
+												&= 1\cdot\bdt{cc}2&-1\\-1&1\edt\\
+												&= 2-1\\
+												&=1
+\end{align*}
+\end{minipage}\vline
+\begin{minipage}{120pt}
+\begin{align*} C_{1,2} &= (-1)^{1+2}\tta_{1,2} \\
+	&= (-1)\cdot\bdt{cc} 0&-1\\3&1\edt\\
+	&= (-1)(0+3)\\
+	&= -3
+\end{align*}
+\end{minipage}\vline
+\begin{minipage}{120pt}
+\begin{align*} C_{1,3} &= (-1)^{1+3}\tta_{1,3}\\
+	&= 1\cdot\bdt{cc}0&2\\3&-1\edt\\
+	&= 0-6\\
+	&= -6
+\end{align*}
+\end{minipage}
+\vs{.2}
+
+Thus the determinant is $$\det{\tta} = 3(1)+6(-3)+7(-6) = -57.$$
+
+\vskip -\baselineskip} \\ %\eexset
+
+\example{ex_determinant_4}{Find the determinant of $$\tta = \bmx{cccc} 1&2&1&2\\-1&2&3&4\\8&5&-3&1\\5&9&-6&3\emx.$$
+}
+{This, quite frankly, will take quite a bit of work. In order to compute this determinant, we need to compute 4 minors, each of which requires finding the determinant of a $3\times 3$ matrix! Complaining won't get us any closer to the solution,\footnote{But it might make us feel a little better. Glance ahead: do you see how much work we have to do?!?} so let's get started. We first compute the cofactors:
+\begin{align*}C_{1,1} &= (-1)^{1+1}\tta_{1,1}\\
+	&= 1\cdot\bdt{ccc}2&3&4\\5&-3&1\\9&-6&3\edt \quad\quad\quad \left(\parbox{100pt}{\scriptsize we must compute the determinant of this $3\times 3$ matrix}\right)\\
+	&= 2\cdot(-1)^{1+1}\bdt{cc}-3&1\\-6&3\edt + 3\cdot(-1)^{1+2}\bdt{cc}5&1\\9&3\edt + 4\cdot(-1)^{1+3}\bdt{cc}5&-3\\9&-6\edt \\
+	&= 2(-3) + 3(-6) + 4(-3)\\
+	&= -36
+\end{align*}
+
+\begin{align*}C_{1,2} &= (-1)^{1+2}\tta_{1,2}\\
+	&= (-1)\cdot\bdt{ccc}-1&3&4\\8&-3&1\\5&-6&3\edt \quad\quad\quad \left(\parbox{100pt}{\scriptsize we must compute the determinant of this $3\times 3$ matrix}\right)\\
+	&= (-1)\underbrace{\left[(-1)\cdot(-1)^{1+1}\bdt{cc}-3&1\\-6&3\edt + 3\cdot(-1)^{1+2}\bdt{cc}8&1\\5&3\edt + 4\cdot(-1)^{1+3}\bdt{cc}8&-3\\5&-6\edt \right]}_{\parbox{150pt}{\centering\scriptsize the determinate of the $3 \times 3$ matrix}} \\
+	&= (-1)\left[(-1)(-3)+3(-19)+4(-33) \right]\\
+	&= 186
+\end{align*}
+
+\drawexampleline%{ex_determinant_4}
+
+\begin{align*}C_{1,3} &= (-1)^{1+3}\tta_{1,3}\\
+	&= 1\cdot\bdt{ccc}-1&2&4\\8&5&1\\5&9&3\edt \quad\quad\quad \left(\parbox{100pt}{\scriptsize we must compute the determinant of this $3\times 3$ matrix}\right)\\
+	&= (-1)\cdot(-1)^{1+1}\bdt{cc}5&1\\9&3\edt + 2\cdot(-1)^{1+2}\bdt{cc}8&1\\5&3\edt + 4\cdot(-1)^{1+3}\bdt{cc}8&5\\5&9\edt \\
+	&= (-1)(6)+2(-19)+4(47)\\
+	&= 144
+\end{align*}
+
+\begin{align*}C_{1,4} &= (-1)^{1+4}\tta_{1,4}\\
+	&= (-1)\cdot\bdt{ccc}-1&2&3\\8&5&-3\\5&9&-6\edt \quad\quad\quad \left(\parbox{100pt}{\scriptsize we must compute the determinant of this $3\times 3$ matrix}\right)\\
+	&= (-1)\underbrace{\left[(-1)\cdot(-1)^{1+1}\bdt{cc}5&-3\\9&-6\edt + 2\cdot(-1)^{1+2}\bdt{cc}8&-3\\5&-6\edt + 3\cdot(-1)^{1+3}\bdt{cc}8&5\\5&9\edt\right]}_{\parbox{150pt}{\centering\scriptsize the determinate of the $3 \times 3$ matrix}} \\
+	&= (-1)\left[(-1)(-3)+2(33)+3(47)\right]\\
+	&= -210
+\end{align*}
+
+We've computed our four cofactors. All that is left is to compute the cofactor expansion.
+$$\det{\tta} = 1(-36) + 2(186)+1(144)+2(-210) = 60.$$
+
+As a way of ``visualizing'' this, let's write out the cofactor expansion again but including the matrices in their place. 
+
+\begin{align*}\det{\tta} &= a_{1,1}C_{1,1}+a_{1,2}C_{1,2}+a_{1,3}C_{1,3}+a_{1,4}C_{1,4} \\
+	&=  1(-1)^2\underbrace{\bdt{ccc}2&3&4\\5&-3&1\\9&-6&3\edt}_{\parbox{60pt}{\scriptsize\centering $=-36$}}\ +\  2(-1)^3\underbrace{\bdt{ccc}-1&3&4\\8&-3&1\\5&-6&3\edt}_{\parbox{60pt}{\scriptsize\centering $=-186$}} \\ 
+	&+\\ &\quad 1(-1)^4\underbrace{\bdt{ccc}-1&2&4\\8&5&1\\5&9&3\edt}_{\parbox{60pt}{\scriptsize\centering $=144$}}\ +\  2(-1)^5\underbrace{\bdt{ccc}-1&2&3\\8&5&-3\\5&9&-6\edt}_{\parbox{60pt}{\scriptsize\centering $=210$}}\\
+	&= 60
+\end{align*}
+\vskip -\baselineskip} \\ %\eexset
+
+That certainly took a while; it required more than 50 multiplications (we didn't count the additions). To compute the determinant of a $5\times5$ matrix, we'll need to compute the determinants of five $4\times 4$ matrices, meaning that we'll need over 250 multiplications! Not only is this a lot of work, but there are just too many ways to make silly mistakes.\footnote{The author made three when the above example was originally typed.} There are some tricks to make this job easier, but regardless we see the need to employ technology. Even then, technology quickly bogs down. A $25 \times 25$ matrix is considered ``small'' by today's standards,\footnote{It is common for mathematicians, scientists and engineers to consider linear systems with thousands of equations and variables.} but it is essentially impossible for a computer to compute its determinant by only using cofactor expansion; it too needs to employ ``tricks.''
+
+In the next section we will learn some of these tricks as we learn some of the properties of the determinant. Right now, let's review the essentials of what we have learned. 
+	\begin{enumerate}
+	\item		The determinant of a square matrix is a number that is determined by the matrix.
+	\item		We find the determinant by computing the cofactor expansion along the first row.
+	\item		To compute the determinant of an $n\times n$ matrix, we need to compute $n$ determinants of $(n-1)\times(n-1)$ matrices.
+	\end{enumerate}
+	
+%EXERCISES
+
+%Lots of determinants of 2s, 3s, a few 4s.
+
+%Show why def of 2by 2 is redundant\\
+
+\printexercises{exercises/03_03_exercises}

@@ -1,0 +1,15 @@
+{The general exponential function has the form $f(x)= ae^{bx}$, where $a$ and $b$ are constants and $e$ is Euler's constant ($\approx$ 2.718). We want to find the equation of the exponential function that goes through the points $(1,2)$ and $(2,4)$.
+\begin{enumerate}
+\item	Show why we cannot simply subsitute in values for $x$ and $y$ in $y = ae^{bx}$ and solve using the techniques we used for polynomials.
+\item	Show how the equality $y = ae^{bx}$ leads us to the linear equation $\ln y = \ln a + bx$.
+\item	Use the techniques we developed to solve for the unknowns $\ln a$ and $b$.
+\item	Knowing $\ln a$, find $a$; find the exponential function $f(x) = ae^{bx}$ that goes through the points $(1,2)$ and $(2,4)$.
+\end{enumerate}
+}
+{\begin{enumerate}
+\item	Substitution yields the equations $2 = ae^{b}$ and $4 = ae^{2b}$; these are not linear equations.
+\item	$y = ae^{bx}$ implies that $\ln y = \ln (ae^{bx}) = \ln a + \ln e^{bx} = \ln a + bx$.
+\item	Plugging in the points for $x$ and $y$ in the equation $\ln y = \ln a + bx$, we have equations $$\begin{array}{ccccc} \ln a & + & b & = & \ln 2 \\ \ln a & + & 2b & = & \ln 4\\ \end{array}.$$ To solve, $$\bmx{ccc} 1 &1&\ln 2 \\ 1 & 2 &\ln 4 \\ \emx \overrightarrow{\text{rref}} \bmx{ccc} 1&0&0\\0&1&\ln 2\\ \emx.$$ Therefore $\ln a = 0$ and $b = \ln 2$.
+\item Since $\ln a = 0$, we know that $a = e^0 = 1$. Thus our exponential function is $f(x) = e^{x\ln 2}$.
+\end{enumerate}
+}

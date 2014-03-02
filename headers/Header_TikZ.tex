@@ -1,0 +1,132 @@
+
+%  Some TiKZ  shortcuts to help make drawing 3D vectors faster.
+%
+\newcommand{\drawvect}[7]{\draw [#4] (0,0,0) -- (#1,0,0) -- (#1,#2,0) -- (#1,#2,#3);
+  \draw [#5] (0,0,0) -- (#1,#2,#3) node [#6] {#7};}
+\newcommand{\drawjustvect}[7]{\draw [#5] (0,0,0) -- (#1,#2,#3) node [#6] {#7};}
+
+\newcommand{\drawxaxis}[4]{\draw [->] (#1,0,0) -- (#2,0,0) node [below left] {$x$};
+\foreach \x in {#3,...,#4}
+ {\draw (\x,-.1,0)--(\x,.1,0); } }
+\newcommand{\drawyaxis}[4]{\draw [->] (0,#1,0) -- (0,#2,0) node [right] {$y$};
+\foreach \y in {#3,...,#4}
+ {\draw (0,\y,-.1)--(0,\y,.1); }; }
+\newcommand{\drawzaxis}[4]{\draw [->] (0,0,#1) -- (0,0,#2) node [above] {$z$};
+\foreach \z in {#3,...,#4}
+ {\draw (0,-.1,\z)--(0,.1,\z); }; }
+%
+% 
+% Draws the VMI Spider in TikZ
+%
+\newcommand{\vmispider}[1][]
+{\begin{scope}[#1]
+	\draw  (-2,2) -- (0,-1) -- (2,2);
+	\draw  (-1,-1) -- (-1,2) -- (0,1) -- (1,2) -- (1,-1);
+	\draw  (-1,2.5) -- (1,2.5);
+	\draw  (-1,-1.5) -- (1,-1.5);
+	\draw  (0,-1.5) -- (0,2.5);
+\end{scope}
+}
+%
+% Draws the unit square, easy to transform
+%
+\newcommand{\unitsquare}[1][]
+{\begin{scope}
+	\draw [#1] (0,0) node (A) {} -- (1,0) node (B) {} -- (1,1) node (C) {} -- (0,1) node (D) {} -- cycle;
+	\draw [->,>=latex,#1,ultra thin] (0,.25)--(1,.25);
+	\draw [->,>=latex,#1,ultra thin] (0,.5)--(1,.5);
+	\draw [->,>=latex,#1,ultra thin] (0,.75)--(1,.75);
+	\filldraw [black]  (A) circle (2pt);%black
+	\filldraw [fill=white,thick]  (B) ++(-2pt,-2pt) rectangle ++(4pt,4pt);%red
+	\filldraw [fill=white,thick]  (C) circle (2pt);%blue
+	\filldraw [fill=white,thick]  (D) ++(-2.5pt,-2.5pt) -- ++(5pt,0pt) -- ++(-2.5pt,5pt) -- cycle;%green
+	\end{scope}
+}
+%
+% Draws unit square for cover image
+%
+\newcommand{\unitsquarecover}[1][]
+{\begin{scope}
+	\draw [#1] (0,0) node (A) {} -- (1,0) node (B) {} -- (1,1) node (C) {} -- (0,1) node (D) {} -- cycle;
+	\draw [->,>=latex,#1,thin] (0,.25)--(1,.25);
+	\draw [->,>=latex,#1, thin] (0,.5)--(1,.5);
+	\draw [->,>=latex,#1, thin] (0,.75)--(1,.75);
+	\filldraw [black]  (A) circle (2pt);%black
+	\draw [#1,ultra thick]  (B) ++(-2pt,-2pt) rectangle ++(4pt,4pt);%red
+	\draw [ultra thick]  (C) circle (2pt);%blue
+	\draw [#1,ultra thick]  (D) ++(-2.5pt,-2.5pt) -- ++(5pt,0pt) -- ++(-2.5pt,5pt) -- cycle;%green
+	\end{scope}
+}
+%
+% Draws unit square without the arrows in the middle.
+%
+\newcommand{\unitsquarewithoutarrows}[1][]
+{\begin{scope}
+	\draw [#1] (0,0) node (A) {} -- (1,0) node (B) {} -- (1,1) node (C) {} -- (0,1) node (D) {} -- cycle;
+	\filldraw [black]  (A) circle (2pt);%black
+	\filldraw [fill=white,thick]  (B) ++(-2pt,-2pt) rectangle ++(4pt,4pt);%red
+	\filldraw [fill=white,thick]  (C) circle (2pt);%blue
+	\filldraw [fill=white,thick]  (D) ++(-2.5pt,-2.5pt) -- ++(5pt,0pt) -- ++(-2.5pt,5pt) -- cycle;%green
+	\end{scope}
+}
+
+%
+% Draw x and y tick marks
+%
+\newcommand{\drawxticks}[1]
+{\foreach \x in {#1}
+		{\draw  (\x,-.1)--(\x,.1);
+			};
+}
+\newcommand{\drawyticks}[1]
+{\foreach \x in {#1}
+		{\draw  (-.1,\x)--(.1,\x);
+			};
+}
+
+\newcommand{\drawxlines}[3]
+{\draw[<->] (#1,0) -- (#2,0) node [right] {$x$};
+\foreach \x in {#3}
+		{\draw  (\x,-.1)--(\x,.1);
+			};
+}
+
+\newcommand{\drawylines}[3]
+{\draw[<->] (0,#1) -- (0,#2) node [above] {$y$};
+\foreach \x in {#3}
+		{\draw  (-.1,\x)--(.1,\x);
+			};
+}
+
+%\ifthenelse{\boolean{booksize}}{% Begin if booksize
+%\newcommand{\settikzpagecorners}{\begin{tikzpicture}[remember picture, overlay]
+%\node [xshift=1in+\oddsidemargin-10pt,yshift=\paperheight-1in-\topmargin-\headheight-\headsep-\textheight-\footskip] (oddpagebottom) at (current page.south west)  {};
+%\node [xshift=1in+\evensidemargin-10pt,yshift=\paperheight-1in-\topmargin-\headheight-\headsep-\textheight-\footskip] (evenpagebottom) at (current page.south west) {};
+%\node [xshift=1in+\oddsidemargin-10pt,yshift=-1in-\topmargin-\headheight-\headsep] (oddpagetop) at (current page.north west)  {};
+%\node [xshift=1in+\evensidemargin-10pt,yshift=-1in-\topmargin-\headheight-\headsep] (evenpagetop) at (current page.north west) {};
+%\end{tikzpicture}
+%}
+%}%  Ends if booksize
+%{%  Begins Else not booksize
+%\ifthenelse{\boolean{amazonsize}}{% Begin if amazonsize
+%\newcommand{\settikzpagecorners}{\begin{tikzpicture}[remember picture, overlay]
+%\ifthenelse{\boolean{ipad}}
+%{\node [xshift=1in+\oddsidemargin-10pt,yshift=\paperheight-.5in-\textheight-\footskip+15pt] (oddpagebottom) at (current page.south west)  {};
+%\node [xshift=1in+\evensidemargin-10pt,yshift=\paperheight-.5in-\textheight-\footskip+15pt] (evenpagebottom) at (current page.south west) {};}
+%{\node [xshift=1in+\oddsidemargin-10pt,yshift=\paperheight-1in-\textheight-\footskip+15pt] (oddpagebottom) at (current page.south west)  {};
+%\node [xshift=1in+\evensidemargin-10pt,yshift=\paperheight-1in-\textheight-\footskip+15pt] (evenpagebottom) at (current page.south west) {};}
+%\node [xshift=1in+\oddsidemargin-10pt,yshift=-1in-\topmargin-\headheight-\headsep] (oddpagetop) at (current page.north west)  {};
+%\node [xshift=1in+\evensidemargin-10pt,yshift=-1in-\topmargin-\headheight-\headsep] (evenpagetop) at (current page.north west) {};
+%\end{tikzpicture}
+%}
+%}%  Ends if amazonsize
+%{%  Begins else not booksize nor amazonsize
+%\newcommand{\settikzpagecorners}{\begin{tikzpicture}[remember picture, overlay]
+%\node [xshift=5pt] (oddpagebottom) at (current page.south west)  {};
+%\node [xshift=5pt] (evenpagebottom) at (current page.south west) {};
+%\node [xshift=5pt] (oddpagetop) at (current page.north west)  {};
+%\node [xshift=5pt] (evenpagetop) at (current page.north west) {};
+%\end{tikzpicture}
+%}%
+%}%
+%}

@@ -1,0 +1,212 @@
+\section{Properties of Eigenvalues and Eigenvectors}\label{sec:eigen_prop}
+
+\asyouread{
+\item	T/F: \tta\ and \ttat\ have the same \ev s.
+\item	T/F: \tta\ and \ttai\ have the same \el s.
+\item	T/F: Marie Ennemond Camille Jordan was a guy.
+\item	T/F: Matrices with a trace of 0 are important, although we haven't seen why.
+\item	T/F: A matrix \tta\ is invertible only if 1 is an \el\ of \tta.
+}
+
+In this section we'll explore how the \el s and \ev s of a matrix relate to other properties of that matrix. This section is essentially a hodgepodge of interesting facts about \el s; the goal here is not to memorize various facts about matrix algebra, but to again be amazed at the many connections between mathematical concepts.
+
+We'll begin our investigations with an example that will give a foundation for other discoveries.\\
+
+\example{ex_eigen_triangular}{Let $\tta = \bmx{ccc}1&2&3\\0&4&5\\0&0&6\emx$. Find the \el s of \tta. }
+{To find the \el s, we compute $\det{\tta-\lda\tti}$:
+\begin{align*}
+\det{\tta-\lda\tti}	&=	\bdt{ccc} 1-\lda & 2&3\\0&4-\lda&5\\0&0&6-\lda \edt\\
+										&= (1-\lda)(4-\lda)(6-\lda)
+\end{align*}
+
+Since our matrix is triangular, the determinant is easy to compute; it is just the product of the diagonal elements. Therefore, we found (and factored) our characteristic polynomial very easily, and we see that we have \el s of $\lda = 1, 4$, and 6.}\\ %\eexset
+
+This examples demonstrates a wonderful fact for us: the \el s of a triangular matrix are simply the entries on the diagonal. Finding the corresponding \ev s still takes some work, but finding the \el s is easy.
+
+With that fact in the backs of our minds, let us proceed to the next example where we will come across some more interesting facts about \el s and \ev s. \\
+
+\example{ex_eigen_prop_1}{Let $\tta = \bmx{cc} -3 & 15 \\ 3 & 9 \emx$ and let $\ttb = \bmx{ccc} -7 & -2 & 10 \\-3 & 2 & 3\\ -6 & -2 & 9\emx$ (as used in Examples \ref{ex_eigen1} and \ref{ex_eigen3}, respectively). Find the following:
+
+\begin{enumerate}
+	\item	\el s and \ev s of \tta\ and \ttb
+	\item	\el s and \ev s of \ttai\ and \ttbi
+	\item	\el s and \ev s of \ttat\ and \ttbt
+	\item	The trace of \tta\ and \ttb
+	\item	The determinant of \tta\ and \ttb
+\end{enumerate}
+}
+{We'll answer each in turn.
+
+\begin{enumerate}
+	\item		We already know the answer to these for we did this work in previous examples. Therefore we just list the answers.
+	
+	For \tta, we have eigenvalues $\lda = -6$ and  $12$, with \ev s $$\vx = x_2\bmx{c} -5\\1\emx \ \text{ and }\  x_2\bmx{c}1\\1\emx\text{, respectively.}$$
+
+%\drawexampleline{ex_eigen_prop_1}
+	
+	For \ttb, we have \el s $\lda = -1,\ 2,$ and $3$ with \ev s $$\vx = x_3 \bmx{c}3\\1\\2\emx,\ x_3 \bmx{c} 2\\1\\2\emx\ \text{ and }\ x_3 \bmx{c} 1\\0\\1\emx \text{, respectively.} $$
+	
+	\item		We first compute the inverses of \tta\ and \ttb. They are: 
+	$$\ttai = \bmx{cc} -1/8 & 5/24 \\ 1/24 & 1/24 \emx \quad \text{and} \quad
+	\ttbi = \bmx{ccc} -4 & 1/3 & 13/3 \\ -3/2 & 1/2 & 3/2 \\ -3 & 1/3 & 10/3 \emx.$$
+	
+	Finding the \el s and \ev s of these matrices is not terribly hard, but it is not ``easy,'' either. Therefore, we omit showing the intermediate steps and go right to the conclusions. 
+	
+	For \ttai, we have \el s $\lda = -1/6$ and $1/12$, with \ev s $$\vx = x_2 \bmx{c} -5\\1\emx\ \text{ and }\  x_2 \bmx{c}1\\1\emx\text{, respectively.}$$
+	
+	For \ttbi, we have \el s $\lda = -1$, $1/2$ and $1/3$ with \ev s $$\vx = x_3\bmx{c} 3\\1\\2\emx,\ x_3\bmx{c} 2\\1\\2\emx \ \text{ and }\  x_3 \bmx{c} 1\\0\\1\emx\text{, respectively.}$$
+	
+%	\drawexampleline{ex_eigen_prop_1}
+	
+	\item		Of course, computing the transpose of \tta\ and \ttb\ is easy; computing their \el s and \ev s takes more work. Again, we omit the intermediate steps.
+	
+	For \ttat, we have \el s $\lda = -6$ and $12$ with \ev s $$\vx = x_2 \bmx{c} -1\\1\emx\ \text{ and }\  x_2 \bmx{c} 5\\1\emx \text{, respectively.}$$
+	
+	For \ttbt, we have \el s $\lda = -1,\ 2$ and $3$ with \ev s $$\vx = x_3 \bmx{c} -1\\0\\1\emx,\ x_3 \bmx{c} -1\\1\\1\emx\ \text{ and }\ x_3\bmx{c} 0\\-2\\1\emx\text{, respectively.}$$
+	
+	\item		The trace of \tta\ is 6; the trace of \ttb\ is 4.
+	
+	\item		The determinant of \tta\ is $-72$; the determinant of \ttb\ is $-6$.
+	
+\end{enumerate}
+\ } \\ %\eexset
+
+Now that we have completed the ``grunt work,'' let's analyze the results of the previous example. We are looking for any patterns or relationships that we can find.\\
+
+\noindent \textsf{\textbf{The \el s and \ev s of \tta\ and \ttai.}} \\
+
+In our example, we found that the \el s of \tta\ are $-6$ and 12; the \el s of \ttai\ are $-1/6$ and $1/12$. Also, the \el s of \ttb\ are $-1$, 2 and 3, whereas the \el s of \ttbi\ are $-1$, $1/2$ and $1/3$. There is an obvious relationship here; it seems that if $\lda$ is an \el\ of \tta, then $1/\lda$ will be an \el\ of \ttai. We can also note that the corresponding \ev s matched, too.
+
+Why is this the case? Consider an invertible matrix \tta\ with \el\ \lda\ and \ev\ \vx. Then, by definition, we know that $\tta\vx = \lda\vx$. Now multiply both sides by \ttai:
+\begin{align*}
+\tta\vx & = \lda\vx \\
+\ttai\tta\vx & = \ttai\lda\vx \\
+\vx & = \lda\ttai\vx \\
+\frac{1}{\lda}\vx & = \ttai\vx 
+\end{align*}
+
+We have just shown that $\ttai\vx = 1/\lda\vx$; this, by definition, shows that \vx\ is an \ev\ of \ttai\ with \el\ 1/\lda. This explains the result we saw above.\\
+
+\noindent \textsf{\textbf{The \el s and \ev s of \tta\ and \ttat.}}\\
+
+Our example showed that \tta\ and \ttat\ had the same \el s but different (but somehow similar) \ev s; it also showed that \ttb\ and \ttbt\ had the same \el s but unrelated \ev s. Why is this?
+
+We can answer the \el\ question relatively easily; it follows from the properties of the determinant and the transpose. Recall the following two facts:
+	\begin{enumerate}
+	\item		$(\tta +\ttb)^T = \ttat + \ttbt$ (Theorem \ref{thm:transpose}) and 
+	\item		$\det{\tta} = \det{\ttat}$ (Theorem \ref{thm:determinant_properties}).
+	\end{enumerate}
+	
+We find the \el s of a matrix by computing the characteristic polynomial; that is, we find $\det{\tta - \lda\tti}$. What is the characteristic polynomial of \ttat? Consider:
+
+\begin{align*}
+\det{\ttat - \lda\tti} & = \det{\ttat - \lda\tti^T} \textsf{\hskip 34 pt \small since $\tti = \tti^T$} \\
+ & = \det{(\tta - \lda\tti)^T}  \textsf{\hskip 31 pt\small Theorem \ref{thm:transpose}} \\
+ & = \det{\tta-\lda\tti}   \textsf{\hskip 46 pt \small Theorem \ref{thm:determinant_properties}}\\
+\end{align*} 
+
+So we see that the characteristic polynomial of \ttat\ is the same as that for \tta. Therefore they have the same \el s. 
+
+What about their respective \ev s? Is there any relationship? The simple answer is ``No.''\footnote{We have defined an \ev\ to be a column vector. Some mathematicians prefer to use row vectors instead; in that case, the typical \el /\ev\ equation looks like $\vx\tta=\lda\vx$. It turns out that doing things this way will give you the same \el s as our method. What is more, take the transpose of the above equation: you get $(\vx\tta)^T = (\lda\vx)^T$ which is also $\ttat\vx^T = \lda\vx^T$. The transpose of a row vector is a column vector, so this equation is actually the kind we are used to, and we can say that $\vx^T$ is an \ev\ of \ttat. 
+
+In short, what we find is that the \ev s of \ttat\ are the ``row'' \ev s of \tta, and vice--versa.}\\
+
+\noindent \textsf{\textbf{The \el s and \ev s of \tta\ and The Trace.}}\\
+
+Note that the eigenvalues of \tta\ are $-6$ and 12, and the trace is 6; the \el s of \ttb\ are $-1$, 2 and 3, and the trace of \ttb\ is 4. Do we notice any relationship? 
+
+It seems that the sum of the \el s is the trace! Why is this the case?
+
+The answer to this is a bit out of the scope of this text; we can justify part of this fact, and another part we'll just state as being true without justification. 
+
+First, recall from Theorem \ref{thm:trace} that tr$(\tta\ttb) = $tr$(\ttb\tta)$. Secondly, we state without justification that given a square matrix \tta, we can find a square matrix \ttp\ such that $\ttpi\tta\ttp$ is an upper triangular matrix with the eigenvalues of \tta\ on the diagonal.\footnote{Who in the world thinks up this stuff? It seems that the answer is Marie Ennemond Camille Jordan, who, despite having at least two girl names, was a guy.} Thus tr$(\ttpi\tta\ttp)$ is the sum of the eigenvalues; also, using our Theorem \ref{thm:trace}, we know that tr$(\ttpi\tta\ttp) = $ tr$(\ttpi\ttp\tta) = $ tr(\tta). Thus the trace of \tta\ is the sum of the eigenvalues.\\
+
+\noindent \textsf{\textbf{The \el s and \ev s of \tta\ and The Determinant.}}\\
+
+Again, the \el s of \tta\ are $-6$ and 12, and the determinant of \tta\ is 
+$-72$. The \el s of \ttb\ are $-1$, 2 and 3; the determinant of \ttb\ is $-6$. It seems as though the product of the \el s is the determinant.
+
+This is indeed true; we defend this with our argument from above. We know that the determinant of a triangular matrix is the product of the diagonal elements. Therefore, given a matrix \tta, we can find \ttp\ such that \ttpi\tta\ttp\ is upper triangular with the eigenvalues of \tta\ on the diagonal. Thus $\det{\ttpi\tta\ttp}$ is the product of the eigenvalues. Using Theorem \ref{thm:determinant_properties}, we know that $\det{\ttpi\tta\ttp} = \det{\ttpi\ttp\tta} = \det{\tta}$. Thus the determinant of \tta\ is the product of the \el s.
+
+We summarize the results of our example with the following theorem.
+
+\theorem{thm:eigen_properties}{\textbf{Properties of Eigenvalues and Eigenvectors}\index{eigenvalue!properties} \\
+
+Let \tta\ be an $n\times n$ invertible matrix. The following are true:
+
+\begin{enumerate}
+\item		If \tta\ is triangular, then the diagonal elements of \tta\ are the \el s of \tta.
+\item		If \lda\ is an \el\ of \tta\ with \ev\ \vx, then $\frac{1}{\lda}$ is an \el\ of \ttai\ with \ev\ \vx.
+\item		If \lda\ is an \el\ of \tta\, then \lda\ is an \el\ of \ttat.
+\item		The sum of the \el s of \tta\ is equal to tr(\tta), the trace of \tta.
+\item		The product of the \el s of \tta\ is the equal to $\det{\tta}$, the determinant of \tta.
+\end{enumerate}
+}
+
+%We now explore a few more properties of the \el s of a matrix.
+
+There is one more concept concerning \el s and \ev s that we will explore. We do so in the context of an example.\\
+
+\example{ex_eigen_zero}{Find the \el s and \ev s of the matrix $\tta = \bmx{cc} 1&2\\1&2\emx$. }
+{To find the \el s, we compute $\det{\tta-\lda\tti}$:
+
+\begin{align*}
+\det{\tta-\lda\tti} &= \bdt{cc}1-\lda & 2\\1&2-\lda \edt \\
+										&= (1-\lda)(2-\lda)-2\\
+										&= \lda^2-3\lda\\
+										&= \lda(\lda-3)
+\end{align*}
+
+Our \el s are therefore $\lda =  0, 3$. 
+
+For $\lda = 0$, we find the \ev s:
+
+$$\bmx{ccc} 1&2&0\\1&2&0\emx \quad \overrightarrow{\text{rref}}\quad \bmx{ccc}1&2&0\\0&0&0\emx$$
+
+This shows that $x_1 = -2x_2$, and so our \ev s $\vx$ are $$\vx = x_2\bmx{c}-2\\1\emx.$$
+
+For $\lda = 3$, we find the \ev s:
+
+$$\bmx{ccc}-2&2&0\\ 1&-1&0 \emx \quad \overrightarrow{\text{rref}}\quad \bmx{ccc}1&-1&0\\0&0&0\emx$$
+
+This shows that $x_1 = x_2$, and so our \ev s $\vx$ are $$\vx = x_2\bmx{c}1\\1\emx.$$
+\ }\\ %\eexset
+
+One interesting thing about the above example is that we see that 0 is an \el\ of \tta; we have not officially encountered this before. Does this mean anything significant?\footnote{Since 0 is a ``special'' number, we might think so -- afterall, we found that having a determinant of 0 is important. Then again, a matrix with a trace of 0 isn't all that important. (Well, as far as we have seen; it actually \textit{is}). So, having an \el\ of 0 may or may not be significant, but we would be doing well if we recognized the possibility of significance and decided to investigate further.} 
+
+Think about what an \el\ of 0 means: there exists an nonzero vector \vx\ where $\tta\vx = 0\vx = \zero$. That is, we have a nontrivial solution to $\tta\vx = \zero$. We know this only happens when \tta\ is not invertible. 
+
+So if \tta\ is invertible, there is no nontrivial solution to $\tta\vx=\zero$, and hence 0 \textit{is not} an \el\ of \tta. If \tta\ is not invertible, then there is a nontrivial solution to $\tta\vx=\zero$, and hence 0 \textit{is} an \el\ of \tta. This leads us to our final addition to the Invertible Matrix Theorem.
+
+\theorem{thm:IMT_eigen}{\textbf{Invertible Matrix Theorem}\index{Invertible Matrix Theorem}\\
+
+Let \tta\ be an $n\times n$ matrix. The following statements are equivalent.
+
+\begin{list}{(\alph{IMTcount})}{}\usecounter{IMTcount}
+\item \tta\ is invertible. \addtocounter{IMTcount}{\value{IMTcount_temp}}
+\item \tta\ does not have an \el\ of 0.
+\end{list}
+\setcounter{IMTcount_temp}{\value{IMTcount}}
+\addtocounter{IMTcount_temp}{-1}
+}
+%\setcounter{IMTcount_temp}{\value{IMTcount}}
+
+This section is about the properties of \el s and \ev s. Of course, we have not investigated all of the numerous properties of \el s and \ev s; we have just surveyed some of the most common (and most important) concepts. Here are four quick examples of the many things that still exist to be explored.
+
+First, recall the matrix $$\tta = \bmx{cc}1&4\\2&3\emx$$ that we used in Example \ref{ex_find_el}. It's characteristic polynomial is $p(\lda)=\lda^2-4\lda-5$. Compute $p(\tta)$; that is, compute $\tta^2-4\tta-5\tti$. You should get something ``interesting,'' and you should wonder ``does this always work?''\footnote{Yes.}
+
+Second, in all of our examples, we have considered matrices where \el s ``appeared only once.'' Since we know that the \el s of a triangular matrix appear on the diagonal, we know that the \el s of $$\tta = \bmx{cc}1&1\\0&1\emx$$ are ``1 and 1;'' that is, the \el\ $\lda = 1$ appears twice. What does that mean when we consider the \ev s of $\lda = 1$? Compare the result of this to the matrix $$\tta = \bmx{cc}1&0\\0&1\emx,$$ which also has the \el\ $\lda =1$ appearing twice.\footnote{To direct further study, it helps to know that mathematicians refer to this as the \textit{duplicity} of an \el. In each of these two examples, \tta\ has the \el\ $\lda=1$ with duplicity of 2.}
+
+Third, consider the matrix $$\tta = \bmx{cc}0&-1\\1&0\emx.$$ What are the \el s?\footnote{Be careful; this matrix is \textit{not} triangular.} We quickly compute the characteristic polynomial to be $p(\lda) = \lda^2 + 1$. Therefore the \el s are $\pm \sqrt{-1} = \pm i$. What does this mean?
+
+Finally, we have found the \el s of matrices by finding the roots of the characteristic polynomial. We have limited our examples to quadratic and cubic polynomials; one would expect for larger sized matrices that a computer would be used to factor the characteristic polynomials. However, in general, this is \textit{not} how the \el s are found. Factoring high order polynomials is too unreliable, even with a computer -- round off errors can cause unpredictable results. Also, to even compute the characteristic polynomial, one needs to compute the determinant, which is also expensive (as discussed in the previous chapter). 
+
+So how are \el s found? There are \textit{iterative} processes that can progressively transform a matrix \tta\ into another matrix that is \textit{almost} an upper triangular matrix (the entries below the diagonal are almost zero) where the entries on the diagonal are the \el s. The more iterations one performs, the better the approximation is. 
+
+These methods are so fast and reliable that some computer programs convert polynomial root finding problems into \el\ problems!
+
+Most textbooks on Linear Algebra will provide direction on exploring the above topics and give further insight to what is going on. We have mentioned all the \el\ and \ev\ properties in this section for the same reasons we gave in the previous section. First, knowing these properties helps us solve numerous real world problems, and second, it is fascinating to see how rich and deep the theory of matrices is.\\
+
+\clearpage
+
+\printexercises{exercises/04_02_exercises}

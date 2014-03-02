@@ -1,0 +1,308 @@
+%\clearpage
+\section{Matrix Multiplication}\label{sec:matrix_multiplication}
+
+\asyouread{
+\item T/F: Column vectors are used more in this text than row vectors, although some other texts do the opposite.
+\item	T/F: To multiply $\tta\times\ttb$, the number of rows of \tta\ and \ttb\ need to be the same.
+\item	T/F: The entry in the 2$^\text{nd}$ row and 3$^\text{rd}$ column of the product \tta\ttb\ comes from multipling the 2$^\text{nd}$ row of \tta\ with the 3$^\text{rd}$ column of \ttb.
+\item	Name two properties of matrix multiplication that also hold for ``regular multiplication'' of numbers.
+\item	Name a property of ``regular multiplication'' of numbers that does not hold for matrix multiplication.
+\item	T/F: $\tta^3 = \tta\cdot\tta\cdot\tta$
+}
+
+In the previous section we found that the definition of matrix addition was very intuitive, and we ended that section discussing the fact that eventually we'd like to know what it means to multiply matrices together. 
+
+In the spirit of the last section, take another wild stab: what do you think $$\bmx{cc}1&2\\3&4\emx \times \bmx{cc} 1&-1\\2&2\emx$$ means?
+
+You are likely to have guessed $$\bmx{cc} 1&-2\\6&8\emx$$ but this is, in fact, \textit{not} right.\footnote{I guess you \textit{could} define multiplication this way. If you'd prefer this type of multiplication, write your own book.} The actual answer is  $$\bmx{cc}5&3\\11&5\emx.$$ If you can look at this one example and suddenly understand exactly how matrix multiplication works, then you are probably smarter than the author. While matrix multiplication isn't hard, it isn't nearly as intuitive as matrix addition is.
+
+To further muddy the waters (before we clear them), consider $$ \bmx{cc}1&2\\3&4\emx \times \bmx{ccc} 1&-1&0\\2&2&-1\emx.$$ Our experience from the last section would lend us to believe that this is not defined, but our confidence is probably a bit shaken by now. In fact, this multiplication \textit{is} defined, and it is $$\bmx{ccc}5&3&-2\\11&5&-4\emx.$$ You may see some similarity in this answer to what we got before, but again, probably not enough to really figure things out.
+
+So let's take a step back and progress slowly. The first thing we'd like to do is define a special type of matrix called a vector.
+
+\definition{def:vector}{\textbf{Column and Row Vectors}\\
+
+\index{vector!column}\index{vector!row}A $m\times 1$ matrix is called a \textit{column vector}. \\
+
+A $1\times n$ matrix is called a \textit{row vector}.}
+
+While it isn't obvious right now, column vectors are going to become far more useful to us than row vectors. Therefore, we often omit the word ``column'' when refering to column vectors, and we just call them ``vectors.''\footnote{In this text, row vectors are only used in this section when we discuss matrix multiplication, whereas we'll make extensive use of column vectors. Other texts make great use of row vectors, but little use of column vectors. It is a matter of preference and tradition: ``most'' texts use column vectors more.} 
+
+We have been using upper case letters to denote matrices; we use lower case letters with an arrow overtop to denote row and column vectors. An example of a row vector is $$\vu = \bmx{cccc}1&2&-1&0\emx$$ and an example of a column vector is $$\vv = \bmx{c} 1\\7\\8\emx.$$
+
+Before we learn how to multiply matrices in general, we will learn what it means to multiply a row vector by a column vector.%\footnote{Recall that we learned about row vectors in the previous section, but didn't really do anything with them.} 
+
+\definition{def:vector_multiply}{\textbf{Multiplying a row vector by a column vector}\\
+
+Let \vu\ be an $1\times n$ row vector with entries $u_1$, $u_2$, $\cdots$, $u_n$ and let \vv\ be an $n\times 1$ column vector with entries $v_1$, $v_2$, $\cdots$, $v_n$. The \textit{product of \vu\ and \vv}, denoted $\vu\cdot\vv$ or $\vu\vv$, is $$\sum_{i=1}^n  u_iv_i = u_1v_1 + u_2v_2 + \cdots + u_nv_n.$$}
+
+Don't worry if this definition doesn't make immediate sense. It is really an easy concept; an example will make things more clear.\\
+
+
+\example{ex_vector_multiplication}{Let $$\vu = \bmx{ccc}1&2&3\emx,\ \vv = \bmx{cccc}2&0&1&-1\emx,\ \vx = \bmx{c}-2\\4\\3\emx,\ \vy = \bmx{c} 1\\2\\5\\0\emx.$$ Find the following products. 
+
+%\enlargethispage{1\baselineskip}
+
+\begin{center}
+\begin{minipage}{100pt}
+\begin{enumerate}
+	\item	\vu\vx
+	\item	\vv\vy
+\end{enumerate}
+\end{minipage}\begin{minipage}{100pt}
+\begin{enumerate}\addtocounter{enumi}{2}
+	\item	\vu\vy
+	\item	\vu\vv
+\end{enumerate}
+\end{minipage}\begin{minipage}{100pt}
+\begin{enumerate}\addtocounter{enumi}{4}
+	\item	\vx\vu
+\end{enumerate}
+\end{minipage}
+\end{center}}
+{\begin{enumerate}
+\item	$\vu\vx = \bmx{ccc}1&2&3\emx\bmx{c}-2\\4\\3\emx = 1(-2)+2(4)+3(3) = 15$
+\item	$\vv\vy = \bmx{cccc}2&0&1&-1\emx\bmx{c}1\\2\\5\\0\emx = 2(1)+0(2)+1(5)-1(0) = 7$
+\item	\vu\vy\ is not defined; Definition \ref{def:vector_multiply} specifies that in order to multiply a row vector and column vector, they must have the same number of entries. 
+\item	\vu\vv\ is not defined; we only know how to multipy row vectors by column vectors. We haven't defined how to multiply two row vectors (in general, it can't be done).
+\item	The product \vx\vu\ \textit{is} defined, but we don't know how to do it yet. Right now, we only know how to multiply a row vector times a column vector; we don't know how to multiply a column vector times a row vector. (That's right: $\vu\vx \neq \vx\vu!$)
+\end{enumerate}
+\vskip -\topsep \vskip -\baselineskip}\\ % \eexset
+
+Now that we understand how to multiply a row vector by a column vector, we are ready to define matrix multiplication. 
+
+\definition{def:matrix_multiply}{\index{matrix!multiplication}\textbf{Matrix Multiplication}\\
+
+Let \tta\ be an $m\times r$ matrix, and let \ttb\ be an $r\times n$ matrix. The \textit{matrix product of \tta\ and \ttb}, denoted $\tta\cdot\ttb$, or simply \tta\ttb, is the $m\times n$ matrix \ttm\ whose entry in the $i^{\text{th}}$ row and $j^{\text{th}}$ column is the product of the $i^{\text{th}}$ row of \tta\ and the $j^{\text{th}}$ column of \ttb.}
+
+It may help to illustrate it in this way. Let matrix \tta\ have rows $\vect{a_1}$, $\vect{a_2}$, $\cdots$, $\vect{a_m}$ and let \ttb\ have columns  $\vect{b_1}$, $\vect{b_2}$, $\cdots$, $\vect{b_n}$. Thus \tta\ looks like $$\bmx{ccc}-&\vect{a_1}&-\\-&\vect{a_2}&-\\ & \vdots & \\ -&\vect{a_m}&-\emx$$ where the ``$-$'' symbols just serve as reminders that the $\vect{a_i}$ represent rows, and \ttb\ looks like $$\bmx{cccc}|&|& &|\\\vect{b_1}&\vect{b_2}&\cdots&\vect{b_n}\\|&|& &|\emx$$ where again, the ``$|$'' symbols just remind us that the \vect{b_i}\ represent column vectors. Then $$\tta\ttb = \bmx{cccc}\vect{a_1}\vect{b_1} & \vect{a_1}\vect{b_2} & \cdots & \vect{a_1}\vect{b_n}\\ \vect{a_2}\vect{b_1} & \vect{a_2}\vect{b_2} & \cdots & \vect{a_2}\vect{b_n}\\ \vdots & \vdots & \ddots & \vdots \\ \vect{a_m}\vect{b_1} & \vect{a_m}\vect{b_2} & \cdots & \vect{a_m}\vect{b_n}\emx.$$
+
+Two quick notes about this definition. First, notice that in order to multiply \tta\ and \ttb, the number of \textit{columns} of \tta\ must be the same as the number of \textit{rows} of \ttb\ (we refer to these as the ``inner dimensions''). Secondly, the resulting matrix has the same number of \textit{rows} as \tta\ and the same number of \textit{columns} as \ttb\ (we refer to these as the ``outer dimensions'').
+
+$$\overbrace{(m\times {\hskip -28pt}\underbrace{r) \times (r}_\text{\parbox{80pt}{\centering these inner dimensions must match}}{\hskip -27pt}\times n)}^\text{\parbox{90pt}{\centering final dimensions are the outer dimensions}}$$
+Of course, this will make much more sense when we see an example. \\
+
+\example{ex_matrix_multiply_1}{Revisit the matrix product we saw at the beginning of this section; multiply $$\bmx{cc}1&2\\3&4\emx\bmx{ccc}1&-1&0\\2&2&-1\emx.$$}
+{Let's call our first matrix \tta\ and the second \ttb. We should first check to see that we can actually perform this multiplication. Matrix \tta\ is $2\times 2$ and \ttb\ is $2\times 3$. The ``inner'' dimensions match up, so we can compute the product; the ``outer'' dimensions tell us that the product will be $2\times 3$. Let $$\tta\ttb = \bmx{ccc}m_{11} & m_{12} & m_{13}\\m_{21} & m_{22} & m_{23}\emx.$$ Let's find the value of each of the entries.
+
+The entry $m_{11}$ is in the first row and first column; therefore to find its value, we need to multiply the first row of \tta\ by the first column of \ttb. Thus $$m_{11} = \bmx{cc} 1&2\emx\bmx{c}1\\2\emx = 1(1)+2(2) = 5.$$ So now we know that $$\tta\ttb = \bmx{ccc}5 & m_{12} & m_{13}\\m_{21} & m_{22} & m_{23}\emx.$$
+
+Finishing out the first row, we have $$m_{12} = \bmx{cc}1&2\emx\bmx{c}-1\\2\emx = 1(-1)+2(2) = 3$$ using the first row of \tta\ and the second column of \ttb, and $$m_{13} = \bmx{cc}1&2\emx\bmx{c}0\\-1\emx = 1(0)+2(-1) = -2$$ using the first row of \tta\ and the third column of \ttb. Thus we have $$\tta\ttb = \bmx{ccc}5 & 3 & -2\\m_{21} & m_{22} & m_{23}\emx.$$
+
+To compute the second row of \tta\ttb, we multiply with the second row of \tta. We find $$m_{21} = \bmx{cc}3&4\emx\bmx{c}1\\2\emx = 11,$$ $$m_{22} = \bmx{cc}3&4\emx\bmx{c}-1\\2\emx = 5,$$ and $$m_{23} = \bmx{cc}3&4\emx\bmx{c}0\\-1\emx = -4.$$ Thus $$\tta\ttb = \bmx{cc}1&2\\3&4\emx\bmx{ccc}1&-1&0\\2&2&-1\emx = \bmx{ccc}5 & 3 & -2\\11 & 5 & -4\emx.$$\ }\\ % \eexset
+
+%\enlargethispage{3\baselineskip}
+
+\example{ex_matrix_multiply_2}{Multiply $$\bmx{cc} 1&-1\\5&2\\-2&3\emx\bmx{cccc}1&1&1&1\\2&6&7&9\emx.$$}
+{Let's first check to make sure this product is defined. Again calling the first matrix \tta\ and the second \ttb, we see that \tta\ is a $3\times 2$ matrix and \ttb\ is a $2\times4$ matrix; the inner dimensions match so the product is defined, and the product will be a $3\times 4$ matrix, $$\tta\ttb = \bmx{cccc}m_{11}&m_{12}&m_{13}&m_{14}\\ m_{21}&m_{22}&m_{23}&m_{24}\\m_{31}&m_{32}&m_{33}&m_{34}\emx.$$
+
+We will demonstrate how to compute some of the entries, then give the final answer. The reader can fill in the details of how each entry was computed.
+
+$$m_{11} = \bmx{cc}1&-1\emx\bmx{c}1\\2\emx = -1.$$ 
+$$m_{13} = \bmx{cc}1&-1\emx\bmx{c}1\\7\emx = -6.$$ 
+$$m_{23} = \bmx{cc}5&2\emx\bmx{c}1\\7\emx = 19.$$
+$$m_{24} = \bmx{cc}5&2\emx\bmx{c}1\\9\emx = 23.$$
+$$m_{32} = \bmx{cc}-2&3\emx\bmx{c}1\\6\emx = 16.$$
+$$m_{34} = \bmx{cc}-2&3\emx\bmx{c}1\\9\emx = 25.$$
+
+So far, we've computed this much of \tta\ttb: $$\tta\ttb = \bmx{cccc}-1&m_{12}&-6&m_{14}\\ m_{21}&m_{22}&19&23\\m_{31}&16&m_{33}&25\emx.$$
+
+The final product is $$\tta\ttb = \bmx{cccc}-1&-5&-6&-8\\ 9&17&19&23\\4&16&19&25\emx.$$ \ }\\
+%\eexset
+
+\example{ex_matrix_multiply_3}{Multiply, if possible, $$\bmx{ccc}2&3&4\\9&8&7\emx\bmx{cc}3&6\\5&-1\emx.$$}
+{Again, we'll call the first matrix \tta\ and the second \ttb. Checking the dimensions of each matrix, we see that \tta\ is a $2\times 3$ matrix, whereas \ttb\ is a $2\times2$ matrix. The inner dimensions do not match, therefore this multiplication is not defined.}\\ % \eexset
+
+%\enlargethispage{5\baselineskip}
+
+\example{ex_matrix_multiply_4}{In Example \ref{ex_vector_multiplication}, we were told that the product \vx\vu\ was defined, where $$\vx =\bmx{c}-2\\4\\3\emx \quad \text{and} \quad \vu = \bmx{ccc}1&2&3\emx,$$ although we were not shown what that product was. Find \vx\vu.}
+{Again, we  need to check to make sure the dimensions work correctly (remember that even though we are referring to \vu\ and \vx\ as vectors, they are, in fact, just matrices). 
+
+The column vector \vx\ has dimensions $3\times1$, whereas the row vector \vu\ has dimensions $1\times 3$. Since the inner dimensions do match, the matrix product is defined; the outer dimensions tell us that the product will be a $3\times3$ matrix, as shown below: $$\vx\vu = \bmx{ccc}m_{11}&m_{12}&m_{13}\\ m_{21}&m_{22}&m_{23}\\m_{31}&m_{32}&m_{33}\emx.$$
+
+To compute the entry $m_{11}$, we multiply the first row of \vx\ by the first column of \vu. What is the first row of \vx? Simply the number $-2$. What is the first column of \vu? Just the number 1. Thus $m_{11} = -2$. (This does seem odd, but through checking, you can see that we are indeed following the rules.)
+
+What about the entry $m_{12}$? Again, we multiply the first row of \vx\ by the first column of \vu; that is, we multiply $-2(2)$. So $m_{12} = -4$.
+
+What about $m_{23}$? Multiply the second row of \vx\ by the third column of \vu; multiply $4(3)$, so $m_{23} = 12$. 
+
+One final example: $m_{31}$ comes from multiplying the third row of \vx, which is 3, by the first column of \vu, which is 1. Therefore $m_{31} = 3$.
+
+So far we have computed $$\vx\vu = \bmx{ccc}-2&-4&m_{13}\\ m_{21}&m_{22}&12\\3&m_{32}&m_{33}\emx.$$
+
+After performing all 9 multiplications, we find $$\vx\vu = \bmx{ccc}-2&-4&-6\\ 4&8&12\\3&6&9\emx.$$ \ \vskip -\baselineskip}\\ %\eexset
+
+In this last example, we saw a ``nonstandard'' multiplication (at least, it felt nonstandard). Studying the entries of this matrix, it seems that there are several different patterns that can be seen amongst the entries. (Remember that mathematicians like to look for patterns. Also remember that we often guess wrong at first; don't be scared and try to identify some patterns.)\\
+
+In Section \ref{sec:matrix_arithmetic_1}, we identified the zero matrix \tto\ that had a nice property in relation to matrix addition (i.e., $\tta+\tto = \tta$ for any matrix \tta). In the following example we'll identify a matrix that works well with multiplication as well as some multiplicative properties. For instance, we've learned how $1\cdot\tta = \tta$; is there a \textit{matrix} that acts like the number 1? That is, can we find a matrix $\ttx$ where $\ttx\cdot\tta=\tta$?\footnote{We made a guess in Section \ref{sec:matrix_arithmetic_1} that maybe a matrix of all 1s would work.}\\
+
+%\enlargethispage{3\baselineskip}
+\example{ex_identity}{Let $$\tta = \bmx{ccc}1&2&3\\2&-7&5\\-2&-8&3\emx, \quad \ttb = \bmx{ccc}1&1&1\\1&1&1\\1&1&1\emx$$ $$\ttc = \bmx{ccc}1&0&2\\2&1&0\\0&2&1\emx, \quad \tti = \bmx{ccc}1&0&0\\0&1&0\\0&0&1\emx.$$ Find the following products.
+
+\begin{center}\begin{minipage}{50pt}
+\begin{enumerate}
+	\item	\tta\ttb
+	\item	\ttb\tta
+\end{enumerate}
+\end{minipage}
+\begin{minipage}{55pt}
+\begin{enumerate}\addtocounter{enumi}{2}
+		\item	$\tta\tto_{3\times4}$
+		\item	$\tta\tti$
+	
+\end{enumerate}
+\end{minipage}
+\begin{minipage}{50pt}
+\begin{enumerate}\addtocounter{enumi}{4}
+	\item	\tti\tta
+	\item	$\tti^2$
+\end{enumerate}
+\end{minipage}
+\begin{minipage}{50pt}
+\begin{enumerate}\addtocounter{enumi}{6}
+	\item	\ttb\ttc
+	\item	$\ttb^2$
+\end{enumerate}
+\end{minipage}
+\end{center}
+}
+{We will find each product, but we leave the details of each computation to the reader.
+
+\begin{enumerate}
+\item		$\tta\ttb =  \bmx{ccc}1&2&3\\2&-7&5\\-2&-8&3\emx\bmx{ccc}1&1&1\\1&1&1\\1&1&1\emx = \bmx{ccc}6&6&6\\0&0&0\\-7&-7&-7\emx$
+
+\item		$\ttb\tta = \bmx{ccc}1&1&1\\1&1&1\\1&1&1\emx\bmx{ccc}1&2&3\\2&-7&5\\-2&-8&3\emx = \bmx{ccc}1&-13&11\\1&-13&11\\1&-13&11\emx$
+
+\item		$\tta\tto_{3\times4} = \tto_{3\times4}$. 
+
+\item		$\tta\tti = \bmx{ccc}1&2&3\\2&-7&5\\-2&-8&3\emx\eyethree = \bmx{ccc}1&2&3\\2&-7&5\\-2&-8&3\emx$
+
+\item		$\tti\tta = \eyethree\bmx{ccc}1&2&3\\2&-7&5\\-2&-8&3\emx = \bmx{ccc}1&2&3\\2&-7&5\\-2&-8&3\emx$
+
+\item		We haven't formally defined what $\tti^2$ means, but we could probably make the reasonable guess that $\tti^2=\tti\cdot\tti $. Thus $$\tti^2 = \eyethree\eyethree = \eyethree$$
+
+\item		$\ttb\ttc = \bmx{ccc}1&1&1\\1&1&1\\1&1&1\emx \bmx{ccc}1&0&2\\2&1&0\\0&2&1\emx = \bmx{ccc}3&3&3\\3&3&3\\3&3&3\emx$
+
+\item		$\ttb^2 = \ttb\ttb = \bmx{ccc}1&1&1\\1&1&1\\1&1&1\emx\bmx{ccc}1&1&1\\1&1&1\\1&1&1\emx=\bmx{ccc}3&3&3\\3&3&3\\3&3&3\emx$
+\end{enumerate}
+\vskip -\topsep \vskip -\baselineskip} \\
+%\eexset
+
+This example is simply chock full of interesting ideas; it is almost hard to think about where to start. 
+
+\textsf{\textbf{Interesting Idea \#1:}} Notice that in our example, $\tta\ttb \neq \ttb\tta$! When dealing with numbers, we were used to the idea that $ab = ba$. With matrices, multiplication is \textit{not} commutative. (Of course, we can find special situations where it does work. In general, though, it doesn't.)
+
+\textsf{\textbf{Interesting Idea \#2:}} Right before this example we wondered if there was a matrix that ``acted like the number 1,'' and guessed it may be a matrix of all 1s. %mentioned how, $a\cdot 1 = 1\cdot a = a$ and wondered if there were a matrix that filled a role similar to the number 1. Then we said that perhaps a matrix of all 1's would fit the bill. 
+However, we found out that such a matrix does not work in that way; in our example, $\tta\ttb \neq \tta$. We did find that $\tta\tti = \tti\tta = \tta$. There is a Multiplicative Identity; it just isn't what we thought it would be. And just as $1^2 = 1$, $\tti^2 = \tti$.
+
+\textsf{\textbf{Interesting Idea \#3:}} When dealing with numbers, we are very familiar with the notion that ``If $ax = bx$, then $a=b$.'' (As long as $x\neq 0$.) Notice that, in our example, $\ttb\ttb = \ttb\ttc$, yet $\ttb\neq\ttc$. In general, just because $\tta\ttx = \ttb\ttx$, we \textit{cannot} conclude that $\tta =\ttb$.\\
+
+Matrix multiplication is turning out to be a very strange operation. We are very used to multiplying numbers, and we know a bunch of properties that hold when using this type of multiplication. When multiplying matrices, though, we probably find ourselves asking two questions, ``What \textit{does} work?'' and ``What \textit{doesn't} work?'' We'll answer these questions; first we'll do an example that demonstrates some of the things that do work.\\
+
+\example{ex_dist_and_assoc}{Let $$\tta = \bmx{cc}1&2\\3&4\emx,\quad \ttb = \bmx{cc}1&1\\1&-1\emx \quad \text{and} \quad \ttc=\bmx{cc}2&1\\1&2\emx.$$ Find the following:
+\begin{center}\begin{minipage}{100pt}
+\begin{enumerate}
+	\item	$\tta(\ttb+\ttc)$
+	\item	$\tta\ttb+\tta\ttc$
+\end{enumerate}
+\end{minipage}
+\begin{minipage}{100pt}
+\begin{enumerate}\addtocounter{enumi}{2}
+		\item	$\tta(\ttb\ttc)$
+		\item	$(\tta\ttb)\ttc$
+\end{enumerate}
+\end{minipage}
+\end{center}
+}
+{We'll compute each of these without showing all the intermediate steps. Keep in mind order of operations: things that appear inside of parentheses are computed first.
+
+%\drawexampleline{ex_dist_and_assoc}
+
+\begin{enumerate}
+\item	 	\begin{align*}
+				\tta(\ttb+\ttc) &= \bmx{cc}1&2\\3&4\emx\left(\bmx{cc}1&1\\1&-1\emx+\bmx{cc}2&1\\1&2\emx\right) \\
+												&= \bmx{cc}1&2\\3&4\emx\bmx{cc}3&2\\2&1\emx \\
+												&= \bmx{cc}7&4\\17&10\emx
+				\end{align*}
+				
+\item		\begin{align*}
+				\tta\ttb+\tta\ttc &= \bmx{cc}1&2\\3&4\emx\bmx{cc}1&1\\1&-1\emx+\bmx{cc}1&2\\3&4\emx\bmx{cc}2&1\\1&2\emx\\
+				&= \bmx{cc}3&-1\\7&-1\emx + \bmx{cc}4&5\\10&11\emx\\
+				&= \bmx{cc}7&4\\17&10\emx
+				\end{align*}
+
+\item		\begin{align*}
+				\tta(\ttb\ttc) &= \bmx{cc}1&2\\3&4\emx\left(\bmx{cc}1&1\\1&-1\emx\bmx{cc}2&1\\1&2\emx\right) \\
+				&= \bmx{cc}1&2\\3&4\emx\bmx{cc}3&3\\1&-1\emx\\
+				&= \bmx{cc} 5&1\\13&5\emx
+				\end{align*}
+				
+\item		\begin{align*}
+				\left(\tta\ttb\right)\ttc &= \left(\bmx{cc}1&2\\3&4\emx\bmx{cc}1&1\\1&-1\emx\right)\bmx{cc}2&1\\1&2\emx\\
+				&= \bmx{cc}3&-1\\7&-1\emx\bmx{cc}2&1\\1&2\emx \\
+				&= \bmx{cc} 5&1\\13&5\emx
+				\end{align*}
+\end{enumerate}
+\vskip -\baselineskip} \\ %\eexset
+
+In looking at our example, we should notice two things. First, it looks like the ``distributive property'' holds; that is, $\tta(\ttb+\ttc) = \tta\ttb + \tta\ttc$. This is nice as many algebraic techniques we have learned about in the past (when doing ``ordinary algebra'') will still work. Secondly, it looks like the ``associative property'' holds; that is, $\tta(\ttb\ttc) = (\tta\ttb)\ttc$. This is nice, for it tells us that when we are multiplying several matrices together, we don't have to be particularly careful in what order we multiply certain pairs of matrices together.\footnote{Be careful: in computing $\tta\ttb\ttc$ together, we can first multiply $\tta\ttb$ or $\ttb\ttc$, but we cannot change the \textit{order} in which these matrices appear. We cannot multiply $\ttb\tta$ or $\tta\ttc$, for instance.}							
+
+
+In leading to an important theorem, let's define a matrix we saw in an earlier example.\footnote{The following definition uses a term we won't define until Definition \ref{def:diagonal} on page \pageref{def:diagonal}: \textit{diagonal}. In short, a ``diagonal matrix'' is one in which the only nonzero entries are the ``diagonal entries.'' The examples given here and in the exercises should suffice until we meet the full definition later.}
+
+\definition{def:identity}{\index{identity matrix}\index{matrix!identity matrix}\textbf{Identity Matrix}\\
+
+The $n\times n$ matrix with 1's on the diagonal and zeros elsewhere is the \textit{$n\times n$ identity matrix}, denoted $\tti_n$. When the context makes the dimension of the identity clear, the subscript is generally omitted.}
+
+Note that while the zero matrix can come in all different shapes and sizes, the identity matrix is always a square matrix. We show a few identity matrices below. $$\tti_2= \eyetwo ,\quad \tti_3 = \eyethree , \quad \tti_4 = \eyefour $$
+
+In our examples above, we have seen examples of things that do and do not work. We should be careful about what examples \textit{prove}, though. If someone were to claim that $\tta\ttb = \ttb\tta$ is always true, one would only need to show them one example where they were false, and we would know the person was wrong. However, if someone claims that $\tta(\ttb+\ttc) = \tta\ttb+\tta\ttc$ is always true, we can't prove this with just one example. We need something more powerful; we need a true proof. 
+
+In this text, we forgo most proofs. The reader should know, though, that when we state something in a theorem, there is a proof that backs up what we state. Our justification comes from something stronger than just examples.
+
+Now we give the good news of what does work when dealing with matrix multiplication.
+
+\theorem{thm:matrix_multiplication}{\index{matrix!multiplication!properties}\textbf{Properties of Matrix Multiplication}\\
+
+Let \tta, \ttb\ and \ttc\ be matrices with dimensions so that the following operations make sense, and let $k$ be a scalar. The following equalities hold:
+
+\begin{enumerate}
+\item	 	$\tta(\ttb\ttc) = (\tta\ttb)\ttc$\ (Associative Property)
+\item		$\tta(\ttb+\ttc) = \tta\ttb + \tta\ttb$\ and 
+
+$(\ttb+\ttc)\tta = \ttb\tta + \ttc\tta$\ (Distributive Property)\label{thm:mat_mult_dist}
+\item		$k(\tta\ttb) = (k\tta)\ttb = \tta(k\ttb)$ \label{thm:mat_mult_scalar}
+\item		$\tta\tti = \tti\tta = \tta$
+\end{enumerate}
+}
+
+The above box contains some very good news, and probably some very surprising news. Matrix multiplication probably seems to us like a very odd operation, so we probably wouldn't have been surprised if we were told that $\tta(\ttb\ttc)\neq(\tta\ttb)\ttc$. It is a very nice thing that the Associative Property does hold.
+
+As we near the end of this section, we raise one more issue of notation. We define $\tta^0 = \tti$. If $n$ is a positive integer, we define $$\tta^n = \underbrace{\tta\cdot\tta\cdot \ \cdots\ \cdot\tta}_\text{\parbox{50pt}{\centering $n$ times}}.$$ 
+
+With numbers, we are used to $a^{-n} = \frac{1}{a^n}$. Do negative exponents work with matrices, too? The answer is yes, sort of. We'll have to be careful, and we'll cover the topic in detail once we define the inverse of a matrix. For now, though, we recognize the fact that $\tta^{-1} \neq \frac{1}{\tta}$, for $\frac{1}{\tta}$ makes no sense; we don't know how to ``divide'' by a matrix.\\
+
+We end this section with a reminder of some of the things that do not work with matrix multiplication. The good news is that there are really only two things on this list.
+\begin{enumerate}
+\item	Matrix multiplication is not commutative; that is, $\tta\ttb \neq \ttb\tta$. 
+\item In general, just because $\tta\ttx = \ttb\ttx$, we cannot conclude that $\tta=\ttb$.
+\end{enumerate}
+The bad news is that these ideas pop up in many places where we don't expect them. For instance, we are used to $$(a+b)^2 = a^2+2ab+b^2.$$ What about $(\tta+\ttb)^2$? All we'll say here is that $$(\tta+\ttb)^2 \neq \tta^2+2\tta\ttb+\ttb^2;$$ we leave it to the reader to figure out why.
+
+The next section is devoted to visualizing column vectors and ``seeing'' how some of these arithmetic properties work together.\\
+
+%In the next section, we'll continue with our practice of visualizing matrix operations. We learned in the previous section how to draw vectors; what results when we multiply a vector by a matrix? Are there any cool visual properties of this? We'll soon find out.\\
+
+%EXERCISES
+
+%lots of multiplication
+
+%diagonal matrices  \ttx\tta
+
+%multiply \tta\ttx for vectors, and variable vectors
+
+%multiply nilpotent matrices (z sent to y, y to x, x to zero. Cube it)
+
+%(A-B)(A+B) etc.
+
+\printexercises{exercises/02_02_exercises}

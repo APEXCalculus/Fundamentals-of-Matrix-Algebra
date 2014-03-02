@@ -1,0 +1,89 @@
+%\documentclass{article}
+%\usepackage{tikz}
+%\usetikzlibrary{fadings,patterns,decorations.fractals,decorations.pathmorphing,shadows,decorations.footprints,calc}
+%\pagestyle{empty}
+
+%
+%\newcommand{\unitsquare}[1][]
+%{\begin{scope}
+%	\draw [#1] (0,0) node (A) {} -- (1,0) node (B) {} -- (1,1) node (C) {} -- (0,1) node (D) {} -- cycle;
+%	\draw [->,>=latex,#1,ultra thin] (0,.25)--(1,.25);
+%	\draw [->,>=latex,#1,ultra thin] (0,.5)--(1,.5);
+%	\draw [->,>=latex,#1,ultra thin] (0,.75)--(1,.75);
+%	\filldraw [black]  (A) circle (2pt);%black
+%	\draw [#1,ultra thick]  (B) ++(-2pt,-2pt) rectangle ++(4pt,4pt);%red
+%	\draw [ultra thick]  (C) circle (2pt);%blue
+%	\draw [#1,ultra thick]  (D) ++(-2.5pt,-2.5pt) -- ++(5pt,0pt) -- ++(-2.5pt,5pt) -- cycle;%green
+%	\end{scope}
+%}
+%
+%\newcommand{\drawxlines}[3]
+%{\draw[<->] (#1,0) -- (#2,0) node [right] {$x$};
+%\foreach \x in {#3}
+%		{\draw  (\x,-.1)--(\x,.1);
+%			};
+%}
+%
+%\newcommand{\drawylines}[3]
+%{\draw[<->] (0,#1) -- (0,#2) node [above] {$y$};
+%\foreach \x in {#3}
+%		{\draw  (-.1,\x)--(.1,\x);
+%			};
+%}
+
+%\usepackage{fontspec}
+%\setmainfont[Mapping=tex-text]{Calibri}
+
+%\begin{document}
+%
+%
+\thispagestyle{empty}
+
+\begin{tikzpicture}[remember picture,overlay]
+\coordinate (top left) at (current page.north west);
+\coordinate (top right) at (current page.north east);
+\coordinate (bot left) at (current page.south west);
+\coordinate (bot right) at (current page.south east);
+\end{tikzpicture}
+
+\begin{tikzpicture}[remember picture,overlay]
+%\shade [bottom color=red!50!black,top color=red!70!black!50]
+%(top left) rectangle (bot right);
+
+\shade [bottom color=red!50!black,top color=red!70!black!50]
+(top left) rectangle (bot right);
+
+
+\def\nodeshadowed[#1]#2;{
+\node[scale=1,above,#1]{#2};
+\node[scale=1,above,#1,yscale=-1,%scope fading=south,
+opacity=0.4]{#2};
+}
+
+%\node[yshift=5.5cm,scale=4,opacity=.5,blue] at (current page.center) {\Huge \textit{of}};
+\node[yshift=5.5cm,scale=4,opacity=.5,blue] at (current page.center) {\fontspec[Scale=2.5]{Lucida Calligraphy}\itshape of};
+\ifthenelse{\boolean{ipadsize}}
+{\node[yshift=7cm,scale=1.9,blue!30!black] at (current page.center) {\fontspec[Scale=2.5]{[cmcsc10]} Fundamentals};
+\node[yshift=4cm,scale=1.9,blue!30!black] at (current page.center) {\fontspec[Scale=2.5]{[cmcsc10]} Matrix Algebra};
+\node[xshift=-1cm,yshift=2.5cm,scale=1,blue!30!black,,left color=yellow!30,right color=yellow] at (current page.center) {\fontspec[Scale=1]{[cmsl10]} \ \hskip 14cm Second Edition};}
+{\node[yshift=7cm,scale=2,blue!30!black] at (current page.center) {\fontspec[Scale=2.5]{[cmcsc10]} Fundamentals};
+\node[yshift=4cm,scale=2,blue!30!black] at (current page.center) {\fontspec[Scale=2.5]{[cmcsc10]} Matrix Algebra};
+\node[xshift=-1cm,yshift=2.5cm,scale=1,blue!30!black,left color=blue!10,right color=blue!50] at (current page.center) {\fontspec[Scale=1]{[cmsl10]} \ \hskip 14cm Third Edition};}
+%\node[xshift=3.45in,yshift=2.5cm,scale=1,blue!30!black,left color=yellow!30,right color=yellow] at (current page.center) {\fontspec[Scale=1]{[cmsl10]} \ \hskip 5.25in Second Edition};
+
+\draw ($(current page.center)!.25!(current page.south)$) node  {
+\begin{tikzpicture}[scale=5,>=latex]
+		\drawxlines{-1.5}{1.5}{1,-1};
+		\drawylines{-.25}{1.5}{1};	
+		\begin{scope}[opacity=.5]\unitsquarecover[very thin];\end{scope}
+		\unitsquarecover[thick,cm={0.5,0.866,-0.866,0.5,(0,0)}];
+		\draw [->] (.5,0) arc (0:58:0.5cm) ;
+		\path (.7,0) arc (0:30:.7) node {\Huge $\theta$};
+\end{tikzpicture}
+};
+
+%\nodeshadowed [at={($(current page.center)!.75!(current page.south)$)}] {\huge $\left[ \begin{array}{cc} \cos \theta & -\sin \theta \\ \sin \theta & \cos \theta \end{array}\right] $};
+
+\draw (4.5in,-8in) node [scale=1,blue!30!black] {\fontspec[Scale=2]{[cmr10]} Gregory Hartman};
+
+\end{tikzpicture}

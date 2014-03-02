@@ -1,0 +1,537 @@
+\newcounter{examplecounter}
+\newcounter{definitioncounter}
+\newcounter{theoremcounter}
+\newcounter{ideacounter}
+\newcounter{excounter}
+
+\definecolor{myblue}{rgb}{.7,.7,1}
+\definecolor{mygreen}{rgb}{.7,1,.7}
+\definecolor{myred}{rgb}{1,.7,.7}
+\definecolor{myyellow}{rgb}{.9,.9,0}
+
+\newtheoremstyle{mystyle}% Generic Theorem Style
+  {15pt}%      Space above
+  {15pt}%      Space below
+  {\sffamily}%         Body font
+  {}%         Indent amount (empty = no indent, \parindent = para indent)
+  {\sffamily\bfseries}% Thm head font
+  {}%        Punctuation after thm head
+  {1.5em}%     Space after thm head: " " = normal interword space;
+        %       \newline = linebreak
+  {}%         Thm head spec (can be left empty, meaning `normal')
+
+\newtheoremstyle{myexamplestyle}% Used for the Example environments
+  {15pt}%      Space above
+  {5pt}%      Space below
+  {}%         Body font
+  {}%         Indent amount (empty = no indent, \parindent = para indent)
+  {\bfseries}% Thm head font
+  {}%        Punctuation after thm head
+  {1.5em}%     Space after thm head: " " = normal interword space;
+        %       \newline = linebreak
+  {}%         Thm head spec (can be left empty, meaning `normal')
+
+
+%
+%Define style for the Examples  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\theoremstyle{myexamplestyle}
+
+\newtheorem{myexample}{Example}
+
+
+
+\newboolean{showexamplelines}
+\setboolean{showexamplelines}{true}
+%\setboolean{showexamplelines}{false}
+
+%%%
+%%%
+\ifthenelse{\boolean{booksize}}{%booksize example environment
+\newcommand{\example}[3]{%
+\hskip -50pt%
+\begin{tikzpicture}[remember picture,overlay]
+\draw (0,0) node [yshift=2.5pt]
+(#1)% 
+[rectangle, text width = 100pt,text justified]%
+{\begin{myexample}\label{#1}\end{myexample}};
+\end{tikzpicture}%
+\hskip 50pt%
+\ifthenelse{\boolean{showexamplelines}}% Should we show lines or not?
+{% Begin if to show lines
+\ifthenelse{\pageref{#1} = \pageref{e#1}}
+{}% If on the same page, do nothing from the top
+{% if on different pages - assuming the next page
+\ifthenelse{\isodd{\pageref{#1}}}%
+{% if an odd page
+\begin{tikzpicture}[remember picture, overlay]
+\draw [\ifthenelse{\boolean{in_color}}{blue!95!black!30}{black!30},line width=1pt] 
+(#1.south west) -- (oddpagebottom |- #1.south west) -- %
+(oddpagebottom);
+\end{tikzpicture}%
+}% close if an odd page
+%\else
+{% else if on an even page
+\begin{tikzpicture}[remember picture, overlay]
+\draw [\ifthenelse{\boolean{in_color}}{blue!95!black!30}{black!30},line width=1pt] 
+(#1.south west) -- (evenpagebottom |- #1.south west) -- %
+(evenpagebottom);
+\end{tikzpicture}%
+}%\fi%close if on an even page
+}%close if on different pages
+%closes ifthenelse
+#2%
+\vskip \baselineskip%
+\hskip -80pt%
+\parbox{80pt}{\textsc{\small Solution}}%
+#3\label{e#1}%
+\ifthenelse{\pageref{#1} = \pageref{e#1}}
+{% if on the same page
+\ifthenelse{\isodd{\pageref{e#1}}}
+{% if an odd page
+\begin{tikzpicture}[remember picture, overlay]
+\node (e#1) {};
+\draw [\ifthenelse{\boolean{in_color}}{blue!95!black!30}{black!30},line width=1pt]  
+(#1.south west) -- (oddpagebottom |- #1.south west) -- (oddpagebottom |- e#1.south west)  -- ++(0,-.1) -- ++(1,0);
+\end{tikzpicture}%
+}% close if an odd page
+%\else
+{% else if on an even page
+\begin{tikzpicture}[remember picture, overlay]
+\node (e#1) {};
+\draw [\ifthenelse{\boolean{in_color}}{blue!95!black!30}{black!30},line width=1pt] 
+(#1.south west) -- (evenpagebottom |- #1.south west) -- %
+(evenpagebottom |- e#1.south west) -- ++(0,-.1) -- ++(1,0);
+\end{tikzpicture}%
+}%\fi%close if on an even page
+}%close if on the same page
+{% if on different pages - assuming the next page
+%\ifodd\thepage
+\ifthenelse{\isodd{\pageref{e#1}}}
+{% if an odd page
+\begin{tikzpicture}[remember picture, overlay]
+\node (e#1) {};
+\draw [\ifthenelse{\boolean{in_color}}{blue!95!black!30}{black!30},line width=1pt] 
+(oddpagetop) -- (oddpagetop |- e#1.south west) -- ++(0,-.1) -- ++(1,0);
+\end{tikzpicture}%
+}% close if an odd page
+%\else
+{% else if on an even page
+\begin{tikzpicture}[remember picture, overlay]
+\node (e#1) {};
+\draw [\ifthenelse{\boolean{in_color}}{blue!95!black!30}{black!30},line width=1pt] 
+(evenpagetop) -- (evenpagetop |- e#1.south west) -- ++(0,-.1) -- ++(1,0);
+\end{tikzpicture}%
+}%\fi%close if on an even page
+}%close if on different pages
+%closes ifthenelse
+}% Closes If to show example lines
+{% Else - do not show lines
+#2%
+\vskip \baselineskip%
+\hskip -80pt%
+\parbox{80pt}{\textsc{\small Solution}}%
+#3\label{e#1}%
+}% Ends Else - do not show lines
+\ \\ }%ends definition
+}%%%%  ends booksize example environment
+{%
+\newcommand{\example}[3]{% begins ipod and laptop size environment
+%\noindent
+{\begin{tikzpicture}[remember picture, overlay]
+\node [xshift=15pt,yshift=2.5pt] (#1) [rectangle,
+text width = 70pt,
+text justified,fill=blue!95!black!30] 
+{\phantom{Example}};
+\end{tikzpicture}
+\begin{tikzpicture}[remember picture, overlay]
+%\node [yshift=2.5pt] (#1) [rectangle,
+%text width = 150pt,
+%text justified] 
+\node [xshift=53pt,yshift=2.5pt] (#1) [rectangle,
+text width = 150pt,
+text justified,text=red] 
+{\begin{myexample}\label{#1}\end{myexample}};
+\end{tikzpicture} {\hskip 50pt}{\hskip 4pt}}
+\ifthenelse{\boolean{showexamplelines}}% Should we show lines or not?
+{ % Begin if to show lines
+\ifthenelse{\pageref{#1} = \pageref{e#1}}
+{} % If on the same page, do nothing from the top
+{% if on different pages - assuming the next page
+\ifthenelse{\isodd{\pageref{#1}}}
+		{% if an odd page
+		\begin{tikzpicture}[remember picture, overlay]
+		\draw [red!95!black!30,line width=1pt] 
+		(oddpagebottom |- #1.south west) -- %
+		(oddpagebottom);
+		\end{tikzpicture}%
+		}% close if an odd page
+		%\else
+		{% else if on an even page
+		\begin{tikzpicture}[remember picture, overlay]
+		\draw [red!95!black!30,line width=1pt] 
+	  (evenpagebottom |- #1.south west) -- %
+		(evenpagebottom);
+		\end{tikzpicture}%
+		}%\fi%close if on an even page
+} %close if on different pages
+%closes ifthenelse
+\nopagebreak\noindent {\hskip -5pt} #2
+\vskip .2in {\hskip -80pt \parbox{72pt}{{\textsc{\small Solution}}}}
+\noindent #3 \label{e#1}  % draw lines from bottom
+\ifthenelse{\pageref{#1} = \pageref{e#1}}
+{% if on the same page
+\ifthenelse{\isodd{\pageref{e#1}}}
+		{% if an odd page
+		\begin{tikzpicture}[remember picture, overlay]
+		\node (e#1) {};
+		%\draw (#1) -- (e#1);
+		\draw [red!95!black!30,line width=1pt]  
+		(#1.south west) -- (oddpagebottom |- #1.south west) -- (oddpagebottom |- e#1.south west)  -- ++(0,-.1) -- ++(1,0);
+		\end{tikzpicture}%
+		}% close if an odd page
+		%\else
+		{% else if on an even page
+		\begin{tikzpicture}[remember picture, overlay]
+		\node (e#1) {};
+		\draw [red!95!black!30,line width=1pt] 
+		(#1.south west) -- (evenpagebottom |- #1.south west) -- %
+		(evenpagebottom |- e#1.south west) -- ++(0,-.1) -- ++(1,0);
+		\end{tikzpicture}%
+		}%\fi%close if on an even page
+} %close if on the same page
+{% if on different pages - assuming the next page
+%\ifodd\thepage
+\ifthenelse{\isodd{\pageref{e#1}}}
+		{% if an odd page
+		\begin{tikzpicture}[remember picture, overlay]
+		\node (e#1) {};
+		\draw [red!95!black!30,line width=1pt] 
+		(oddpagetop) -- (oddpagetop |- e#1.south west) -- ++(0,-.1) -- ++(1,0);
+		\end{tikzpicture}%
+		}% close if an odd page
+		%\else
+		{% else if on an even page
+		\begin{tikzpicture}[remember picture, overlay]
+		\node (e#1) {};
+		\draw [red!95!black!30,line width=1pt] 
+		(evenpagetop) -- (evenpagetop |- e#1.south west) -- ++(0,-.1) -- ++(1,0);
+		\end{tikzpicture}%
+		}%\fi%close if on an even page
+} %close if on different pages
+%closes ifthenelse
+} % Closes If to show example lines
+{ % Else - do not show lines
+\nopagebreak\noindent {\hskip -5pt} #2
+\vskip .2in {\hskip -80pt \parbox{72pt}{{\textsc{\small Solution}}}}
+\noindent #3 \label{e#1} 
+} % Ends Else - do not show lines
+\ \\ }%ends definition
+}
+
+%%%%
+%% Defines the examples for the CreateSpace sized book
+
+\ifthenelse{\boolean{amazonsize}}{%booksize example environment
+\renewcommand{\example}[3]{%
+%\hskip -10pt%
+{\begin{tikzpicture}[remember picture, overlay]
+\node [xshift=15pt,yshift=2.5pt] (#1) [rectangle,
+text width = 70pt,
+text justified] 
+{\phantom{Example}};
+\end{tikzpicture}
+\begin{tikzpicture}[remember picture, overlay]
+%\node [yshift=2.5pt] (#1) [rectangle,
+%text width = 150pt,
+%text justified] 
+\node [xshift=58pt,yshift=2.5pt] (#1) [rectangle,
+text width = 150pt,
+text justified] 
+{\begin{myexample}\label{#1}\end{myexample}};
+\end{tikzpicture}{\hskip 74pt}%{\hskip 4pt}%
+}
+\ifthenelse{\boolean{showexamplelines}}% Should we show lines or not?
+{% Begin if to show lines
+\ifthenelse{\pageref{#1} = \pageref{e#1}}
+{}% If on the same page, do nothing from the top
+{% if on different pages - assuming the next page
+\ifthenelse{\isodd{\pageref{#1}}}%
+{% if an odd page
+\begin{tikzpicture}[remember picture, overlay]
+\ifthenelse{\boolean{in_color}}{\draw [blue!95!black!30,line width=1pt]}{\draw [black!30,line width=1pt]} 
+(oddpagebottom |- #1.north west) -- %
+(oddpagebottom);
+\end{tikzpicture}%
+}% close if an odd page
+%\else
+{% else if on an even page
+\begin{tikzpicture}[remember picture, overlay]
+\ifthenelse{\boolean{in_color}}{\draw [blue!95!black!30,line width=1pt]}{\draw [black!30,line width=1pt]} 
+(evenpagebottom |- #1.north west) -- %
+(evenpagebottom);
+\end{tikzpicture}%
+}%\fi%close if on an even page
+}%close if on different pages
+%closes ifthenelse
+#2%
+\vskip \baselineskip%
+%\hskip -10pt%
+\parbox{80pt}{\textsc{\small \bfseries Solution}}%
+#3\label{e#1}%
+\ifthenelse{\pageref{#1} = \pageref{e#1}}
+{% if on the same page
+\ifthenelse{\isodd{\pageref{e#1}}}
+{% if an odd page
+\begin{tikzpicture}[remember picture, overlay]
+\node (e#1) {};
+\ifthenelse{\boolean{in_color}}{\draw [blue!95!black!30,line width=1pt]}{\draw [black!30,line width=1pt]} 
+(oddpagebottom |- #1.north west) -- (oddpagebottom |- e#1.north west)  -- ++(0,-.2) -- ++(1,0);
+\end{tikzpicture}%
+}% close if an odd page
+%\else
+{% else if on an even page
+\begin{tikzpicture}[remember picture, overlay]
+\node (e#1) {};
+\ifthenelse{\boolean{in_color}}{\draw [blue!95!black!30,line width=1pt]}{\draw [black!30,line width=1pt]}
+(evenpagebottom |- #1.north west) -- %
+(evenpagebottom |- e#1.north west) -- ++(0,-.2) -- ++(1,0);
+\end{tikzpicture}%
+}%\fi%close if on an even page
+}%close if on the same page
+{% if on different pages - assuming the next page
+%\ifodd\thepage
+\ifthenelse{\isodd{\pageref{e#1}}}
+{% if an odd page
+\begin{tikzpicture}[remember picture, overlay]
+\node (e#1) {};
+\ifthenelse{\boolean{in_color}}{\draw [blue!95!black!30,line width=1pt]}{\draw [black!30,line width=1pt]}
+(oddpagetop) -- (oddpagetop |- e#1.south west) -- ++(0,-.2) -- ++(1,0);
+\end{tikzpicture}%
+}% close if an odd page
+%\else
+{% else if on an even page
+\begin{tikzpicture}[remember picture, overlay]
+\node (e#1) {};
+\ifthenelse{\boolean{in_color}}{\draw [blue!95!black!30,line width=1pt]}{\draw [black!30,line width=1pt]} 
+(evenpagetop) -- (evenpagetop |- e#1.south west) -- ++(0,-.2) -- ++(1,0);
+\end{tikzpicture}%
+}%\fi%close if on an even page
+}%close if on different pages
+%closes ifthenelse
+}% Closes If to show example lines
+{% Else - do not show lines
+#2%
+\vskip \baselineskip%
+%\hskip -10pt%
+\parbox{80pt}{\textsc{\small\bfseries Solution}}%
+#3\label{e#1}%
+}% Ends Else - do not show lines
+\ \\ }%ends definition
+}
+{}
+
+%%%%
+
+
+%%%
+%%%
+
+%	Draws an example line when the beginning and end of the example
+%	spans 3 or more pages. This assumes it is a total of 3 pages;
+% this calculates the line to be drawn as one page after the start, 
+% calculating even/odd page side this way.
+%
+\newcommand{\drawexampleline}[1]{
+\ifthenelse{\boolean{showexamplelines}}
+{ % show lines
+\ifthenelse{\isodd{\pageref{#1}}}
+	{\begin{tikzpicture}[remember picture,overlay]
+	 \ifthenelse{\boolean{in_color}}{\draw [blue!95!black!30,line width=1pt]}{\draw [black!30,line width=1pt]}
+	 (evenpagetop) -- (evenpagebottom);
+	 \end{tikzpicture}
+}
+	{\begin{tikzpicture}[remember picture,overlay]
+	 \ifthenelse{\boolean{in_color}}{\draw [blue!95!black!30,line width=1pt]}{\draw [black!30,line width=1pt]}
+	 (oddpagetop) -- (oddpagebottom);
+	 \end{tikzpicture}
+}
+} % End show lines
+{} % No else - don't do anything
+}
+
+%  This draws an example line on the current page.
+%  It takes a number as an argument (it could be the page number).
+%  Use an odd number for an odd page, even for an even page.
+%
+\newcommand{\drawexamplelinenow}[1]{
+\ifthenelse{\boolean{showexamplelines}}
+{ % show lines
+\ifthenelse{\isodd{#1}}
+	{\begin{tikzpicture}[remember picture,overlay]
+	 \ifthenelse{\boolean{in_color}}{\draw [blue!95!black!30,line width=1pt]}{\draw [black!30,line width=1pt]}
+	  (oddpagetop) -- (oddpagebottom);
+	 \end{tikzpicture}
+}
+	{\begin{tikzpicture}[remember picture,overlay]
+	 \ifthenelse{\boolean{in_color}}{\draw [blue!95!black!30,line width=1pt]}{\draw [black!30,line width=1pt]}
+	  (evenpagetop) -- (evenpagebottom);
+	 \end{tikzpicture}
+}
+} % End show lines
+{} % No else - don't do anything
+}
+
+
+
+
+
+%
+%Define style for Definitions, Theorems and Key Ideas  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+
+\theoremstyle{mystyle}
+
+\newtheorem{deff}{Definition}
+
+%\newcommand{\definition}[2]{\begin{deff}\label{#1} \fcolorbox{blue}{myblue}{ \begin{minipage}[t]{265pt}#2\end{minipage}}\end{deff}}
+
+\ifthenelse{\boolean{booksize}\or\boolean{amazonsize}}{% Begin if booksize
+\newcommand{\definition}[2]{\begin{deff}\label{#1}
+\raisebox{24pt}{\begin{tikzpicture}[baseline=(current bounding box.north)-1cm]
+%\pgfsetbaselinepointlater{\pgfpointanchor{X}{base}}
+\ifthenelse{\boolean{in_color}}{\node (X) [rectangle,
+text width = 240pt,
+baseline=-1cm,
+very thick,
+inner sep=15pt,
+draw = yellow!95!black!60,
+top color = white!95!yellow,
+bottom color = yellow!90!black!30,
+text justified]} 
+{\node (X) [rectangle,draw,
+text width = 240pt,
+baseline=-1cm,
+inner sep=15pt,
+very thick,
+text justified]} 
+{#2};
+\end{tikzpicture}}
+\end{deff}}%
+}%  End If
+{% begin else not booksize
+\newcommand{\definition}[2]{\begin{deff}\label{#1}
+\raisebox{24pt}{\begin{tikzpicture}[baseline=(current bounding box.north)-1cm]
+%\pgfsetbaselinepointlater{\pgfpointanchor{X}{base}}
+\node (X) [rectangle,draw,
+text width = 170pt,
+baseline=-1cm,
+inner sep=15pt,
+very thick,
+text justified] 
+{#2};
+\end{tikzpicture}}
+\end{deff}}%
+}%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newtheorem{thm}{Theorem}
+
+\ifthenelse{\boolean{booksize}\or\boolean{amazonsize}}{%
+\newcommand{\colortheorem}[2]{\begin{thm}\label{#1}
+\raisebox{24pt}{\begin{tikzpicture}[baseline=(current bounding box.north)-1cm]
+%\pgfsetbaselinepointlater{\pgfpointanchor{X}{base}}
+\ifthenelse{\boolean{in_color}}
+{\node (X) [rectangle,
+text width = 240pt,
+baseline=-1cm,
+inner sep=15pt,
+very thick,
+draw = green!30!black!50,
+top color = white!95!green,
+bottom color = green!60!black!20,
+text justified] }
+{\node (X) [rectangle,draw,
+text width = 240pt,
+baseline=-1cm,
+inner sep=15pt,
+very thick,
+text justified] }
+{#2};
+\end{tikzpicture}}\end{thm}}%
+}%
+{%
+\newcommand{\colortheorem}[2]{\begin{thm}\label{#1}
+\raisebox{24pt}{\begin{tikzpicture}[baseline=(current bounding box.north)-1cm]
+%\pgfsetbaselinepointlater{\pgfpointanchor{X}{base}}
+\node (X) [rectangle,draw,
+text width = 170pt,
+baseline=-1cm,
+inner sep=15pt,
+very thick,
+text justified] 
+{#2};
+\end{tikzpicture}}\end{thm}}%
+}%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newtheorem{keyidea}{Key Idea}
+
+\ifthenelse{\boolean{booksize}\or\boolean{amazonsize}}{%
+\newcommand{\idea}[2]{\begin{keyidea}\label{#1}
+\raisebox{24pt}{\begin{tikzpicture}[baseline=(current bounding box.north)-1cm]
+%\pgfsetbaselinepointlater{\pgfpointanchor{X}{base}}
+\ifthenelse{\boolean{in_color}}
+{\node (X) [rectangle,
+text width = 240pt,
+baseline=-1cm,
+inner sep=15pt,
+very thick,
+draw = red!30!black!50,
+top color = white!95!red,
+bottom color = red!60!black!20,
+text justified] }
+{\node (X) [rectangle,draw,
+text width = 240pt,
+baseline=-1cm,
+inner sep=15pt,
+very thick,
+text justified] }
+{#2};
+\end{tikzpicture}}
+\end{keyidea}}%
+}%
+{%
+\newcommand{\idea}[2]{\begin{keyidea}\label{#1}
+\raisebox{24pt}{\begin{tikzpicture}[baseline=(current bounding box.north)-1cm]
+%\pgfsetbaselinepointlater{\pgfpointanchor{X}{base}}
+\node (X) [rectangle,draw,
+text width = 170pt,
+baseline=-1cm,
+inner sep=15pt,
+very thick,
+text justified] 
+{#2};
+\end{tikzpicture}}
+\end{keyidea}}%
+}%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\asyouread}[1]{\begin{tikzpicture}
+\ifthenelse{\boolean{in_color}}{\node [preaction={fill=black,opacity=.5,transform canvas={xshift=1mm,yshift=-1mm}}, right color=blue!80!black!30, left color=blue!80] at (0,0) {\textcolor{white}{\textsf{\textit{AS YOU READ $\ldots$}}}};}
+{\node [preaction={fill=black,opacity=.5,transform canvas={xshift=1mm,yshift=-1mm}}, right color=black!30, left color=black!10] at (0,0) {\textcolor{white}{\textsf{\textit{AS YOU READ $\ldots$}}}};}
+\end{tikzpicture}
+\begin{enumerate}
+#1
+\end{enumerate}
+\vskip 20pt}
+
+

@@ -1,0 +1,240 @@
+%
+%Commands used in the Exercise section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\exc}{\addtocounter{excounter}{2}\arabic{excounter}}
+
+%\newcount\edc  %exercise display count
+
+\newif\ifmore
+
+\newif\ifexsetmore
+
+\newcount\showexercises
+
+\newcount\numberofexercises
+
+\newcounter{numofexer}
+\newcounter{negnumofexer}
+
+\newcounter{debug}
+\setcounter{debug}{0}
+
+\newcounter{exercisecounter}
+\newcounter{IMTcount}
+\newcounter{IMTcount_temp}
+
+\newboolean{showexercisenames}
+%\setboolean{showexercisenames}{true}
+\setboolean{showexercisenames}{false}
+
+\newread\exread
+\newread\exsetread
+\newread\exansread
+\newread\printansread
+
+\newwrite\answrite
+\openout\answrite=\jobname.answers
+
+\def\exinput #1 {\ifnum \showexercises=1 
+												\openin\exread=#1 
+												\read\exread to \tempp 
+												\begin{enumerate} 
+													\addtocounter{enumi}{\theexercisecounter}
+													\item 
+													\ifthenelse{\boolean{showexercisenames}}
+													{\tiny {\hskip -60pt}% This line too
+												  \makebox[60pt][l]{\printexercisename #1 }%  
+												  \small%
+												  }{}
+													\tempp 
+													\addtocounter{exercisecounter}{1}
+												\end{enumerate}
+												\closein\exread 
+									\else \ifnum \showexercises=2  %i.e, we are printing odd answers, not questions 
+												\openin\exread=#1 
+												\read\exread to \tempp % read in the question - we ignore it.
+												\addtocounter{exercisecounter}{1}
+												\read\exread to \tempp % reads in the answer
+												\ifodd \theexercisecounter
+												%\else
+													\begin{enumerate} 
+													\addtocounter{enumi}{\theexercisecounter}
+													\addtocounter{enumi}{-1}
+													\item 
+													\ifthenelse{\boolean{showexercisenames}}
+													{\tiny {\hskip -60pt}% This line too
+												  \makebox[60pt][l]{\printexercisename #1 }%
+												  \small%
+												  }{}
+													\tempp 
+													%\addtocounter{exercisecounter}{1}
+													\end{enumerate} 
+												\fi
+												\closein\exread 
+												\fi  %ends the \ifnum \showexercises = 2 if statement
+												%
+												\ifnum \showexercises=3  %i.e., we print all answers, not just odds 
+												\openin\exread=#1 
+												\read\exread to \tempp %reads in the question, which is ignored 
+												\read\exread to \tempp %reads in the answer
+												\begin{enumerate} 
+													\addtocounter{enumi}{\theexercisecounter}
+													\item 
+													\ifthenelse{\boolean{showexercisenames}}
+													{\tiny {\hskip -60pt}% This line too
+												  \makebox[60pt][l]{\printexercisename #1 }%
+												  \small%
+												  }{}
+													\tempp 
+													\addtocounter{exercisecounter}{1}
+												\end{enumerate}
+												\closein\exread
+												\fi % ends the \ifnum \showexercises=3 if statement
+									\fi 
+								}
+
+\def\exsetinput #1 {\openin\exsetread=#1
+										\setcounter{numofexer}{0}
+										\setcounter{negnumofexer}{0} 
+										\read\exsetread to \exsettemp
+										\read\exsetread to \exsettemp
+										{\loop
+												\read\exsetread to \exsettemp
+												\ifeof \exsetread \exsetmorefalse \else \exsetmoretrue \fi
+												\ifexsetmore
+														\addtocounter{numofexer}{1}
+														\addtocounter{negnumofexer}{-1}
+											\repeat}							
+										\closein\exsetread
+										\openin\exsetread=#1
+										\ifnum \showexercises=1 
+											\read\exsetread to \exsettemp
+											\setcounter{enumi}{\theexercisecounter} 
+											\addtocounter{enumi}{1}
+											\ifthenelse{\boolean{showexercisenames}}
+													{\tiny {\hskip -60pt}% This line too
+												  \makebox[60pt][l]{\printexercisename #1 }%
+												  \small%
+												  }{}
+											\noin\textbf{\exsettemp\theenumi\addtocounter{enumi}{-1}
+											\addtocounter{enumi}{\thenumofexer}{-- }\theenumi%
+											\addtocounter{enumi}{\thenegnumofexer}%
+											\read\exsetread to \exsettemp \exsettemp}%
+											
+											{\loop
+													\read\exsetread to \exsettemp
+													\ifeof \exsetread \exsetmorefalse \else \exsetmoretrue \fi
+													\ifexsetmore
+															\exsettemp
+											\repeat}
+										\else
+											\read\exsetread to \exsettemp
+											\read\exsetread to \exsettemp
+											{\loop
+													\read\exsetread to \exsettemp
+													\ifeof \exsetread \exsetmorefalse \else \exsetmoretrue \fi
+													\ifexsetmore
+															\exsettemp
+											\repeat}
+										\fi
+										\closein\exsetread
+								}
+
+\def\printexercises #1 {%
+\ifthenelse{\equal{\expandafter\readsection\thesection}{1}}{\immediate\write\answrite{\noexpand \noindent {\noexpand\Large\noexpand\bf Chapter \thechapter} \noexpand \vskip \noexpand\baselineskip } \write\answrite{}}{}%
+\immediate\write\answrite{\noexpand\noindent {\noexpand\bf Section \thesection} \noexpand \vskip \baselineskip}%
+\write\answrite{\noexpand\printanswers{#1}}%
+\setcounter{exercisecounter}{0}\showexercises=1 \small%
+\noin\underline{\parbox{\textwidth}{\Large\textbf{Exercises \thesection} }}% 
+\sffamily%
+\vskip\baselineskip%
+\begin{multicols}{2}%
+				\openin\exansread=#1 
+				\ifeof \exansread 
+					{No problems written.} 
+				\else 
+					\loop \read\exansread to \extemp  
+							\ifeof \exansread \morefalse \else \moretrue \fi 
+							\ifmore 
+									\extemp
+							\repeat 
+				\fi 
+				\closein\exansread 
+				\end{multicols}%
+				\setlength{\hoffset}{0pt} \rmfamily\normalsize \vskip \baselineskip% \end{flushleft}
+				}
+				
+
+
+% The following prints the answers. In order to print just odds, set \showexercises=2. 
+% To print all answers, set \showexercises=3.
+% 
+\def\printanswers #1 {\setcounter{exercisecounter}{0} \footnotesize \showexercises=2 \openin\printansread=#1 
+				\ifeof \printansread 
+					{No problems written.} 
+				\else 
+					\loop \read\printansread to \extemp  
+							\ifeof \printansread \morefalse \else \moretrue \fi 
+							\ifmore 
+									\extemp
+							\fi 
+							\ifeof \printansread \morefalse \else \moretrue \fi 
+							\ifmore 
+					\repeat 
+				\fi 
+				\closein\printansread
+				\small}
+
+\def\testexinput #1 {\ifnum \showexercises=1 
+												\openin\exread=#1 
+												\read\exread to \tempp 
+												\begin{enumerate} 
+													\addtocounter{enumi}{\theexercisecounter}
+													\item \tempp 
+													\addtocounter{exercisecounter}{1}
+												\end{enumerate}
+												\closein\exread 
+									\else \ifnum \showexercises=2 
+												\openin\exread=#1 
+												\read\exread to \tempp 
+												\addtocounter{exercisecounter}{1}
+												\read\exread to \tempp 
+												\ifodd \theexercisecounter
+														\begin{enumerate} 
+													\addtocounter{enumi}{\theexercisecounter}
+													\addtocounter{enumi}{-1}
+													\item \tempp 
+													%\addtocounter{exercisecounter}{1}
+													\end{enumerate} 
+												\fi
+												\closein\exread 
+												\fi
+									\fi 
+								}
+								
+\def \printexercisename exercises/#1_#2_#3_#4 {#1 #2 #3 #4}
+
+%%%%%%%%%%%%% Used to automate the answer production at
+%%%%%%%%%%%%% end the text.
+
+\def \readsection #1.#2{#2}
+
+\def \writeexercisestofile #1{%
+\write\answrite{\noexpand\printanswers{exercises/0\thechapter_0\expandafter\readsection #1_exercises.tex} \noexpand \vskip \baselineskip } \write\answrite{} }
+
+\def \cchapter #1{\chapter{#1}\write\answrite{\noexpand \noindent {\Large \bf Chapter \thechapter} \noexpand \vskip \noexpand\baselineskip } \write\answrite{} }
+
+\def \ssection #1{\section{#1}\write\answrite{\noexpand\noindent {\bf Section \thesection}} \noexpand \vskip \baselineskip
+}
+
+\def \makeexercisesection #1{\write\answrite{\noexpand\end{multicols}
+\noexpand\normalsize} \closeout\answrite \chapter{#1} \input{\jobname.answers}}%
+
+
+%
+% The following is a line of code, not a definition. 
+% It writes the first line of the ``.answers'' file
+% to set up the proper formatting of that file.
+%
+\write\answrite{\noexpand\small\noexpand\raggedright\noexpand\begin{multicols}{2}}

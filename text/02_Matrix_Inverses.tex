@@ -1,0 +1,166 @@
+\section{The Matrix Inverse}\label{sec:inverses}
+
+\asyouread{
+\item T/F: If \tta\ and \ttb\ are square matrices where $\tta\ttb=\tti$, then $\ttb\tta=\tti$.
+\item T/F: A matrix \tta\ has exactly one inverse, infinite inverses, or no inverse.
+\item T/F: Everyone is special.
+\item T/F: If \tta\ is invertible, then \ttaxo\ has exactly 1 solution.
+\item What is a corollary?
+\item Fill in the blanks: \underline{\hskip .5in} a matrix is invertible is useful; computing the inverse is \underline{\hskip .5in}.
+}
+
+Once again we visit the old algebra equation, $ax=b$. How do we solve for $x$? We know that, as long as $a\neq 0$, $$x = \frac{b}{a}, \ \text{or, stated in another way,} \ x = a^{-1}b.$$ 
+
+What is $a^{-1}$? It is the number that, when multiplied by $a$, returns 1. That is, $$a^{-1}a = 1.$$
+
+Let us now think in terms of matrices. We have learned of the identity matrix \tti\ that ``acts like the number 1.'' That is, if \tta\ is a square matrix, then $$\tti\tta = \tta\tti = \tta.$$
+If we had a matrix, which we'll call \ttai, where $\ttai\tta=\tti$, then by analogy to our algebra example above it seems like we might be able to solve the linear system \ttaxb\ for \vx\ by multiplying both sides of the equation by \ttai. That is, perhaps $$\vx = \ttai\vb.$$
+
+Of course, there is a lot of speculation here. We don't know that such a matrix like \ttai\ exists. However, we do know how to solve the matrix equation $\tta\ttx = \ttb$, so we can use that technique to solve the equation $\tta\ttx = \tti$ for \ttx. This seems like it will get us close to what we want. Let's practice this once and then study our results.\\
+
+\example{ex_inverse_1}{Let $$\tta = \bmx{cc} 2&1\\1&1\emx.$$ Find a matrix \ttx\ such that $\tta\ttx = \tti$.}
+{We know how to solve this from the previous section: we form the proper augmented matrix, put it into \rref\ and interpret the results. 
+$$\bmx{cccc}2&1&1&0\\1&1&0&1\emx \quad \arref \quad \bmx{cccc}1&0&1&-1\\0&1&-1&2\emx$$
+
+We read from our matrix that $$\ttx = \bmx{cc}1&-1\\-1&2\emx.$$ Let's check our work:
+\begin{align*}
+	\tta\ttx & = \bmx{cc}2&1\\1&1\emx\bmx{cc}1&-1\\-1&2\emx \\
+					& = \bmx{cc}1&0\\0&1\emx\\
+					& = \tti
+\end{align*}
+Sure enough, it works.}\\ % \eexset
+
+Looking at our previous example, we are tempted to jump in and call the matrix \ttx\ that we found ``\ttai.'' However, there are two obstacles in the way of us doing this. 
+
+First, we know that in general $\tta\ttb \neq \ttb\tta$. So while we found that $\tta\ttx = \tti$, we can't automatically assume that $\ttx\tta=\tti$.
+
+Secondly, we have seen examples of matrices where $\tta\ttb = \tta\ttc$, but $\ttb\neq\ttc$. So just because $\tta\ttx = \tti$, it is possible that another matrix \tty\ exists where $\tta\tty = \tti$. If this is the case, using the notation \ttai\ would be misleading, since it could refer to more than one matrix.
+
+These obstacles that we face are not insurmountable. The first obstacle was that we know that $\tta\ttx=\tti$ but didn't know that $\ttx\tta=\tti$. That's easy enough to check, though. Let's look at \tta\ and \ttx\ from our previous example.
+\begin{align*}
+\ttx\tta &= \bmx{cc}1&-1\\-1&2\emx\bmx{cc}2&1\\1&1\emx \\
+					&=\bmx{cc}1&0\\0&1\emx\\
+					&=\tti
+\end{align*}
+
+Perhaps this first obstacle isn't much of an obstacle after all. Of course, we only have one example where it worked, so this doesn't mean that it always works. We have good news, though: it always does work. The only ``bad'' news to come with this is that this is a bit harder to prove. We won't worry about proving it always works, but state formally that it does in the following theorem.
+
+\theorem{thm:inverse1}{{\bf Special Commuting Matrix Products}\\
+
+Let \tta\ be an $n\times n$ matrix. 
+\begin{enumerate}
+\item	If there is a matrix \ttx\ such that $\tta\ttx=\tti_n$, then $\ttx\tta=\tti_n$. 
+\item	If there is a matrix \ttx\ such that $\ttx\tta=\tti_n$, then $\tta\ttx=\tti_n$. 
+\end{enumerate}
+}
+
+The second obstacle is easier to address. We want to know if another matrix \tty\ exists where $\tta\tty = \tti =\tty\tta$. Let's suppose that it does. Consider the expression $\ttx\tta\tty$. Since matrix multiplication is associative, we can group this any way we choose. We could group this as $(\ttx\tta)\tty$; this results in 
+\begin{align*}
+(\ttx\tta)\tty	&= \tti\tty\\
+								&= \tty.
+\end{align*}
+We could also group $\ttx\tta\tty$ as $\ttx(\tta\tty)$. This tells us 
+\begin{align*}
+\ttx(\tta\tty) &= \ttx\tti\\
+		&= \ttx
+\end{align*}
+
+Combining the two ideas above, we see that $\ttx = \ttx\tta\tty = \tty$; that is, $\ttx=\tty$. We conclude that there is only one matrix \ttx\ where $\ttx\tta = \tti = \tta\ttx$. (Even if we think we have two, we can do the above exercise and see that we really just have one.)
+
+We have just proved the following theorem.
+
+\theorem{thm:inverse_unique}{\index{inverse!uniqueness}{\bf Uniqueness of Solutions to $\tta\ttx=\tti_n$}\\
+
+Let \tta\ be an $n\times n$ matrix and let \ttx\ be a matrix where $\tta\ttx = \tti_n$. Then \ttx\ is unique; it is the only matrix that satisfies this equation.}
+
+So given a square matrix \tta, if we can find a matrix \ttx\ where $\tta\ttx=\tti$, then we know that $\ttx\tta = \tti$ and that \ttx\ is the only matrix that does this. This makes \ttx\ special, so we give it a special name.
+
+\definition{def:inverse}{\index{matrix!inverse}\index{inverse!definition}{\bf Invertible Matrices and the Inverse of \tta}\\
+
+Let \tta\ and \ttx\ be $n\times n$ matrices where $\tta\ttx = \tti = \ttx\tta$. Then:
+\begin{enumerate} 
+\item		\tta\ is \textit{invertible}.
+\item		\ttx\ is the \textit{inverse} of \tta, denoted by \ttai.
+\end{enumerate}}
+
+
+Let's do an example.\\
+
+\example{ex_inverse_2}{Find the inverse of $\tta = \bmx{cc}1&2\\2&4\emx$.}
+{By solving the equation $\tta\ttx = \tti$ for \ttx\ will give us the inverse of \tta. Forming the appropriate augmented matrix and finding its \rref\ gives us $$\bmx{cccc}1&2&1&0\\2&4&0&1\emx \quad \arref \quad \bmx{cccc}1&2&0&1/2\\0&0&1&-1/2\emx$$
+Yikes! We were expecting to find that the \rref\ of this matrix would look like $$\bmx{cc}\tti & \ttai\emx.$$ However, we don't have the identity on the left hand side. Our conclusion: \tta\ is not invertible.}\\ % \eexset
+
+We have just seen that not all matrices are invertible.\footnote{\label{footnote:special}Hence our previous definition; why bother calling \tta\ ``invertible'' if every square matrix is? If everyone is special, then no one is. Then again, everyone \textit{is} special.} With this thought in mind, let's complete the array of boxes we started before the example. We've discovered that if a matrix has an inverse, it has only one. Therefore, we gave that special matrix a name, ``\textit{the} inverse.'' Finally, we describe the most general way to find the inverse of a matrix, and a way to tell if it does not have one.
+
+\keyidea{idea:finding_inverses}{\index{inverse!computing}\index{matrix!inverse}{\bf Finding \ttai}\\
+
+Let \tta\ be an $n \times n$ matrix. To find \ttai, put the augmented matrix $$\bmx{cc} \tta & \tti_n \emx$$ into \rref. If the result is of the form $$\bmx{cc} I_n & \ttx \emx,$$ then $\ttai = \ttx$. If not, (that is, if the first $n$ columns of the \rref\ are not $\tti_n$), then \tta\ is not invertible.}
+
+Let's try again. \\
+
+\example{ex_inverse_3}{Find the inverse, if it exists, of $\tta = \bmx{ccc} 1&1&-1\\1&-1&1\\1&2&3\emx$.}
+{We'll try to solve $\tta\ttx = \tti$ for \ttx\ and see what happens.
+$$\bmx{cccccc}1&1&-1&1&0&0\\1&-1&1&0&1&0\\1&2&3&0&0&1\emx \quad \arref\quad \bmx{cccccc}1&0&0&0.5&0.5&0\\0&1&0&0.2&-0.4&0.2\\0&0&1&-0.3&0.1&0.2\emx$$
+
+We have a solution, so $$\tta = \bmx{ccc}0.5&0.5&0\\0.2&-0.4&0.2\\-0.3&0.1&0.2\emx.$$ Multiply \tta\ttai\ to verify that it is indeed the inverse of \tta.}\\ % \eexset
+
+In general, given a matrix \tta, to find \ttai\ we need to form the augmented matrix $\bmx{cc}\tta&\tti \emx$ and put it into \rref\ and interpret the result. In the case of a $2\times 2$ matrix, though, there is a shortcut. We give the shortcut in terms of a theorem.\footnote{We don't prove this theorem here, but it really isn't hard to do. Put the matrix $$\bmx{cccc}a&b&1&0\\c&d&0&1\emx$$ into \rref\ and you'll discover the result of the theorem. Alternatively, multiply \tta\ by what we propose is the inverse and see that we indeed get \tti.}
+
+\theorem{thm:2by2}{{\bf The Inverse of a 2$\times$2 Matrix}\\
+
+Let $$\tta = \bmx{cc}a&b\\c&d\emx.$$ \tta\ is invertible if and only if $ad-bc\neq 0$.\\
+
+If $ad-bc \neq 0$, then $$\ttai = \frac{1}{ad-bc}\bmx{cc}d&-b\\-c&a\emx.$$}
+
+We can't divide by 0, so if $ad-bc=0$, we don't have an inverse. Recall Example \ref{ex_inverse_2}, where $$\tta = \bmx{cc}1&2\\2&4\emx.$$ Here, $ad-bc = 1(4) - 2(2) = 0$, which is why \tta\ didn't have an inverse.
+
+Although this idea is simple, we should practice it.\\
+
+\enlargethispage{2\baselineskip}
+
+\example{ex_inverse_4}{Use Theorem \ref{thm:2by2} to find the inverse of $$\tta = \bmx{cc}3 & 2\\-1 & 9\emx$$ if it exists.}
+{Since $ad-bc = 29 \neq 0$, \ttai\ exists. By the Theorem, \begin{align*} \ttai &= \frac{1}{3(9)-2(-1)}\bmx{cc}9&-2\\1&3\emx \\
+&= \frac{1}{29}\bmx{cc}9&-2\\1&3\emx
+\end{align*}
+
+We can leave our answer in this form, or we could ``simplify'' it as $$\ttai = \frac{1}{29}\bmx{cc}9&-2\\1&3\emx = \bmx{cc} 9/29 & -2/29\\1/29 & 3/29\emx.$$\ }\\ %\eexset
+
+We started this section out by speculating that just as we solved algebraic equations of the form $ax=b$ by computing $x = a^{-1}b$, we might be able to solve matrix equations of the form \ttaxb\ by computing $\vx = \ttai\vb$. If \ttai\ does exist, then we \textit{can} solve the equation \ttaxb\ this way. Consider:
+
+\begin{align*} \tta \vx &= \vb & & \textsf{\hskip 20pt  \small(original equation)}\\ 
+\ttai\tta\vx &= \ttai\vb & &\textsf{\hskip 20 pt \small (multiply both sides \textit{on the left} by \ttai)}\\ 
+\tti\vx &= \ttai\vb & &\textsf{\hskip 20 pt \small (since $\ttai\tta=\tti$)} \\ 
+\vx &= \ttai\vb & &\textsf{\hskip 20 pt \small (since $\tti\vx = \vx$)} \end{align*}
+
+Let's step back and think about this for a moment. The only thing we know about the equation \ttaxb\ is that \tta\ is invertible. We also know that solutions to \ttaxb\ come in three forms: exactly one solution, infinite solutions, and no solution. We just showed that if \tta\ is invertible, then \ttaxb\ has \textit{at least} one solution. We showed that by setting \vx\ equal to  \ttai\vb, we have a solution. Is it possible that more solutions exist?
+
+No. Suppose we are told that a known vector \vv\ is a solution to the equation \ttaxb; that is, we know that $\tta\vv=\vb$. We can repeat the above steps:
+
+\begin{align*} \tta\vv &=\vb \\ \ttai\tta\vv &=\ttai\vb \\ \tti\vv &= \ttai\vb \\ \vv &= \ttai\vb. \end{align*} This shows that \textit{all} solutions to \ttaxb\ are exactly $\vx = \ttai\vb$ when \tta\ is invertible. We have just proved the following theorem.
+
+\theorem{thm:inverse_solution}{\index{solution!unique}{\bf Invertible Matrices and Solutions to \ttaxb}\\
+
+Let \tta\ be an invertible $n\times n$ matrix, and let \vb\ be any $n\times 1$ column vector. Then the equation \ttaxb\ has exactly one solution, namely $$\vx = \ttai\vb.$$}
+
+A corollary\footnote{a \textit{corollary} is an idea that follows directly from a theorem} to this theorem is: If \tta\ is not invertible, then \ttaxb\ does not have exactly one solution. It may have infinite solutions and it may have no solution, and we would need to examine the \rref\ of the augmented matrix $\bmx{cc} \tta & \vb \emx$ to see which case applies.
+
+We demonstrate our theorem with an example.\\
+
+\example{ex_inverse_solution_1}{Solve \ttaxb\ by computing $\vx = \ttai\vb$, where $$\tta = \left[ \begin {array}{ccc} 1&0&-3\\  -3&-4&10
+\\  4&-5&-11\end {array} \right]\ \text{ and }\ \vb = \left[ \begin {array}{c} -15\\   57 \\  -46\end {array} \right].$$ }
+{Without showing our steps, we compute $$\ttai = \left[ \begin {array}{ccc} 94&15&-12\\  7&1&-1
+\\  31&5&-4\end {array} \right].$$ We then find the solution to \ttaxb\ by computing \ttai\vb: \begin{align*} \vx &=\ttai\vb \\ &= \left[ \begin {array}{ccc} 94&15&-12\\  7&1&-1
+\\  31&5&-4\end {array} \right] \left[ \begin {array}{c} -15\\   57 \\  -46\end {array} \right] \\ &= \left[ \begin {array}{c} -3\\   -2\\    4\end {array} \right]. \end{align*}
+
+We can easily check our answer: $$\left[ \begin {array}{ccc} 1&0&-3\\  -3&-4&10
+\\  4&-5&-11\end {array} \right]\left[ \begin {array}{c} -3\\   -2\\    4\end {array} \right] = \left[ \begin {array}{c} -15\\   57 \\  -46\end {array} \right].$$
+\ }\\ %\eexset
+
+Knowing a matrix is invertible is incredibly useful.\footnote{As odd as it may sound, \textit{knowing} a matrix is invertible is useful; actually computing the inverse isn't. This is discussed at the end of the next section.} Among many other reasons, if you know \tta\ is invertible, then you know for sure that $\ttaxb$ has a solution (as we just stated in Theorem \ref{thm:inverse_solution}). In the next section we'll demonstrate many different properties of invertible matrices, including stating several different ways in which we know that a matrix is invertible.\\
+
+
+%\clearpage
+
+\printexercises{exercises/02_05_exercises}
+
+%\clearpage

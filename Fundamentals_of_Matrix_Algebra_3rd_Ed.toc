@@ -1,0 +1,32 @@
+\thispagestyle {empty}
+\contentsline {chapter}{Thanks}{iii}{section*.1}
+\contentsline {chapter}{Preface}{v}{section*.2}
+\contentsline {chapter}{Table of Contents}{vii}{section*.3}
+\contentsline {chapter}{\numberline {1}Systems of Linear Equations}{1}{chapter.1}
+\contentsline {section}{\numberline {1.1}Introduction to Linear Equations}{1}{section.1.1}
+\contentsline {section}{\numberline {1.2}Using Matrices To Solve Systems of Linear Equations}{5}{section.1.2}
+\contentsline {section}{\numberline {1.3}Elementary Row Operations and Gaussian Elimination}{12}{section.1.3}
+\contentsline {section}{\numberline {1.4}Existence and Uniqueness of Solutions}{22}{section.1.4}
+\contentsline {section}{\numberline {1.5}Applications of Linear Systems}{34}{section.1.5}
+\contentsline {chapter}{\numberline {2}Matrix Arithmetic}{45}{chapter.2}
+\contentsline {section}{\numberline {2.1}Matrix Addition and Scalar Multiplication}{45}{section.2.1}
+\contentsline {section}{\numberline {2.2}Matrix Multiplication}{51}{section.2.2}
+\contentsline {section}{\numberline {2.3}Visualizing Matrix Arithmetic in 2D}{66}{section.2.3}
+\contentsline {section}{\numberline {2.4}Vector Solutions to Linear Systems}{80}{section.2.4}
+\contentsline {section}{\numberline {2.5}Solving Matrix Equations $\ensuremath {A}\ensuremath {X}=\ensuremath {B}$}{97}{section.2.5}
+\contentsline {section}{\numberline {2.6}The Matrix Inverse}{103}{section.2.6}
+\contentsline {section}{\numberline {2.7}Properties of the Matrix Inverse}{112}{section.2.7}
+\contentsline {chapter}{\numberline {3}Operations on Matrices}{121}{chapter.3}
+\contentsline {section}{\numberline {3.1}The Matrix Transpose}{121}{section.3.1}
+\contentsline {section}{\numberline {3.2}The Matrix Trace}{131}{section.3.2}
+\contentsline {section}{\numberline {3.3}The Determinant}{135}{section.3.3}
+\contentsline {section}{\numberline {3.4}Properties of the Determinant}{146}{section.3.4}
+\contentsline {section}{\numberline {3.5}Cramer's Rule}{159}{section.3.5}
+\contentsline {chapter}{\numberline {4}Eigenvalues and Eigenvectors}{163}{chapter.4}
+\contentsline {section}{\numberline {4.1}Eigenvalues and Eigenvectors}{163}{section.4.1}
+\contentsline {section}{\numberline {4.2}Properties of Eigenvalues and Eigenvectors}{177}{section.4.2}
+\contentsline {chapter}{\numberline {5}Graphical Explorations of Vectors}{187}{chapter.5}
+\contentsline {section}{\numberline {5.1}Transformations of the Cartesian Plane}{187}{section.5.1}
+\contentsline {section}{\numberline {5.2}Properties of Linear Transformations}{202}{section.5.2}
+\contentsline {section}{\numberline {5.3}Visualizing Vectors: Vectors in Three Dimensions}{215}{section.5.3}
+\contentsline {chapter}{\numberline {A}Solutions To Selected Problems}{227}{appendix.A}
